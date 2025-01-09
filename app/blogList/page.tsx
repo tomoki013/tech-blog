@@ -1,7 +1,10 @@
-export default function blogList() {
+import * as Blog from '@/features/blog/index';
+
+export default async function BlogListPage() {
     return (
-        <main className="h-[100vh] flex justify-center items-center">
-            <h1>Hello, world!</h1>
+        <main>
+            <h1>ブログ一覧</h1>
+			<Blog.DisplayPosts />
         </main>
     );
-}
+};
