@@ -1,8 +1,7 @@
 export default function Home() {
   	return (
-    	<div>
+    	<main className="h-[100vh] flex justify-center items-center">
 	  		<h1>Hello, world!</h1>
-			<p>This is Tomokichi's ITblog</p>
-		</div>
+		</main>
   	);
 }

@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// CSSの変数の定義
+:root {
+    --font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; /*通常使用するフォント*/
+
+    // デフォルトの色の変数
+    --bg-color: #f8f9fa; /* 背景色 */
+    --main-color: #007bff; /* メインの色 */
+    --header-color: #0056b3; /* ヘッダーの色 */
+	--footer-color: #bcbbbb; /* フッターの色 */
+    --text-color: #343a40; /* テキストの色 */
+    --accent-color: #218838; /* アクセントの色*/
+    
+}
+
+// ダークモードの色の変数
+[data-theme='dark'] {
+	--bg-color: #121212; /* 背景色 */
+	--main-color: #ffc107; /* メインの色 */
+	--header-color: #00bcd4; /* ヘッダーの色 */
+	--footer-color: #2E2E2E; /* フッターの色 */
+	--text-color: #e0e0e0; /*テキストの色 */
+	--accent-color: #8a2be2; /* アクセントの色*/
+}
+
+* {
+	box-sizing: border-box;
+	word-break: auto-phrase;
+}
+  
+html {
+	scroll-behavior: smooth;
+	font-size: 100%;
+	overflow-x: hidden;
+}
+  
+body {
+	margin: 0;
+	padding: 0;
+	background-color: var(--bg-color);
+	font-family: var(--font-family);
+    color: var(--text-color);
+	overflow-x: hidden;
+}
+  
+h1 {
+	font-size: 2rem;
+	font-weight: bold;
+}
+h2 {
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+h3 {
+	font-size: 1.2rem;
+	font-weight: bold;
+}
+  
+@media (max-width: 768px) {
+	html {
+		font-size: 12px;
+	}
+}
