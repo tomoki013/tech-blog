@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "./globals.scss";
+import * as Layout from '@/app/components/layouts/index';
+import * as Elements from '@/app/components/elements/index';
 
 export const metadata: Metadata = {
   	title: "ともきちのITブログ",
@@ -12,9 +14,14 @@ export default function RootLayout({
   	children: React.ReactNode;
 }>) {
   	return (
-    	<html lang="ja">
+    	<html lang="ja" suppressHydrationWarning>
       		<body>
-        		{children}
+				<Elements.Providers>
+					<Elements.ThemeButton />
+					<Layout.Header />
+        				{children}
+					<Layout.Footer />
+				</Elements.Providers>
       		</body>
     	</html>
   	);
