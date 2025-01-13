@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.scss";
-import * as Layout from '@/app/components/layouts/index';
+import * as Layouts from '@/app/components/layouts/index';
 import * as Elements from '@/app/components/elements/index';
 
 export const metadata: Metadata = {
@@ -18,9 +18,17 @@ export default function RootLayout({
       		<body>
 				<Elements.Providers>
 					<Elements.ThemeButton />
-					<Layout.Header />
-        				{children}
-					<Layout.Footer />
+					<Layouts.Header />
+					<Elements.FlexWrapper>
+						<Elements.LeftContainer />
+						<Elements.CenterContainer>
+							{children}
+						</Elements.CenterContainer>
+						<Elements.RightContainer>
+							<Layouts.Profile />
+						</Elements.RightContainer>
+					</Elements.FlexWrapper>
+					<Layouts.Footer />
 				</Elements.Providers>
       		</body>
     	</html>

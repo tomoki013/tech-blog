@@ -1,7 +1,7 @@
+// import * as Elements from '@/app/components/elements/index';
+
 export default function Home() {
   	return (
-    	<main className="h-[100vh] flex justify-center items-center">
-	  		<h1>Hello, world!</h1>
-		</main>
+		<h1 className="h-[100vh] flex justify-center">Hello, My IT Blog!</h1>
   	);
 }
