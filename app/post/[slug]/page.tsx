@@ -15,12 +15,10 @@ export default async function Post(props: { params: Promise<{ slug: string}> }) 
     }
 
     return (
-        <main>
-            <Blog.Article
-                title={post.title}
-                date={post.date}
-                content={post.content}
-            />
-        </main>
+        <Blog.Article
+            title={post.title}
+            date={post.date}
+            content={post.content}
+        />
     );
 }

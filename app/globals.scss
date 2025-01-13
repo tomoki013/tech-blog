@@ -9,10 +9,10 @@
     // デフォルトの色の変数
     --bg-color: #f8f9fa; /* メインの色 */
     --header-color: #0056b3; /* ヘッダーの色 */
-	--footer-color: #bcbbbb; /* フッターの色 */
+	--footer-color: #cccccc; /* フッターの色 */
     --text-color: #343a40; /* テキストの色 */
     --accent-color: #218838; /* アクセントの色*/
-	--reverse-color: #121212; /* 反転色 */
+	--reverse-color: #121212; /* 反対色 */
     
 }
 
@@ -23,7 +23,7 @@
 	--footer-color: #2E2E2E; /* フッターの色 */
 	--text-color: #e0e0e0; /*テキストの色 */
 	--accent-color: #8a2be2; /* アクセントの色*/
-	--reverse-color: #f8f9fa; /* 反転色 */
+	--reverse-color: #f8f9fa; /* 反対色 */
 }
 
 * {
@@ -33,7 +33,7 @@
   
 html {
 	scroll-behavior: smooth;
-	font-size: 100%;
+	font-size: 16px;
 	overflow-x: hidden;
 }
   
