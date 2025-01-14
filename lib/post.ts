@@ -17,6 +17,7 @@ export const getAllPosts = (): Post[] => {
             date: data.date, // 変更: 配列から単一の文字列に
             image: data.image,
             alt: data.alt,
+            tags: data.tags || [],
             slug: fileName.replace(/\.md$/, ''),
         };
     })
@@ -33,4 +34,9 @@ export const getPostBySlug = async (slug: string) => {
         ...data,
         slug,
     };
+}
+
+export const getPostByTag = (tag: string) => {
+    const allPosts = getAllPosts();
+    return allPosts.filter((post) => post.tags && post.tags.includes(tag));
 }
