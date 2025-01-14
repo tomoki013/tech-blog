@@ -4,5 +4,6 @@ export interface Post {
     date: string;
     image: string;
     alt: string;
+    tags?: string[];
     slug: string;
 }

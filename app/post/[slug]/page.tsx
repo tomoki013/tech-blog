@@ -19,6 +19,7 @@ export default async function Post(props: { params: Promise<{ slug: string}> }) 
             title={post.title}
             date={post.date}
             content={post.content}
+            tags={post.tags || []}
         />
     );
 }
