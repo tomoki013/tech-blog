@@ -35,8 +35,3 @@ export const getPostBySlug = async (slug: string) => {
         slug,
     };
 }
-
-export const getPostByTag = (tag: string) => {
-    const allPosts = getAllPosts();
-    return allPosts.filter((post) => post.tags && post.tags.includes(tag));
-}
