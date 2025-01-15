@@ -5,7 +5,10 @@ import FlexWrapper from "./container/FlexWrapper";
 import LeftContainer from "./container/LeftContainer";
 import CenterContainer from "./container/CenterContainer";
 import RightContainer from "./container/RightContainer";
+import UnitContainer from "./container/UnitContainer";
 import Tags from "./tags/Tags";
+import Profile from "./profile/Profile";
+import GitHubIcon from "./icons/GitHubIcon";
 
 export {
     Navigation,
@@ -15,5 +18,8 @@ export {
     LeftContainer,
     CenterContainer,
     RightContainer,
+    UnitContainer,
     Tags,
+    Profile,
+    GitHubIcon,
 }

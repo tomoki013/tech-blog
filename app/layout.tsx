@@ -25,13 +25,7 @@ export default function RootLayout({
 					<Elements.ThemeButton />
 					<Layouts.Header />
 					<Elements.FlexWrapper>
-						<Elements.LeftContainer />
-						<Elements.CenterContainer>
-							{children}
-						</Elements.CenterContainer>
-						<Elements.RightContainer>
-							<Layouts.Profile />
-						</Elements.RightContainer>
+						{children}
 					</Elements.FlexWrapper>
 					<Layouts.Footer />
 				</Elements.Providers>
