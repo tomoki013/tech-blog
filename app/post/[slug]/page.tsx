@@ -1,5 +1,6 @@
 import { getAllPosts, getPostBySlug } from "@/lib/post";
 import * as Blog from '@/features/blog/index';
+import * as Elements from '@/app/components/elements/index';
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
     const posts = await getAllPosts();
@@ -15,11 +16,19 @@ export default async function Post(props: { params: Promise<{ slug: string}> }) 
     }
 
     return (
-        <Blog.Article
-            title={post.title}
-            date={post.date}
-            content={post.content}
-            tags={post.tags || []}
-        />
+        <>
+            <Elements.LeftContainer />
+            <Elements.CenterContainer>
+                <Blog.Article
+                    title={post.title}
+                    date={post.date}
+                    content={post.content}
+                    tags={post.tags || []}
+                />
+            </Elements.CenterContainer>
+            <Elements.RightContainer>
+                <Blog.Index />
+            </Elements.RightContainer>
+        </>
     );
 }
