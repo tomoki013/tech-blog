@@ -4,7 +4,11 @@
 
 .doc h2 {
     padding-left: 4px;
-    border-bottom: 1px solid orange;
-    border-left: 5px solid orange;
+    border-bottom: 1px solid var(--accent-color);
+    border-left: 5px solid var(--accent-color);
+    color: var(--reverse-color);
+}
+
+.doc li::marker {
     color: var(--reverse-color);
 }
