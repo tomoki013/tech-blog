@@ -15,7 +15,7 @@ const Article = ({ title, date, content, tags = [] }: ArticleProps) => {
         <article>
             <h1 className="text-center">{title}</h1><hr />
             <p className="text-right">{date}</p>
-            <Elements.Tags tags={tags} />
+            <Elements.Tags tags={tags} hideAll />
             <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 className={`" prose text-[var(--reverse-color)]" ${styles.doc} `}
