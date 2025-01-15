@@ -4,12 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { Post } from '@/lib/types';
+import { Suspense } from "react";
 
 interface DisplayPostsProps {
     posts: Post[];
 }
 
-const DisplayPosts: React.FC<DisplayPostsProps> = ({ posts }) => {
+const DisplayPostsItems: React.FC<DisplayPostsProps> = ({ posts }) => {
     const searchParams = useSearchParams();
     const tag = searchParams.get("tag");
 
@@ -39,6 +40,14 @@ const DisplayPosts: React.FC<DisplayPostsProps> = ({ posts }) => {
             ))}
         </ul>
     );
+}
+
+const DisplayPosts: React.FC<DisplayPostsProps> = ({ posts }) => {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <DisplayPostsItems posts={posts} />
+        </Suspense>
+    )
 }
 
 export default DisplayPosts;
