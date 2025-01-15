@@ -1,15 +1,23 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
-import { getAllPosts } from "@/lib/post";
+import { useSearchParams } from "next/navigation";
 import { Post } from '@/lib/types';
 
-const DisplayPosts: React.FC = () => {
-    let posts: Post[] = getAllPosts();
-    posts = posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+interface DisplayPostsProps {
+    posts: Post[];
+}
+
+const DisplayPosts: React.FC<DisplayPostsProps> = ({ posts }) => {
+    const searchParams = useSearchParams();
+    const tag = searchParams.get("tag");
+
+    const filteredPosts = tag && tag !== "全て" ? posts.filter((post) => post.tags?.includes(tag)) : posts;
 
     return (
         <ul>
-            {posts.map((post) => (
+            {filteredPosts.map((post) => (
                 <li key={post.slug} className="border-y border-[var(--reverse-color)] my-4">
                     <Link href={`/post/${post.slug}`} className="grid grid-cols-[1fr_4fr] grid-rows-[auto_auto_auto] text-left p-2 hover:bg-[var(--footer-color)]">
                         <Image
