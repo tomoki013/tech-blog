@@ -3,13 +3,13 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
+import { TagsProps } from "../types";
 
-interface TagsProps {
-    tags: string[];
-    hideAll?: boolean;
-}
-
-const TagsItem: React.FC<TagsProps> = ({ tags, hideAll }) => {
+const TagsItem = ({
+    tags,
+    hideAll
+} : TagsProps
+) => {
     const searchParams = useSearchParams();
     const query = searchParams.get('tag') || "全て";
     const allTags = hideAll ? [...tags] : ["全て", ...tags];

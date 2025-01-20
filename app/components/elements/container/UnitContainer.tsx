@@ -1,9 +1,10 @@
-interface UnitContainerProps {
-    children: React.ReactNode;
-    className?: string;
-}
+import { ContainerProps } from "../types";
 
-const UnitContainer: React.FC<UnitContainerProps> = ({ children, className }) => {
+const UnitContainer = ({
+    children,
+    className
+}: ContainerProps
+) => {
     return (
         <section className={`" bg-[var(--bg-color)] rounded-md p-2 text-center w-[60%] ${className} "`}>
             {children}

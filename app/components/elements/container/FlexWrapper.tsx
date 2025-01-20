@@ -1,8 +1,9 @@
-interface FlexWrapperProps {
-    children?: React.ReactNode;
-}
+import { WithChildren } from "../types";
 
-const FlexWrapper: React.FC<FlexWrapperProps> = ({ children }) => {
+const FlexWrapper = ({
+    children
+} : WithChildren
+) => {
     return (
         <div className="flex">
             {children}

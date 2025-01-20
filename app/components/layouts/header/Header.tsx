@@ -1,6 +1,6 @@
 import * as Elements from '@/app/components/elements/index';
 
-const Header: React.FC = () => {
+const Header = () => {
     return (
         <header className='bg-[var(--footer-color)]'>
             <h1 className="text-center p-4">ともきちのITブログ</h1>
