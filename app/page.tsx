@@ -5,6 +5,7 @@ const Home = () => {
 		<>
 			<Elements.LeftContainer />
 			<Elements.CenterContainer>
+				<h1 className='text-center'>トップページ</h1>
 				<h1 className="h-[100vh] flex justify-center">Hello, My IT Blog!</h1>
 			</Elements.CenterContainer>
 			<Elements.RightContainer />
