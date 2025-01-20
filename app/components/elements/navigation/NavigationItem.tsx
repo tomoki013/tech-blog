@@ -1,13 +1,13 @@
 import Link from "next/link";
 import styles from './NavigationItem.module.scss';
+import { IconItemProps } from "../types";
 
-interface NavigationItemProps {
-    href: string;
-    children: React.ReactNode;
-    className?: string;
-}
-
-const NavigationItem: React.FC<NavigationItemProps> = ({ href, children, className }) => {
+const NavigationItem = ({
+    href,
+    children,
+    className
+} : IconItemProps
+) => {
     return (
         <li>
             <Link

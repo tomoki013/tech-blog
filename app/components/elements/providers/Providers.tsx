@@ -2,12 +2,12 @@
 
 import React from "react";
 import { ThemeProvider } from "next-themes";
+import { WithChildren } from "../types";
 
-interface ProvidersProps {
-    children: React.ReactNode;
-}
-
-const Providers: React.FC<ProvidersProps> = ({ children }) => {
+const Providers = ({
+    children
+} : WithChildren
+) => {
     return (
         <>
             <ThemeProvider defaultTheme="light" enableSystem >

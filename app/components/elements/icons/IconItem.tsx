@@ -1,12 +1,12 @@
 import Link from "next/link"
+import { IconItemProps } from '../types';
 
-interface IconItemProps {
-    href: string;
-    children: React.ReactNode;
-    className?: string;
-}
-
-const IconItem: React.FC<IconItemProps> = ({ href, children, className }) => {
+const IconItem = ({
+    href,
+    children,
+    className
+} : IconItemProps
+) => {
     return (
         <div className='flex bg-[var(--bg-color)] p-1'>
             <Link

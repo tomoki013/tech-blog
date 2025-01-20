@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import * as Elements from '@/app/components/elements/index';
 
-const Profile: React.FC = () => {
+const Profile = () => {
     return (
         <Elements.UnitContainer>
             <h2>Profile</h2><hr />

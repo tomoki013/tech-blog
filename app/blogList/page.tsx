@@ -2,7 +2,7 @@ import * as Blog from '@/features/blog/index';
 import * as Elements from '@/app/components/elements/index';
 import { getAllPosts } from "@/lib/post";
 
-export default async function BlogListPage() {
+const BlogListPage = async () => {
     const posts = await getAllPosts();
 
     const tags = Array.from(new Set(posts.flatMap(post => post.tags))).filter((tag): tag is string => tag !== undefined);
@@ -18,4 +18,6 @@ export default async function BlogListPage() {
             <Elements.RightContainer />
         </>
     );
-};
+}
+
+export default BlogListPage;

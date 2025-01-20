@@ -2,15 +2,15 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import styles from './Article.module.scss';
 import * as Elements from '@/app/components/elements/index';
+import { ArticleProps } from '../../types';
 
-export interface ArticleProps {
-    title: string;
-    date: string;
-    content: string;
-    tags: string[];
-}
-
-const Article = ({ title, date, content, tags = [] }: ArticleProps) => {
+const Article = ({
+    title,
+    date,
+    content,
+    tags = []
+}: ArticleProps
+) => {
     return (
         <article>
             <h1 className="text-center">{title}</h1><hr />

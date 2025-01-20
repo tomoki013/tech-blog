@@ -1,4 +1,4 @@
-const Index: React.FC = () => {
+const Index = () => {
     return (
         <section className="bg-[var(--bg-color)] rounded-md p-2">
             <h2>目次</h2><hr />

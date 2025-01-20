@@ -1,12 +1,12 @@
 import * as Elements from '@/app/components/elements/index';
 import * as Blog from '@/features/blog/index';
 import { getAllPosts } from '@/lib/post';
+import { WithChildren } from '../types';
 
-interface RightContainerProps {
-    children?: React.ReactNode;
-}
-
-const RightContainer: React.FC<RightContainerProps> = ({ children }) => {
+const RightContainer = ({
+    children
+} : WithChildren
+) => {
     const posts = getAllPosts();
 
     return (

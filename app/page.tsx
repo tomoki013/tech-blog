@@ -1,6 +1,6 @@
 import * as Elements from '@/app/components/elements/index';
 
-export default function Home() {
+const Home = () => {
   	return (
 		<>
 			<Elements.LeftContainer />
@@ -11,3 +11,5 @@ export default function Home() {
 		</>
   	);
 }
+
+export default Home;

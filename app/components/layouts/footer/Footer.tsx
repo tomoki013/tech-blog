@@ -1,6 +1,6 @@
 import * as Elements from '@/app/components/elements/index';
 
-const Footer: React.FC = () => {
+const Footer = () => {
 
     const currentYear = new Date().getFullYear();
 

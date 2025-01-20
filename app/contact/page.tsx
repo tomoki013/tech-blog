@@ -1,6 +1,6 @@
 import * as Elements from '@/app/components/elements/index';
 
-export default function contact() {
+const Contact = () => {
     return (
         <>
             <Elements.LeftContainer />
@@ -13,3 +13,5 @@ export default function contact() {
         </>
     );
 }
+
+export default Contact;

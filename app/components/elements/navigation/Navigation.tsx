@@ -1,10 +1,10 @@
 import NavigationItem from "./NavigationItem";
+import { WithClassname } from "../types";
 
-interface NavigationProps {
-    className?: string;
-}
-
-const Navigation: React.FC<NavigationProps> = ({ className }) => {
+const Navigation = ({
+    className
+} : WithClassname
+) => {
     return (
         <nav className={`' py-2 ${className} '`}>
             <ul className="flex flex-wrap justify-center items-center gap-6">
