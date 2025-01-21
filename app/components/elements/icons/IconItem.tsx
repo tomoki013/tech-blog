@@ -1,4 +1,5 @@
 import Link from "next/link"
+import styles from './IconItem.module.scss';
 import { IconItemProps } from '../types';
 
 const IconItem = ({
@@ -13,7 +14,7 @@ const IconItem = ({
                 href={href}
                 target='_blank'
                 rel="noopener noreferrer"
-                className={`' text-5xl text-[var(--reverse-color)] hover:opacity-70 ${className} '`}
+                className={`' ${styles.icon_item} ${className} '`}
             >
                 {children}
             </Link>
