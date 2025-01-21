@@ -19,6 +19,7 @@ export default async function Post(props: { params: Promise<{ slug: string}> }) 
         <>
             <Elements.LeftContainer />
             <Elements.CenterContainer>
+                <div className="p-2 bg-[var(--accent-color)] rounded border border-[var(--reverse-color)] text-black">この記事は<span className="border-b-2 border-red-600">{post.date}</span>に書かれたものです。古い情報が含まれている可能性がありますのでお気を付けください。</div>
                 <Blog.Article
                     title={post.title}
                     date={post.date}

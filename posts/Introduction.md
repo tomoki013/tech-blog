@@ -1,10 +1,9 @@
 ---
 title: "ITブログ始めました！"
-description: "description"
+description: "HTML, CSS, JavaScript, React, Next.jsなど、Web開発に必要な技術を解説するブログです。初心者から中級者まで、幅広い層の方の学習をサポートします。Web開発の基礎から実践まで、あなたのスキルアップを応援します。"
 date: '2025-01-13'
 image: /images/
 alt: "image"
-tags: ["イントロ"]
 ---
 
 ## 技術のアウトプットのためにITブログを始めました！

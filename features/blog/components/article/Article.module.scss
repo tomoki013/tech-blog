@@ -6,7 +6,19 @@
     padding-left: 4px;
     border-bottom: 1px solid var(--accent-color);
     border-left: 5px solid var(--accent-color);
+}
+
+.doc h2, .doc h3, .doc h4, .doc h5, .doc h6, .doc code {
     color: var(--reverse-color);
+}
+
+.doc pre code {
+    color: #fff;
+}
+
+.doc a {
+    color: blue;
+    text-decoration: underline;
 }
 
 .doc li::marker {

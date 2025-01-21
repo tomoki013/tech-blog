@@ -1,0 +1,7 @@
+.icon_item {
+    font-size: 3rem;
+    color: var(--reverse-color);
+    &:hover {
+        color: color-mix(in srgb, var(--reverse-color), var(--bg-color) 20%);
+    }
+}
