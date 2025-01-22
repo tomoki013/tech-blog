@@ -7,11 +7,13 @@ import { DisplayPostsProps } from "../../types";
 const DisplayPosts = ({
     posts,
     displayCount,
-    sortType
+    sortType,
+    limitedTitle,
+    limitedDescription,
 } : DisplayPostsProps) => {
     return (
         <Suspense fallback={<div>Loading...</div>}>
-            <DisplayPostsItems posts={posts} displayCount={displayCount} sortType={sortType} />
+            <DisplayPostsItems posts={posts} displayCount={displayCount} sortType={sortType} limitedTitle={limitedTitle} limitedDescription={limitedDescription} />
         </Suspense>
     )
 }

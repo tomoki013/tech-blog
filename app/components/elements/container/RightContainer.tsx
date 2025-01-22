@@ -15,7 +15,7 @@ const RightContainer = ({
             {children}
             <Elements.UnitContainer>
                 <h2>おすすめのブログ</h2><hr />
-                <Blog.DisplayPosts posts={posts} displayCount={3} sortType='random' />
+                <Blog.DisplayPosts posts={posts} displayCount={3} sortType='random' limitedTitle={7} limitedDescription={10} />
             </Elements.UnitContainer>
         </aside>
     );

@@ -11,4 +11,6 @@ export interface DisplayPostsProps {
     posts: Post[];
     displayCount?: number;
     sortType?: 'latest' | 'oldest' | 'random';
+    limitedTitle?: number;
+    limitedDescription?: number;
 }

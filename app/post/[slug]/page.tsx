@@ -28,7 +28,7 @@ export default async function Post(props: { params: Promise<{ slug: string}> }) 
                 />
             </Elements.CenterContainer>
             <Elements.RightContainer>
-                <Blog.Index />
+                {/* <Blog.Index /> */}
             </Elements.RightContainer>
         </>
     );
