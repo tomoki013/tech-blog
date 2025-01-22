@@ -8,14 +8,20 @@ import { DisplayPostsProps } from "../../types";
 const DisplayPostsItems = ({
     posts,
     displayCount,
-    sortType='latest'
-} : DisplayPostsProps) => {
+    sortType='latest',
+    limitedTitle,
+    limitedDescription,
+} : DisplayPostsProps
+) => {
     const searchParams = useSearchParams();
     const tag = searchParams.get("tag");
 
     let filteredPosts = tag && tag !== "全て" ? posts.filter((post) => post.tags?.includes(tag)) : posts;
 
     const count = displayCount || filteredPosts.length;
+
+    const titleCount = limitedTitle || 15;
+    const descriptionCount = limitedDescription || 40;
 
     if (sortType === 'oldest') {
         filteredPosts = filteredPosts.sort((a, b) => new Date(a.date[0]).getTime() - new Date(b.date[0]).getTime());
@@ -38,10 +44,10 @@ const DisplayPostsItems = ({
                             className="col-span-1 row-span-3"
                         />
                         <h2 className="col-span-1 row-span-1 underline">
-                            {post.title.length > 15 ? post.title.substring(0,15) + '...' : post.title}
+                            {post.title.length > titleCount ? post.title.substring(0, titleCount) + '...' : post.title}
                         </h2>
                         <p className="col-span-1 row-span-1 text-lg">
-                        {post.description.length > 30 ? post.description.substring(0, 40) + '...' : post.description}
+                        {post.description.length > descriptionCount ? post.description.substring(0, descriptionCount) + '...' : post.description}
                         </p>
                         <p className="col-span-1 row-span-1">{post.date}</p>
                     </Link>
