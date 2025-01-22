@@ -1,6 +1,6 @@
 ---
 title: "CSSの基本を学ぼう！ウェブデザイン初心者向けガイド"
-description: "description"
+description: "CSS初心者必見！ウェブデザインの基本となるCSSの役割や使い方をわかりやすく解説。フォントや色、レイアウト調整など、実例を交えながら基礎を学びましょう！"
 date: '2025-01-22'
 image: /images/
 alt: "image"
