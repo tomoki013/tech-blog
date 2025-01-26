@@ -7,6 +7,14 @@ export async function generateStaticParams(): Promise<{ slug: string }[]> {
     return posts.map((post) => ({ slug: post.slug }));
 }
 
+const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${year}年${month}月${day}日`;
+}
+
 export default async function Post(props: { params: Promise<{ slug: string}> }) {
     const params = await props.params;
     const post = await getPostBySlug(params.slug);
@@ -19,7 +27,7 @@ export default async function Post(props: { params: Promise<{ slug: string}> }) 
         <>
             <Elements.LeftContainer />
             <Elements.CenterContainer>
-                <div className="p-2 bg-[var(--accent-color)] rounded border border-[var(--reverse-color)] text-black">この記事は<span className="border-b-2 border-red-600">{post.date}</span>に書かれたものです。古い情報が含まれている可能性がありますのでお気を付けください。</div>
+                <div className="p-2 bg-[var(--accent-color)] rounded border border-[var(--reverse-color)] text-black">この記事は<span className='border-b-2 border-red-600'>{formatDate(post.date)}</span>に書かれたものです。古い情報が含まれている可能性がありますのでお気を付けください。</div>
                 <Blog.Article
                     title={post.title}
                     date={post.date}
