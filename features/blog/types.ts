@@ -1,4 +1,4 @@
-import { Post } from "@/lib/types";
+import { Post } from './../../lib/types';
 
 export interface ArticleProps {
     title: string;
@@ -8,9 +8,12 @@ export interface ArticleProps {
 }
 
 export interface DisplayPostsProps {
-    posts: Post[];
     displayCount?: number;
     sortType?: 'latest' | 'oldest' | 'random';
     limitedTitle?: number;
     limitedDescription?: number;
+}
+
+export interface DisplayPostsItemProps extends DisplayPostsProps {
+    posts: Post[];
 }

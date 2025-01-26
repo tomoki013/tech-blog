@@ -8,6 +8,7 @@ const Footer = () => {
         <footer className="bg-[var(--footer-color)] pt-4">
             <p className="text-center">&copy; {currentYear} Tomokich Tech-Blog</p>
             <Elements.Navigation />
+            <Elements.PageTopIcon />
         </footer>
     );
 }
