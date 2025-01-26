@@ -9,6 +9,7 @@ import UnitContainer from "./container/UnitContainer";
 import Tags from "./tags/Tags";
 import Profile from "./profile/Profile";
 import GitHubIcon from "./icons/GitHubIcon";
+import PageTopIcon from "./pageTopIcon/PageTopIcon";
 
 export {
     Navigation,
@@ -22,4 +23,5 @@ export {
     Tags,
     Profile,
     GitHubIcon,
+    PageTopIcon,
 }

@@ -52,7 +52,11 @@ const TagsItem = ({
     );
 }
 
-const Tags: React.FC<TagsProps> = ({ tags, hideAll }) => {
+const Tags = ({
+    tags,
+    hideAll
+} : TagsProps
+) => {
     return (
         <Suspense fallback={<div>Loading...</div>}>
             <TagsItem tags={tags} hideAll={hideAll} />

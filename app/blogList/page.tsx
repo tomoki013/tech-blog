@@ -4,7 +4,6 @@ import { getAllPosts } from "@/lib/post";
 
 const BlogListPage = async () => {
     const posts = await getAllPosts();
-
     const tags = Array.from(new Set(posts.flatMap(post => post.tags))).filter((tag): tag is string => tag !== undefined);
 
     return (
@@ -13,7 +12,7 @@ const BlogListPage = async () => {
             <Elements.CenterContainer>
                 <h1 className='text-center'>ブログ一覧</h1>
                 <Elements.Tags tags={tags} />
-                <Blog.DisplayPosts posts={posts} />
+                <Blog.DisplayPosts />
             </Elements.CenterContainer>
             <Elements.RightContainer />
         </>

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import { DisplayPostsProps } from "../../types";
+import { DisplayPostsItemProps } from "../../types";
 
 const DisplayPostsItems = ({
     posts,
@@ -11,7 +11,7 @@ const DisplayPostsItems = ({
     sortType='latest',
     limitedTitle,
     limitedDescription,
-} : DisplayPostsProps
+} : DisplayPostsItemProps
 ) => {
     const searchParams = useSearchParams();
     const tag = searchParams.get("tag");
@@ -24,11 +24,11 @@ const DisplayPostsItems = ({
     const descriptionCount = limitedDescription || 40;
 
     if (sortType === 'oldest') {
-        filteredPosts = filteredPosts.sort((a, b) => new Date(a.date[0]).getTime() - new Date(b.date[0]).getTime());
+        filteredPosts = filteredPosts.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
     } else if (sortType === 'random') {
         filteredPosts = filteredPosts.sort(() => Math.random() - 0.5);
     } else {
-        filteredPosts = filteredPosts.sort((a, b) => new Date(b.date[0]).getTime() - new Date(a.date[0]).getTime());
+        filteredPosts = filteredPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     }
 
     return (
@@ -49,7 +49,7 @@ const DisplayPostsItems = ({
                         <p className="col-span-1 row-span-1 text-lg">
                         {post.description.length > descriptionCount ? post.description.substring(0, descriptionCount) + '...' : post.description}
                         </p>
-                        <p className="col-span-1 row-span-1">{post.date}</p>
+                        <p className="col-span-1 row-span-1"><span className="border-b-2 border-[var(--accent-color)]">{post.date}</span></p>
                     </Link>
                 </li>
             ))}

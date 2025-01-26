@@ -1,0 +1,13 @@
+.page_top_icon {
+    color: #fff;
+    background-color: var(--accent-color);
+    font-size: 1.125rem;
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.25rem;
+    &:hover {
+        background-color: color-mix(in srgb, var(--accent-color), black 20%);
+    }
+}

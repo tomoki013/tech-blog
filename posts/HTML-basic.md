@@ -118,24 +118,39 @@ HTMLでは、見出しタグ`<h1>`から`<h6>`までが用意されています�
 
 ### 実際にHTMLを書いてみよう
 
-では、実際に簡単なHTMLコードを作成してみましょう。  
-以下は「Hello, World!」というテキストを表示する簡単なHTMLページの例です：
+では、実際に簡単なHTMLコードを作成してみましょう。：
 ```html
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <title>Hello, World!</title>
+        <title>HTMLの基本を学ぼう！</title>
     </head>
     <body>
-        <h1>Hello, World!</h1>
+        <h1>HTMLの基本を学ぼう！</h1>
+        <h2>HTML学習の集大成のページ</h2>
         <p>HTMLはウェブページを作るための言語です。</p>
+        <h3>順番付きリスト</h3>
+        <ol>
+            <li>北海道</li>
+            <li>岩手県</li>
+            <li>福島県</li>
+        </ol>
+        <h3>順番無しリスト</h3>
+        <ul>
+            <li>りんご</li>
+            <li>みかん</li>
+            <li>バナナ</li>
+        </ul>
+        <h3>リンク</h3>
+        <a href="https://tech-blog-beta-one.vercel.app/">ともきちのITブログ</a>
+        <h3>画像</h3>
+        <img src="https://picsum.photos/200/300" alt="ランダムな画像">
     </body>
 </html>
 ```
 このコードをテキストエディタにコピーして拡張子が`.html`のファイルとして保存し、ブラウザで開いてみてください。  
-ブラウザに「Hello, World!」と表示されれば成功です。  
-
 ## まとめ
 
 HTMLは、ウェブページを作成するための基礎となる言語です。  

@@ -264,34 +264,93 @@ border: 3px dotted blue; /* 3pxの点線の青色の枠線 */
 以下は、簡単なCSSデザインを使ったHTMLページの例です。  
 HTMLファイル（index.html）：
 ```html
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSSの基本を学ぼう！</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
         <h1>CSSの基本を学ぼう！</h1>
-        <p>CSSを使えば、ウェブページを簡単にデザインできます。</p>
-    </body>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#">ホーム</a></li>
+            <li><a href="#">概要</a></li>
+            <li><a href="#">サービス</a></li>
+            <li><a href="#">お問い合わせ</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h2>このページについて</h2>
+        <p>これは、基本的なCSSスタイリングを示すために作成されたシンプルなウェブページです。外部CSSを使用してスタイリングされたヘッダー、ナビゲーション、コンテンツセクションが含まれています。</p>
+        <p>自由にスタイルを変更し、自分だけのデザインを試してみてください！</p>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 CSSの基本を学ぼう！ All rights reserved.</p>
+    </footer>
+</body>
 </html>
 ```
 CSSファイル（styles.css）：
 ```css
+/* style.css */
 body {
-    background-color: #f0f0f0;
     font-family: Arial, sans-serif;
     line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
 }
 
-h1 {
-    color: #333;
+header {
+    background: #333;
+    color: #fff;
+    padding: 10px 0;
     text-align: center;
 }
 
-p {
-    color: #555;
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    background: #444;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
     font-size: 18px;
-    margin: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background: #333;
+    color: #fff;
+    margin-top: 20px;
 }
 ```
 このコードを使って実際にブラウザで表示してみましょう。  
