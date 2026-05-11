@@ -1,46 +1,15 @@
-name: Deploy
+- name: Checkout
+  uses: actions/checkout@v6
 
-on:
-  push:
-    branches:
-      - main
+- name: Setup pnpm
+  uses: pnpm/action-setup@v4
 
-permissions:
-  contents: read
+- name: Setup Node.js
+  uses: actions/setup-node@v5
+  with:
+    node-version: 22
+    cache: pnpm
+    cache-dependency-path: pnpm-lock.yaml
 
-jobs:
-  deploy:
-    name: Deploy to Cloudflare Workers
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: 22
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Check formatting and lint
-        run: pnpm check
-
-      - name: Typecheck
-        run: pnpm typecheck
-
-      - name: Build
-        run: pnpm build
-        env:
-          PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL }}
-
-      - name: Deploy
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy
+- name: Install dependencies
+  run: pnpm install --frozen-lockfile
