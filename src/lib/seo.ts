@@ -15,6 +15,8 @@ export const formatDate = (date: Date, locale: "ja" | "en") =>
     year: "numeric",
     month: "short",
     day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
   }).format(date);
 
 export const toRfc822 = (date: Date) => date.toUTCString();
