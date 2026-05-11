@@ -48,8 +48,14 @@ const articleUrl = `${siteConfig.url}${canonicalPath}`;
 >
   <article class="article-detail">
     <header class="article-detail__header">
-      <p class="eyebrow">{t.articles}</p>
       <h2>{title}</h2>
+      <div class="article-detail__profile">
+        <img src={siteConfig.profileImage} alt={siteConfig.author} class="article-detail__avatar" />
+        <div class="article-detail__author-info">
+          <span class="article-detail__author-name">{siteConfig.author}</span>
+          <p class="article-detail__author-bio">{siteConfig.bio[locale]}</p>
+        </div>
+      </div>
       <p class="article-detail__description">{description}</p>
       <div class="article-detail__dates">
         <time datetime={publishedAt.toISOString()}>{t.published}: {formatDate(publishedAt, locale)}</time>
@@ -125,5 +131,42 @@ const articleUrl = `${siteConfig.url}${canonicalPath}`;
   .dark .share-link:hover {
     background-color: var(--color-link);
     color: var(--color-surface);
+  }
+
+  .article-detail__profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    background-color: var(--color-surface);
+  }
+
+  .article-detail__avatar {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    object-fit: cover;
+  }
+
+  .article-detail__author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .article-detail__author-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  .article-detail__author-bio {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    margin: 0;
   }
 </style>

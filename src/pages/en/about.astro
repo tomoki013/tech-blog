@@ -33,4 +33,97 @@ const locale = "en";
       I value not only polished conclusions, but also the messy process of learning and iteration.
     </p>
   </section>
+
+  <section class="contact-cards">
+    <a href="https://x.com/tomokichi178694" target="_blank" rel="noopener noreferrer" class="contact-card">
+      <div class="contact-card__icon">𝕏</div>
+      <div class="contact-card__content">
+        <h3>Contact on X</h3>
+        <p>@tomokichi178694</p>
+      </div>
+    </a>
+
+    <a href="https://github.com/tomoki013/tech-blog/issues" target="_blank" rel="noopener noreferrer" class="contact-card">
+      <div class="contact-card__icon">GitHub</div>
+      <div class="contact-card__content">
+        <h3>Contact via Issues</h3>
+        <p>tech-blog</p>
+      </div>
+    </a>
+  </section>
 </BaseLayout>
+
+<style>
+  .about-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .about-card p {
+    max-width: 42rem;
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
+  .contact-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .contact-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    background: var(--color-surface);
+    box-shadow: var(--shadow-soft);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .contact-card:hover {
+    border-color: var(--color-link);
+    background: color-mix(in srgb, var(--color-surface) 90%, var(--color-link) 10%);
+    box-shadow: 0 8px 24px rgb(28 27 24 / 0.12);
+    transform: translateY(-2px);
+  }
+
+  .contact-card__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+    background: color-mix(in srgb, var(--color-surface-muted) 70%, var(--color-link) 30%);
+    font-weight: 700;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .contact-card__content {
+    flex: 1;
+    text-align: left;
+  }
+
+  .contact-card__content h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--color-text);
+  }
+
+  .contact-card__content p {
+    margin: 0.25rem 0 0 0;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+</style>

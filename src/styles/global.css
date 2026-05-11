@@ -194,7 +194,6 @@ img {
 }
 
 .hero h1,
-.page-header h1,
 .article-detail__header h1 {
   margin: 0;
   max-width: 48rem;
@@ -203,10 +202,22 @@ img {
   letter-spacing: -0.07em;
 }
 
+.page-header h1 {
+  margin: 0;
+  font-size: clamp(2.35rem, 8vw, 5.2rem);
+  line-height: 0.98;
+  letter-spacing: -0.07em;
+}
+
 .hero p,
-.page-header p,
 .article-detail__description {
   max-width: 42rem;
+  color: var(--color-text-muted);
+  font-size: clamp(1.04rem, 2vw, 1.18rem);
+  line-height: 1.9;
+}
+
+.page-header p {
   color: var(--color-text-muted);
   font-size: clamp(1.04rem, 2vw, 1.18rem);
   line-height: 1.9;

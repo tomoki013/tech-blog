@@ -10,10 +10,56 @@ const locale = "ja";
   locale={locale}
   canonicalPath="/404/"
   alternateHref="/en/"
+  alternateLocales={[
+    { locale: "ja", path: "/404/" },
+    { locale: "x-default", path: "/404/" },
+  ]}
 >
-  <section class="page-header">
+  <section class="error-page">
     <p class="eyebrow">404</p>
     <h1>ページが見つかりませんでした</h1>
     <p>URLが間違っているか、ページが移動した可能性があります。</p>
+    <div class="actions">
+      <a href="/" class="button">ホームに戻る</a>
+    </div>
   </section>
+
+  <style>
+    .error-page {
+      text-align: center;
+      padding-block: 8rem;
+    }
+
+    .error-page h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: 1.5rem;
+    }
+
+    .error-page p {
+      color: var(--color-text-muted);
+      margin-bottom: 3rem;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      background-color: var(--color-text);
+      color: var(--color-bg);
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .button:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+      color: var(--color-bg);
+    }
+  </style>
 </BaseLayout>
