@@ -1,0 +1,36 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { siteConfig } from "@/site.config";
+
+const locale = "en";
+---
+
+<BaseLayout
+  title="About"
+  description="About Tomokichi and this engineering growth blog."
+  locale={locale}
+  canonicalPath="/en/about/"
+  alternateHref="/about/"
+  alternateLocales={[
+    { locale: "ja", path: "/about/" },
+    { locale: "en", path: "/en/about/" },
+    { locale: "x-default", path: "/about/" },
+  ]}
+>
+  <section class="page-header">
+    <p class="eyebrow">About</p>
+    <h1>About this blog</h1>
+    <p>I write down what I learn from building, designing, operating, and improving software.</p>
+  </section>
+
+  <section class="about-card">
+    <img class="hero__profile" src={siteConfig.profileImage} alt="Tomokichi profile" width="256" height="256" loading="lazy" />
+    <p>
+      I am Tomokichi. This blog focuses on indie development, web engineering, AI-assisted development,
+      product design, and operational improvements.
+    </p>
+    <p>
+      I value not only polished conclusions, but also the messy process of learning and iteration.
+    </p>
+  </section>
+</BaseLayout>

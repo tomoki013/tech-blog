@@ -1,0 +1,54 @@
+---
+import type { Locale } from "@/i18n/config";
+import { absoluteUrl } from "@/lib/seo";
+import { siteConfig } from "@/site.config";
+
+interface AlternateLocale {
+  locale: Locale | "x-default";
+  path: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  locale: Locale;
+  canonicalPath: string;
+  type?: "website" | "article";
+  alternateLocales?: AlternateLocale[];
+}
+
+const {
+  title,
+  description,
+  locale,
+  canonicalPath,
+  type = "website",
+  alternateLocales = [],
+} = Astro.props;
+
+const pageTitle =
+  title === siteConfig.name[locale] ? title : `${title} | ${siteConfig.name[locale]}`;
+const canonicalUrl = absoluteUrl(canonicalPath);
+const ogImageUrl = absoluteUrl(siteConfig.ogImage);
+---
+
+<title>{pageTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+
+{alternateLocales.map((alternate) => (
+  <link rel="alternate" hreflang={alternate.locale} href={absoluteUrl(alternate.path)} />
+))}
+
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:site_name" content={siteConfig.name[locale]} />
+<meta property="og:locale" content={locale === "ja" ? "ja_JP" : "en_US"} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageUrl} />

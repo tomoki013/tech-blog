@@ -1,0 +1,39 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { siteConfig } from "@/site.config";
+
+const locale = "ja";
+---
+
+<BaseLayout
+  title="About"
+  description="ともきちのプロフィールと、このブログについて。"
+  locale={locale}
+  canonicalPath="/about/"
+  alternateHref="/en/about/"
+  alternateLocales={[
+    { locale: "ja", path: "/about/" },
+    { locale: "en", path: "/en/about/" },
+    { locale: "x-default", path: "/about/" },
+  ]}
+>
+  <section class="page-header">
+    <p class="eyebrow">About</p>
+    <h1>このブログについて</h1>
+    <p>学習・開発・設計・運用で得た気づきを、未来の自分と誰かのために残していきます。</p>
+  </section>
+
+  <section class="about-card">
+    <img class="hero__profile" src={siteConfig.profileImage} alt="Tomokichi profile" width="256" height="256" loading="lazy" />
+    <p>
+      ともきちです。個人開発、Web開発、AI活用、プロダクト設計、運用改善などを中心に、
+      エンジニアとして成長する過程を記録しています。
+    </p>
+    <p>
+      このブログでは、完成された正解だけでなく、試行錯誤の途中で考えたことも大切に扱います。
+    </p>
+    <p>
+      お問い合わせは X（<a href="https://x.com/tomokichi178694" target="_blank" rel="noopener noreferrer">@tomokichi178694</a>）まで。
+      GitHub は <a href="https://github.com/tomoki013/tech-blog" target="_blank" rel="noopener noreferrer">https://github.com/tomoki013/tech-blog</a>
+      の Issue でも受け付けています。
+    </p>

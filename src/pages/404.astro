@@ -1,0 +1,19 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const locale = "ja";
+---
+
+<BaseLayout
+  title="404"
+  description="ページが見つかりませんでした。"
+  locale={locale}
+  canonicalPath="/404/"
+  alternateHref="/en/"
+>
+  <section class="page-header">
+    <p class="eyebrow">404</p>
+    <h1>ページが見つかりませんでした</h1>
+    <p>URLが間違っているか、ページが移動した可能性があります。</p>
+  </section>
+</BaseLayout>

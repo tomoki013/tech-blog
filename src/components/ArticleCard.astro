@@ -1,0 +1,32 @@
+---
+import type { Locale } from "@/i18n/config";
+import { getUi } from "@/i18n/ui";
+import { formatDate } from "@/lib/seo";
+
+interface Props {
+  title: string;
+  description: string;
+  href: string;
+  publishedAt: Date;
+  tags: string[];
+  locale: Locale;
+}
+
+const { title, description, href, publishedAt, tags, locale } = Astro.props;
+const t = getUi(locale);
+---
+
+<article class="article-card">
+  <div class="article-card__meta">
+    <time datetime={publishedAt.toISOString()}>{t.published}: {formatDate(publishedAt, locale)}</time>
+  </div>
+  <h2 class="article-card__title">
+    <a href={href}>{title}</a>
+  </h2>
+  <p class="article-card__description">{description}</p>
+  {tags.length > 0 && (
+    <ul class="tag-list" aria-label={t.tags}>
+      {tags.map((tag) => <li>{tag}</li>)}
+    </ul>
+  )}
+</article>

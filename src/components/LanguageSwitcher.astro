@@ -1,0 +1,18 @@
+---
+import type { Locale } from "@/i18n/config";
+import { getUi } from "@/i18n/ui";
+
+interface Props {
+  locale: Locale;
+  alternateHref: string;
+}
+
+const { locale, alternateHref } = Astro.props;
+const t = getUi(locale);
+const targetLocale = locale === "ja" ? "en" : "ja";
+const label = locale === "ja" ? t.switchToEnglish : t.switchToJapanese;
+---
+
+<a class="language-switcher" href={alternateHref} hreflang={targetLocale} aria-label={t.language}>
+  {label}
+</a>

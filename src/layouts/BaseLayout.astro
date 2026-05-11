@@ -1,0 +1,60 @@
+---
+import Footer from "@/components/Footer.astro";
+import Header from "@/components/Header.astro";
+import SEO from "@/components/SEO.astro";
+import ThemeInit from "@/components/ThemeInit.astro";
+import type { Locale } from "@/i18n/config";
+import "@/styles/global.css";
+
+interface AlternateLocale {
+  locale: Locale | "x-default";
+  path: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  locale: Locale;
+  canonicalPath: string;
+  alternateHref: string;
+  type?: "website" | "article";
+  alternateLocales?: AlternateLocale[];
+}
+
+const {
+  title,
+  description,
+  locale,
+  canonicalPath,
+  alternateHref,
+  type = "website",
+  alternateLocales = [],
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <ThemeInit />
+    <SEO
+      title={title}
+      description={description}
+      locale={locale}
+      canonicalPath={canonicalPath}
+      type={type}
+      alternateLocales={alternateLocales}
+    />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/icon.png" type="image/png" />
+  </head>
+  <body>
+    <Header locale={locale} alternateHref={alternateHref} />
+    <main class="site-main">
+      <slot />
+    </main>
+    <Footer locale={locale} />
+  </body>
+</html>

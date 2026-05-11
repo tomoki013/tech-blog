@@ -1,0 +1,42 @@
+---
+import {
+  getAboutPath,
+  getArchivedPath,
+  getArticlesPath,
+  getHomePath,
+  type Locale,
+} from "@/i18n/config";
+import { getUi } from "@/i18n/ui";
+import { siteConfig } from "@/site.config";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+
+interface Props {
+  locale: Locale;
+  alternateHref: string;
+}
+
+const { locale, alternateHref } = Astro.props;
+const t = getUi(locale);
+---
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-header__brand" href={getHomePath(locale)} aria-label={siteConfig.name[locale]}>
+      <span class="site-header__mark" aria-hidden="true">T</span>
+      <span>{siteConfig.name[locale]}</span>
+    </a>
+
+    <nav class="site-header__nav" aria-label="Primary navigation">
+      <a href={getHomePath(locale)}>{t.home}</a>
+      <a href={getArticlesPath(locale)}>{t.articles}</a>
+      <a href={getArchivedPath(locale)}>{t.archived}</a>
+      <a href={getAboutPath(locale)}>{t.about}</a>
+    </nav>
+
+    <div class="site-header__actions">
+      <LanguageSwitcher locale={locale} alternateHref={alternateHref} />
+      <ThemeToggle locale={locale} />
+    </div>
+  </div>
+</header>

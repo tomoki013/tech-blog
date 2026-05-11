@@ -1,0 +1,66 @@
+---
+import type { Locale } from "@/i18n/config";
+import { getUi } from "@/i18n/ui";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { formatDate } from "@/lib/seo";
+
+interface AlternateLocale {
+  locale: Locale | "x-default";
+  path: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  locale: Locale;
+  canonicalPath: string;
+  alternateHref: string;
+  alternateLocales: AlternateLocale[];
+  publishedAt: Date;
+  updatedAt: Date;
+  tags: string[];
+}
+
+const {
+  title,
+  description,
+  locale,
+  canonicalPath,
+  alternateHref,
+  alternateLocales,
+  publishedAt,
+  updatedAt,
+  tags,
+} = Astro.props;
+const t = getUi(locale);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale={locale}
+  canonicalPath={canonicalPath}
+  alternateHref={alternateHref}
+  type="article"
+  alternateLocales={alternateLocales}
+>
+  <article class="article-detail">
+    <header class="article-detail__header">
+      <p class="eyebrow">{t.articles}</p>
+      <h2>{title}</h2>
+      <p class="article-detail__description">{description}</p>
+      <div class="article-detail__dates">
+        <time datetime={publishedAt.toISOString()}>{t.published}: {formatDate(publishedAt, locale)}</time>
+        <time datetime={updatedAt.toISOString()}>{t.updated}: {formatDate(updatedAt, locale)}</time>
+      </div>
+      {tags.length > 0 && (
+        <ul class="tag-list" aria-label={t.tags}>
+          {tags.map((tag) => <li>{tag}</li>)}
+        </ul>
+      )}
+    </header>
+    <div class="article-content">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>

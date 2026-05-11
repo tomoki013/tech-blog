@@ -1,0 +1,57 @@
+---
+import ArticleCard from "@/components/ArticleCard.astro";
+import { getArticlesPath } from "@/i18n/config";
+import { getUi } from "@/i18n/ui";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getArticlesWithPaths } from "@/lib/articles";
+import { siteConfig } from "@/site.config";
+
+const locale = "ja";
+const t = getUi(locale);
+const articles = (await getArticlesWithPaths(locale)).slice(0, 5);
+---
+
+<BaseLayout
+  title={siteConfig.name[locale]}
+  description={siteConfig.description[locale]}
+  locale={locale}
+  canonicalPath="/"
+  alternateHref="/en/"
+  alternateLocales={[
+    { locale: "ja", path: "/" },
+    { locale: "en", path: "/en/" },
+    { locale: "x-default", path: "/" },
+  ]}
+>
+  <section class="hero">
+    <div>
+      <p class="eyebrow">Engineering Growth Log</p>
+      <h2>{siteConfig.name[locale]}</h2>
+      <p>{t.topLead}</p>
+    </div>
+    <img class="hero__profile" src={siteConfig.profileImage} alt="Tomokichi profile" width="256" height="256" loading="eager" />
+  </section>
+
+  <section aria-labelledby="latest-articles">
+    <div class="section-header">
+      <h2 id="latest-articles">{t.latestArticles}</h2>
+      <a href={getArticlesPath(locale)}>{t.allArticles}</a>
+    </div>
+    <div class="article-list">
+      {articles.length === 0 ? (
+        <p>{t.noArticles}</p>
+      ) : (
+        articles.map(({ article, href }) => (
+          <ArticleCard
+            title={article.data.title}
+            description={article.data.description}
+            href={href}
+            publishedAt={article.data.publishedAt}
+            tags={article.data.tags}
+            locale={locale}
+          />
+        ))
+      )}
+    </div>
+  </section>
+</BaseLayout>

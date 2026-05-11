@@ -1,0 +1,53 @@
+---
+import { render } from "astro:content";
+import { getArticlePath, getArticlesPath } from "@/i18n/config";
+import ArticleLayout from "@/layouts/ArticleLayout.astro";
+import { getPublishedArticleSlugs, getPublishedArticles, getSlugFromId } from "@/lib/articles";
+
+const locale = "ja";
+
+export async function getStaticPaths() {
+  const locale = "ja";
+  const articles = await getPublishedArticles(locale);
+  const englishSlugs = await getPublishedArticleSlugs("en");
+
+  return articles.map((article) => {
+    const slug = getSlugFromId(article.id, locale);
+    const hasEnglish = englishSlugs.has(slug);
+
+    return {
+      params: { slug },
+      props: { article, slug, hasEnglish },
+    };
+  });
+}
+
+const { article, slug, hasEnglish } = Astro.props;
+const { Content } = await render(article);
+const canonicalPath = getArticlePath(locale, slug);
+const englishPath = hasEnglish ? getArticlePath("en", slug) : getArticlesPath("en");
+const alternateLocales = hasEnglish
+  ? [
+      { locale: "ja" as const, path: canonicalPath },
+      { locale: "en" as const, path: englishPath },
+      { locale: "x-default" as const, path: canonicalPath },
+    ]
+  : [
+      { locale: "ja" as const, path: canonicalPath },
+      { locale: "x-default" as const, path: canonicalPath },
+    ];
+---
+
+<ArticleLayout
+  title={article.data.title}
+  description={article.data.description}
+  locale={locale}
+  canonicalPath={canonicalPath}
+  alternateHref={englishPath}
+  alternateLocales={alternateLocales}
+  publishedAt={article.data.publishedAt}
+  updatedAt={article.data.updatedAt}
+  tags={article.data.tags}
+>
+  <Content />
+</ArticleLayout>

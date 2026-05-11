@@ -1,0 +1,46 @@
+---
+import ArticleCard from "@/components/ArticleCard.astro";
+import { getUi } from "@/i18n/ui";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getArticlesWithPaths } from "@/lib/articles";
+
+const locale = "ja";
+const t = getUi(locale);
+const articles = await getArticlesWithPaths(locale);
+---
+
+<BaseLayout
+  title={t.articles}
+  description="ともきちのエンジニア成長記の記事一覧です。"
+  locale={locale}
+  canonicalPath="/articles/"
+  alternateHref="/en/articles/"
+  alternateLocales={[
+    { locale: "ja", path: "/articles/" },
+    { locale: "en", path: "/en/articles/" },
+    { locale: "x-default", path: "/articles/" },
+  ]}
+>
+  <section class="page-header">
+    <p class="eyebrow">Articles</p>
+    <h1>{t.articles}</h1>
+    <p>開発、設計、AI活用、運用改善などについての記録です。</p>
+  </section>
+
+  <div class="article-list">
+    {articles.length === 0 ? (
+      <p>{t.noArticles}</p>
+    ) : (
+      articles.map(({ article, href }) => (
+        <ArticleCard
+          title={article.data.title}
+          description={article.data.description}
+          href={href}
+          publishedAt={article.data.publishedAt}
+          tags={article.data.tags}
+          locale={locale}
+        />
+      ))
+    )}
+  </div>
+</BaseLayout>
