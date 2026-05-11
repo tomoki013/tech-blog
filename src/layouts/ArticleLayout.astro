@@ -3,6 +3,7 @@ import type { Locale } from "@/i18n/config";
 import { getUi } from "@/i18n/ui";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { formatDate } from "@/lib/seo";
+import { siteConfig } from "@/site.config";
 
 interface AlternateLocale {
   locale: Locale | "x-default";
@@ -33,6 +34,7 @@ const {
   tags,
 } = Astro.props;
 const t = getUi(locale);
+const articleUrl = `${siteConfig.url}${canonicalPath}`;
 ---
 
 <BaseLayout
@@ -58,9 +60,70 @@ const t = getUi(locale);
           {tags.map((tag) => <li>{tag}</li>)}
         </ul>
       )}
+      <div class="article-detail__share">
+        <a
+          href={`https://x.com/intent/tweet?url=${encodeURIComponent(articleUrl)}&text=${encodeURIComponent(title)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="share-link"
+          aria-label="Share on X"
+          title="Share on X"
+        >
+          <svg
+            class="share-icon"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.627l-5.1-6.694-5.867 6.694h-3.31l7.732-8.835L2.882 2.25h6.791l4.771 6.318 5.486-6.318zM17.002 18.807h1.844L6.983 3.931H5.025l11.977 14.876z" />
+          </svg>
+        </a>
+      </div>
     </header>
     <div class="article-content">
       <slot />
     </div>
   </article>
 </BaseLayout>
+
+<style>
+  .article-detail__share {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .share-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.375rem;
+    background-color: var(--color-surface-muted);
+    color: var(--color-text);
+    transition: all 0.2s ease-in-out;
+  }
+
+  .share-link:hover {
+    background-color: var(--color-link);
+    color: var(--color-surface);
+  }
+
+  .share-icon {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+
+  .dark .share-link {
+    background-color: var(--color-surface-muted);
+    color: var(--color-text);
+  }
+
+  .dark .share-link:hover {
+    background-color: var(--color-link);
+    color: var(--color-surface);
+  }
+</style>

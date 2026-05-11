@@ -23,8 +23,11 @@ const t = getUi(locale);
 <header class="site-header">
   <div class="site-header__inner">
     <a class="site-header__brand" href={getHomePath(locale)} aria-label={siteConfig.name[locale]}>
-      <span class="site-header__mark" aria-hidden="true">T</span>
-      <span>{siteConfig.name[locale]}</span>
+      <img src={siteConfig.profileImage} alt="logo" class="site-header__mark" />
+      <div class="site-header__brand-text">
+        <span>{siteConfig.name[locale]}</span>
+        <span class="site-header__author">{siteConfig.author}</span>
+      </div>
     </a>
 
     <nav class="site-header__nav" aria-label="Primary navigation">
@@ -40,3 +43,23 @@ const t = getUi(locale);
     </div>
   </div>
 </header>
+
+<style>
+  .site-header__mark {
+    width: 2rem;
+    height: 2rem;
+    object-fit: contain;
+  }
+
+  .site-header__brand-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .site-header__author {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    font-weight: normal;
+  }
+</style>
