@@ -17,7 +17,7 @@ export const siteConfig = {
     ja: "Webエンジニア。個人開発、Web開発、AI活用、プロダクト設計、運用改善などを中心に活動しています。技術の力で日常を少し便利に、面白くすることを目指しています。",
     en: "Web Developer. Passionate about personal development, Web development, AI utilization, product design, and operational improvement.",
   },
-  profileImage: "/icon.png",
+  profileImage: "/icon-256.webp",
   ogImage: "/og/default.png",
 } satisfies {
   url: string;

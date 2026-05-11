@@ -29,7 +29,18 @@ const articles = (await getArticlesWithPaths(locale)).slice(0, 5);
       <h2>{siteConfig.name[locale]}</h2>
       <p>{t.topLead}</p>
     </div>
-    <img class="hero__profile" src={siteConfig.profileImage} alt="Tomokichi profile" width="256" height="256" loading="eager" />
+    <img
+      class="hero__profile"
+      src="/icon-256.webp"
+      srcset="/icon-256.webp 256w, /icon-512.webp 512w"
+      sizes="179px"
+      alt="Tomokichi profile"
+      width="179"
+      height="179"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
   </section>
 
   <section aria-labelledby="latest-articles">

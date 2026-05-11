@@ -23,7 +23,15 @@ const t = getUi(locale);
 <header class="site-header">
   <div class="site-header__inner">
     <a class="site-header__brand" href={getHomePath(locale)} aria-label={siteConfig.name[locale]}>
-      <img src={siteConfig.profileImage} alt="logo" class="site-header__mark" />
+      <img
+        src={siteConfig.profileImage}
+        alt="logo"
+        class="site-header__mark"
+        width="32"
+        height="32"
+        loading="lazy"
+        decoding="async"
+      />
       <div class="site-header__brand-text">
         <span>{siteConfig.name[locale]}</span>
         <span class="site-header__author">{siteConfig.author}</span>
