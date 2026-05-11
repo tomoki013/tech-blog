@@ -224,12 +224,9 @@ img {
 }
 
 .hero__profile {
-  width: 8rem;
-  height: 8rem;
-  border: 1px solid var(--color-border);
-  border-radius: 2rem;
-  background: var(--color-surface);
-  box-shadow: var(--shadow-soft);
+  width: 179px;
+  height: 179px;
+  border-radius: 9999px;
   object-fit: cover;
 }
 
@@ -474,6 +471,18 @@ img {
   font-size: 0.92rem;
 }
 
+.site-footer__main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.site-footer__actions {
+  display: none;
+  align-items: center;
+  gap: 1rem;
+}
+
 .copyright {
   margin-top: 1rem;
 }
@@ -497,29 +506,28 @@ img {
 
 @media (max-width: 760px) {
   .site-header__inner {
-    align-items: flex-start;
+    align-items: center;
     flex-direction: column;
-    padding-block: 1rem;
+    padding-block: 0.75rem;
+    gap: 0.75rem;
+    min-height: auto;
   }
 
-  .site-header {
-    position: static;
+  .site-header__brand-text {
+    align-items: center;
+    text-align: center;
   }
 
-  .site-header__nav,
   .site-header__actions {
-    flex-wrap: wrap;
+    display: none;
+  }
+
+  .site-footer__actions {
+    display: flex;
   }
 
   .hero {
     grid-template-columns: 1fr;
-  }
-
-  .hero__profile {
-    order: -1;
-    width: 6.5rem;
-    height: 6.5rem;
-    border-radius: 1.5rem;
   }
 
   .section-header,

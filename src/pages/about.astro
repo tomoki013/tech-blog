@@ -24,7 +24,18 @@ const locale = "ja";
   </section>
 
   <section class="about-profile">
-    <img class="about-profile__avatar" src={siteConfig.profileImage} alt="Tomokichi profile" width="160" height="160" loading="lazy" />
+    <img
+      class="hero__profile"
+      src="/icon-256.webp"
+      srcset="/icon-256.webp 256w, /icon-512.webp 512w"
+      sizes="179px"
+      alt="Tomokichi profile"
+      width="179"
+      height="179"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
     <div class="about-profile__content">
       <p>
         ともきちです。個人開発、Web開発、AI活用、プロダクト設計、運用改善などを中心に、
@@ -65,8 +76,7 @@ const locale = "ja";
 
 <style>
   .about-profile {
-    display: grid;
-    grid-template-columns: auto 1fr;
+    display: flex;
     align-items: center;
     gap: 3rem;
     padding: 2.5rem;
@@ -77,19 +87,17 @@ const locale = "ja";
     margin-bottom: 3rem;
   }
 
-  .about-profile__avatar {
-    width: 12rem;
-    height: 12rem;
-    border: 1px solid var(--color-border);
-    border-radius: 2rem;
-    background: var(--color-surface);
-    box-shadow: var(--shadow-soft);
-    object-fit: cover;
-  }
+  @media (max-width: 768px) {
+    .about-profile {
+      flex-direction: column;
+      text-align: center;
+      padding: 1.5rem;
+      gap: 1.5rem;
+    }
 
-  .about-profile__content {
-    flex: 1;
-    text-align: left;
+    .about-profile__content {
+      text-align: center;
+    }
   }
 
   .about-profile p {
@@ -111,6 +119,7 @@ const locale = "ja";
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
     gap: 1.5rem;
+    margin-top: 3rem;
   }
 
   .contact-card {
@@ -155,23 +164,5 @@ const locale = "ja";
     margin: 0.35rem 0 0 0;
     font-size: 0.95rem;
     color: var(--color-text-muted);
-  }
-
-  @media (max-width: 768px) {
-    .about-profile {
-      flex-direction: column;
-      text-align: center;
-      padding: 1.5rem;
-      gap: 1.5rem;
-    }
-
-    .about-profile__content {
-      text-align: center;
-    }
-
-    .about-profile__avatar {
-      width: 8rem;
-      height: 8rem;
-    }
   }
 </style>
