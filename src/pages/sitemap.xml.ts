@@ -33,11 +33,11 @@ export const GET: APIRoute = async () => {
   const articlePages = [
     ...jaArticles.map(({ article, slug }) => ({
       loc: getArticlePath("ja", slug),
-      lastmod: toDateOnly(article.data.updatedAt),
+      lastmod: toDateOnly(article.data.updatedAt ?? article.data.publishedAt),
     })),
     ...enArticles.map(({ article, slug }) => ({
       loc: getArticlePath("en", slug),
-      lastmod: toDateOnly(article.data.updatedAt),
+      lastmod: toDateOnly(article.data.updatedAt ?? article.data.publishedAt),
     })),
   ];
 

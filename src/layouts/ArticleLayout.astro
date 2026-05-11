@@ -18,7 +18,7 @@ interface Props {
   alternateHref: string;
   alternateLocales: AlternateLocale[];
   publishedAt: Date;
-  updatedAt: Date;
+  updatedAt?: Date;
   tags: string[];
 }
 
@@ -49,25 +49,12 @@ const articleUrl = `${siteConfig.url}${canonicalPath}`;
   <article class="article-detail">
     <header class="article-detail__header">
       <h2>{title}</h2>
-      <div class="article-detail__profile">
-        <img
-          src={siteConfig.profileImage}
-          alt={siteConfig.author}
-          class="article-detail__avatar"
-          width="56"
-          height="56"
-          loading="lazy"
-          decoding="async"
-        />
-        <div class="article-detail__author-info">
-          <span class="article-detail__author-name">{siteConfig.author}</span>
-          <p class="article-detail__author-bio">{siteConfig.bio[locale]}</p>
-        </div>
-      </div>
       <p class="article-detail__description">{description}</p>
       <div class="article-detail__dates">
         <time datetime={publishedAt.toISOString()}>{t.published}: {formatDate(publishedAt, locale)}</time>
-        <time datetime={updatedAt.toISOString()}>{t.updated}: {formatDate(updatedAt, locale)}</time>
+        {updatedAt && (
+          <time datetime={updatedAt.toISOString()}>{t.updated}: {formatDate(updatedAt, locale)}</time>
+        )}
       </div>
       {tags.length > 0 && (
         <ul class="tag-list" aria-label={t.tags}>
@@ -97,6 +84,21 @@ const articleUrl = `${siteConfig.url}${canonicalPath}`;
     </header>
     <div class="article-content">
       <slot />
+    </div>
+    <div class="article-detail__profile">
+      <img
+        src={siteConfig.profileImage}
+        alt={siteConfig.author}
+        class="article-detail__avatar"
+        width="56"
+        height="56"
+        loading="lazy"
+        decoding="async"
+      />
+      <div class="article-detail__author-info">
+        <span class="article-detail__author-name">{siteConfig.author}</span>
+        <p class="article-detail__author-bio">{siteConfig.bio[locale]}</p>
+      </div>
     </div>
   </article>
 </BaseLayout>

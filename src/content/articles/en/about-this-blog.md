@@ -1,8 +1,7 @@
 ---
 title: "About This Blog: Why I Built a Fast, Minimal Engineering Blog"
 description: "An introduction to Tomokichi's Engineering Growth Log: the technical choices, design philosophy, and the kinds of topics I plan to write about."
-publishedAt: "2026-05-11"
-updatedAt: "2026-05-11"
+publishedAt: "2026-05-11 15:30"
 tags: ["Astro", "Cloudflare", "Engineering Blog", "Indie Development"]
 draft: false
 ---

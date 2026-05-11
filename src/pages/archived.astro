@@ -1,0 +1,71 @@
+---
+import { getUi } from "@/i18n/ui";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getArticlesWithPaths } from "@/lib/articles";
+
+const locale = "ja";
+const t = getUi(locale);
+const articles = await getArticlesWithPaths(locale);
+
+const articlesByYear = articles.reduce(
+  (acc, { article, slug, href }) => {
+    const year = article.data.publishedAt.getFullYear();
+    if (!acc[year]) {
+      acc[year] = [];
+    }
+    acc[year].push({ article, slug, href });
+    return acc;
+  },
+  {} as Record<number, typeof articles>,
+);
+
+const years = Object.keys(articlesByYear)
+  .map(Number)
+  .sort((a, b) => b - a);
+---
+
+<BaseLayout
+  title={t.archived}
+  description="ともきちのエンジニア成長記の記事アーカイブです。年別に記事をまとめています。"
+  locale={locale}
+  canonicalPath="/archived/"
+  alternateHref="/en/archived/"
+  alternateLocales={[
+    { locale: "ja", path: "/archived/" },
+    { locale: "en", path: "/en/archived/" },
+    { locale: "x-default", path: "/archived/" },
+  ]}
+>
+  <section class="page-header">
+    <p class="eyebrow">Archive</p>
+    <h1>{t.archived}</h1>
+    <p>過去に執筆した記事のアーカイブです。</p>
+  </section>
+
+  <div class="archive-list">
+    {years.length === 0 ? (
+      <p>{t.noArticles}</p>
+    ) : (
+      years.map((year) => (
+        <section class="archive-year">
+          <h2>{year}</h2>
+          <ol>
+            {articlesByYear[year].map(({ article, href }) => (
+              <li>
+                <time datetime={article.data.publishedAt.toISOString()}>
+                  {article.data.publishedAt.toLocaleDateString(locale, {
+                    month: "2-digit",
+                    day: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </time>
+                <a href={href}>{article.data.title}</a>
+              </li>
+            ))}
+          </ol>
+        </section>
+      ))
+    )}
+  </div>
+</BaseLayout>
