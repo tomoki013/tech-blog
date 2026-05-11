@@ -1,0 +1,122 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getUi } from "@/i18n/ui";
+
+const locale = "ja";
+const t = getUi(locale);
+---
+
+<BaseLayout
+  title={t.privacy}
+  description="プライバシーポリシーについてのページです。"
+  locale={locale}
+  canonicalPath="/privacy/"
+  alternateHref="/en/privacy/"
+  alternateLocales={[
+    { locale: "ja", path: "/privacy/" },
+    { locale: "en", path: "/en/privacy/" },
+    { locale: "x-default", path: "/privacy/" },
+  ]}
+>
+  <section class="page-header">
+    <p class="eyebrow">Privacy Policy</p>
+    <h1>{t.privacy}</h1>
+  </section>
+
+  <section class="prose">
+    <div class="prose__meta">
+      <p><strong>制定日：</strong> 2026年5月11日</p>
+      <p><strong>最終更新日：</strong> 2026年5月11日</p>
+    </div>
+
+    <div class="prose__section">
+      <h3>1. ポリシーについて</h3>
+      <p>
+        このプライバシーポリシーは、当ブログにおける個人情報の取扱いについて定めています。
+      </p>
+    </div>
+
+    <div class="prose__section">
+      <h3>2. 個人情報の取得について</h3>
+      <p>
+        当ブログでは、ユーザーから特に個人情報を取得することはありません。通常の閲覧では個人を特定する情報は収集されません。
+      </p>
+      <p>
+        ご質問やご指摘がある場合は、X（<a href="https://x.com/tomokichi178694" target="_blank" rel="noopener noreferrer">@tomokichi178694</a>）または <a href="https://github.com/tomoki013/tech-blog" target="_blank" rel="noopener noreferrer">GitHub の Issue</a> でお気軽にお知らせください。
+      </p>
+    </div>
+
+    <div class="prose__section">
+      <h3>3. Cookie について</h3>
+      <p>
+        当ブログでは、Cookie を使用していません。
+      </p>
+    </div>
+
+    <div class="prose__section">
+      <h3>4. アクセス解析について</h3>
+      <p>
+        当ブログでは、アクセス解析ツールは使用していません。
+      </p>
+    </div>
+
+    <div class="prose__section">
+      <h3>5. プライバシーポリシーの変更について</h3>
+      <p>
+        当ブログは、本ポリシーの内容を適宜見直しその改善に努めます。修正された最新のプライバシーポリシーは常に本ページにて開示されます。
+      </p>
+    </div>
+  </section>
+
+  <style>
+    .page-header {
+      text-align: center;
+      margin-bottom: 4rem;
+      width: 100%;
+    }
+
+    .prose {
+      max-width: 42rem;
+      margin-inline: auto;
+    }
+
+    .prose__section {
+      margin-bottom: 3rem;
+    }
+
+    .prose__meta {
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .prose__meta p {
+      margin: 0.5rem 0;
+      font-size: 0.95rem;
+      color: var(--color-text-muted);
+    }
+
+    .prose h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: 0.5rem;
+    }
+
+    .prose p {
+      line-height: 1.8;
+      color: var(--color-text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .prose ul {
+      margin-bottom: 1rem;
+      padding-left: 1.5rem;
+      color: var(--color-text-muted);
+    }
+
+    .prose li {
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</BaseLayout>

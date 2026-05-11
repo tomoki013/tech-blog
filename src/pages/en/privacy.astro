@@ -1,0 +1,122 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getUi } from "@/i18n/ui";
+
+const locale = "en";
+const t = getUi(locale);
+---
+
+<BaseLayout
+  title={t.privacy}
+  description="Privacy Policy page."
+  locale={locale}
+  canonicalPath="/en/privacy/"
+  alternateHref="/privacy/"
+  alternateLocales={[
+    { locale: "ja", path: "/privacy/" },
+    { locale: "en", path: "/en/privacy/" },
+    { locale: "x-default", path: "/privacy/" },
+  ]}
+>
+  <section class="page-header">
+    <p class="eyebrow">Privacy Policy</p>
+    <h1>{t.privacy}</h1>
+  </section>
+
+  <section class="prose">
+    <div class="prose__meta">
+      <p><strong>Effective Date:</strong> May 11, 2026</p>
+      <p><strong>Last Updated:</strong> May 11, 2026</p>
+    </div>
+
+    <div class="prose__section">
+      <h3>1. About This Policy</h3>
+      <p>
+        This Privacy Policy outlines how this blog handles personal information.
+      </p>
+    </div>
+
+    <div class="prose__section">
+      <h3>2. About Information Collection</h3>
+      <p>
+        This blog does not actively collect personal information from users. Normal browsing does not collect any personally identifiable information.
+      </p>
+      <p>
+        If you have any questions or feedback, please feel free to contact us via X (<a href="https://x.com/tomokichi178694" target="_blank" rel="noopener noreferrer">@tomokichi178694</a>) or <a href="https://github.com/tomoki013/tech-blog" target="_blank" rel="noopener noreferrer">GitHub Issues</a>.
+      </p>
+    </div>
+
+    <div class="prose__section">
+      <h3>3. About Cookies</h3>
+      <p>
+        This blog does not use cookies.
+      </p>
+    </div>
+
+    <div class="prose__section">
+      <h3>4. About Access Analytics</h3>
+      <p>
+        This blog does not use access analytics tools.
+      </p>
+    </div>
+
+    <div class="prose__section">
+      <h3>5. Changes to the Privacy Policy</h3>
+      <p>
+        This blog will review and improve the contents of this policy as appropriate. The latest modified privacy policy will always be disclosed on this page.
+      </p>
+    </div>
+  </section>
+
+  <style>
+    .page-header {
+      text-align: center;
+      margin-bottom: 4rem;
+      width: 100%;
+    }
+
+    .prose {
+      max-width: 42rem;
+      margin-inline: auto;
+    }
+
+    .prose__section {
+      margin-bottom: 3rem;
+    }
+
+    .prose__meta {
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .prose__meta p {
+      margin: 0.5rem 0;
+      font-size: 0.95rem;
+      color: var(--color-text-muted);
+    }
+
+    .prose h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: 0.5rem;
+    }
+
+    .prose p {
+      line-height: 1.8;
+      color: var(--color-text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .prose ul {
+      margin-bottom: 1rem;
+      padding-left: 1.5rem;
+      color: var(--color-text-muted);
+    }
+
+    .prose li {
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</BaseLayout>

@@ -1,0 +1,117 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getUi } from "@/i18n/ui";
+
+const locale = "en";
+const t = getUi(locale);
+---
+
+<BaseLayout
+  title={t.disclaimer}
+  description="Disclaimer page."
+  locale={locale}
+  canonicalPath="/en/disclaimer/"
+  alternateHref="/disclaimer/"
+  alternateLocales={[
+    { locale: "ja", path: "/disclaimer/" },
+    { locale: "en", path: "/en/disclaimer/" },
+    { locale: "x-default", path: "/disclaimer/" },
+  ]}
+>
+  <section class="page-header">
+    <p class="eyebrow">Disclaimer</p>
+    <h1>{t.disclaimer}</h1>
+  </section>
+
+  <section class="prose">
+    <div class="prose__meta">
+      <p><strong>Effective Date:</strong> May 11, 2026</p>
+      <p><strong>Last Updated:</strong> May 11, 2026</p>
+    </div>
+
+    <div class="prose__section">
+      <h3>1. Responsibility for Damages, etc.</h3>
+      <p>
+        While we strive to provide the most accurate information possible regarding the content and information on this blog, we do not guarantee its accuracy or safety. Information may also be outdated.
+      </p>
+      <p>
+        Please note that we cannot be held responsible for any damages or losses caused by the content posted on this blog.
+      </p>
+      <p>
+        In addition, if you move to another site from this blog via links, banners, etc., we assume no responsibility for the information, services, etc. provided on the destination site.
+      </p>
+    </div>
+
+    <div class="prose__section">
+      <h3>2. Copyright and Portrait Rights</h3>
+      <p>
+        Unauthorized reproduction of text, images, etc. posted on this blog is prohibited.
+      </p>
+      <p>
+        This blog is not intended to infringe on copyrights or portrait rights. If you have any problems regarding copyrights or portrait rights, please contact us via X (<a href="https://x.com/tomokichi178694" target="_blank" rel="noopener noreferrer">@tomokichi178694</a>) or <a href="https://github.com/tomoki013/tech-blog" target="_blank" rel="noopener noreferrer">GitHub Issues</a>. We will respond promptly.
+      </p>
+    </div>
+
+    <div class="prose__section">
+      <h3>3. Prohibition of Unauthorized Reproduction</h3>
+      <p>
+        Unauthorized reproduction of information on copyrighted works such as text, images, and videos on this blog is prohibited.
+      </p>
+      <p>
+        Legal action may be taken for anything exceeding the scope of quotation. When reproducing, please contact us via X (<a href="https://x.com/tomokichi178694" target="_blank" rel="noopener noreferrer">@tomokichi178694</a>) or <a href="https://github.com/tomoki013/tech-blog" target="_blank" rel="noopener noreferrer">GitHub Issues</a>.
+      </p>
+    </div>
+
+    <div class="prose__section">
+      <h3>4. About Links</h3>
+      <p>
+        This blog is basically link-free. No permission or contact is required when linking.
+      </p>
+      <p>
+        However, please refrain from using inline frames or direct links to images.
+      </p>
+    </div>
+  </section>
+
+  <style>
+    .page-header {
+      text-align: center;
+      margin-bottom: 4rem;
+      width: 100%;
+    }
+
+    .prose {
+      max-width: 42rem;
+      margin-inline: auto;
+    }
+
+    .prose__section {
+      margin-bottom: 3rem;
+    }
+
+    .prose__meta {
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .prose__meta p {
+      margin: 0.5rem 0;
+      font-size: 0.95rem;
+      color: var(--color-text-muted);
+    }
+
+    .prose h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: 0.5rem;
+    }
+
+    .prose p {
+      line-height: 1.8;
+      color: var(--color-text-muted);
+      margin-bottom: 1rem;
+    }
+  </style>
+</BaseLayout>
