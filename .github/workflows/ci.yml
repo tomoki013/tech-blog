@@ -1,6 +1,7 @@
-name: Deploy
+name: CI
 
 on:
+  pull_request:
   push:
     branches:
       - main
@@ -9,10 +10,10 @@ permissions:
   contents: read
 
 jobs:
-  deploy:
-    name: Deploy to Cloudflare Workers
+  check:
+    name: Check
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
 
     steps:
       - name: Checkout
@@ -42,10 +43,3 @@ jobs:
         run: pnpm build
         env:
           PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL }}
-
-      - name: Deploy
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy
