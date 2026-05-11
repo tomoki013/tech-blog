@@ -69,3 +69,87 @@ const years = Object.keys(articlesByYear)
     )}
   </div>
 </BaseLayout>
+
+<style>
+  .page-header {
+    margin-bottom: 2.25rem;
+  }
+
+  .page-header h1 {
+    margin: 0;
+    font-size: clamp(2.35rem, 8vw, 5.2rem);
+    line-height: 0.98;
+    letter-spacing: -0.07em;
+  }
+
+  .page-header p {
+    color: var(--color-text-muted);
+    font-size: clamp(1.04rem, 2vw, 1.18rem);
+    line-height: 1.9;
+  }
+
+  .eyebrow {
+    margin: 0 0 0.8rem;
+    color: var(--color-text-muted);
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .archive-list {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .archive-year {
+    padding: 1.4rem;
+    border: 1px solid var(--color-border);
+    border-radius: 1.4rem;
+    background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .archive-year h2 {
+    margin: 0 0 1rem;
+    font-size: 1.45rem;
+    letter-spacing: -0.04em;
+  }
+
+  .archive-year ol {
+    display: grid;
+    gap: 0.85rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .archive-year li {
+    display: grid;
+    grid-template-columns: 8rem minmax(0, 1fr);
+    gap: 1rem;
+    align-items: baseline;
+  }
+
+  .archive-year time {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  .archive-year a {
+    color: var(--color-text);
+    font-weight: 650;
+    text-decoration: none;
+  }
+
+  .archive-year a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 760px) {
+    .archive-year li {
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
+    }
+  }
+</style>

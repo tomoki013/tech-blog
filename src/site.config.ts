@@ -18,6 +18,7 @@ export const siteConfig = {
     en: "Web Developer. Passionate about personal development, Web development, AI utilization, product design, and operational improvement.",
   },
   profileImage: "/icon-256.webp",
+  profileImageSmall: "/icon-64.webp",
   ogImage: "/og/default.png",
 } satisfies {
   url: string;
@@ -26,5 +27,6 @@ export const siteConfig = {
   author: string;
   bio: Record<Locale, string>;
   profileImage: string;
+  profileImageSmall: string;
   ogImage: string;
 };

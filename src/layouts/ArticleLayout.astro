@@ -104,75 +104,125 @@ const articleUrl = `${siteConfig.url}${canonicalPath}`;
 </BaseLayout>
 
 <style>
-  .article-detail__share {
+  .article-detail {
+    width: min(100%, 46rem);
+    margin-inline: auto;
+  }
+
+  .article-detail__header {
+    margin-bottom: 2.25rem;
+  }
+
+  .article-detail__header h2 {
+    margin: 0;
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    line-height: 1.2;
+    letter-spacing: -0.035em;
+  }
+
+  .article-detail__description {
+    max-width: 42rem;
+    color: var(--color-text-muted);
+    font-size: clamp(1.04rem, 2vw, 1.18rem);
+    line-height: 1.9;
+  }
+
+  .article-detail__dates {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: 1rem;
+    flex-wrap: wrap;
+    gap: 0.6rem 1rem;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
   }
 
-  .share-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 0.375rem;
-    background-color: var(--color-surface-muted);
-    color: var(--color-text);
-    transition: all 0.2s ease-in-out;
-  }
-
-  .share-link:hover {
-    background-color: var(--color-link);
-    color: var(--color-surface);
-  }
-
-  .share-icon {
-    width: 1.125rem;
-    height: 1.125rem;
-  }
-
-  .dark .share-link {
-    background-color: var(--color-surface-muted);
-    color: var(--color-text);
-  }
-
-  .dark .share-link:hover {
-    background-color: var(--color-link);
-    color: var(--color-surface);
-  }
-
-  .article-detail__profile {
+  .tag-list {
     display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 1.5rem;
-    padding: 1rem;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    padding: 0;
+    margin: 1rem 0 0;
+    list-style: none;
+  }
+
+  .tag-list li {
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    color: var(--color-text-muted);
+    font-size: 0.82rem;
+    padding: 0.25rem 0.56rem;
+  }
+
+  .article-content {
+    color: var(--color-text);
+    font-size: 1.04rem;
+    line-height: 1.95;
+  }
+
+  .article-content :global(> * + *) {
+    margin-top: 1.25rem;
+  }
+
+  .article-content :global(h2),
+  .article-content :global(h3),
+  .article-content :global(h4) {
+    margin-top: 2.5rem;
+    line-height: 1.35;
+    letter-spacing: -0.035em;
+  }
+
+  .article-content :global(h2) {
+    font-size: 1.65rem;
+  }
+
+  .article-content :global(h3) {
+    font-size: 1.32rem;
+  }
+
+  .article-content :global(p),
+  .article-content :global(li) {
+    color: color-mix(in srgb, var(--color-text) 88%, var(--color-text-muted));
+  }
+
+  .article-content :global(a) {
+    color: var(--color-link);
+  }
+
+  .article-content :global(ul),
+  .article-content :global(ol) {
+    padding-left: 1.4rem;
+  }
+
+  .article-content :global(blockquote) {
+    margin-inline: 0;
+    border-left: 3px solid var(--color-border);
+    padding-left: 1rem;
+    color: var(--color-text-muted);
+  }
+
+  .article-content :global(code) {
+    border: 1px solid var(--color-border);
+    border-radius: 0.4rem;
+    background: var(--color-surface-muted);
+    padding: 0.12rem 0.34rem;
+    font-size: 0.92em;
+  }
+
+  .article-content :global(pre) {
+    overflow-x: auto;
     border: 1px solid var(--color-border);
     border-radius: 1rem;
-    background-color: var(--color-surface);
+    background: var(--color-surface-muted);
+    padding: 1rem;
   }
 
-  .article-detail__avatar {
-    width: 3.5rem;
-    height: 3.5rem;
-    border-radius: 999px;
-    border: 1px solid var(--color-border);
-    object-fit: cover;
+  .article-content :global(pre code) {
+    border: 0;
+    background: transparent;
+    padding: 0;
   }
 
-  .article-detail__author-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.125rem;
-  }
-
-  .article-detail__author-name {
-    font-weight: 700;
-    font-size: 0.95rem;
-  }
-
+  .article-detail__share {
+...
   .article-detail__author-bio {
     font-size: 0.85rem;
     color: var(--color-text-muted);
