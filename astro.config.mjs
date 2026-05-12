@@ -8,6 +8,10 @@ export default defineConfig({
   site,
   output: "static",
   trailingSlash: "always",
+  prefetch: true,
+  build: {
+    inlineStylesheets: "always",
+  },
   vite: {
     plugins: [tailwindcss()],
   },

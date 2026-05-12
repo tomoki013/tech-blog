@@ -22,7 +22,7 @@ const t = getUi(locale);
     <time datetime={publishedAt.toISOString()}>{t.published}: {formatDate(publishedAt, locale)}</time>
   </div>
   <h2 class="article-card__title">
-    <a href={href}>{title}</a>
+    <a href={href} data-astro-prefetch>{title}</a>
   </h2>
   <p class="article-card__description">{description}</p>
   {showTags && tags.length > 0 && (

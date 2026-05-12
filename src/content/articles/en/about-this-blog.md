@@ -1,34 +1,216 @@
 ---
-title: "About This Blog: Why I Built a Fast, Minimal Engineering Blog"
-description: "An introduction to Tomokichi's Engineering Growth Log: the technical choices, design philosophy, and the kinds of topics I plan to write about."
+title: "About This Blog: Why I Rebuilt a Blazing-Fast Engineering Blog"
+description: "Why I rebuilt Tomokichi's Engineering Growth Log from Next.js to Astro, how I chose the stack, and what I want to write about here."
 publishedAt: "2026-05-11 15:30"
+updatedAt: "2026-05-12 11:35"
 tags: ["Astro", "Cloudflare", "Engineering Blog", "Indie Development"]
 draft: false
 ---
 
-# About This Blog: Why I Built a Fast, Minimal Engineering Blog
+## About This Blog: Why I Rebuilt a Blazing-Fast Engineering Blog
 
-This is a personal engineering blog for documenting what I learn, build, break, rethink, and improve as I grow as a developer.
+This blog is my personal engineering blog for recording what I learn, build, break, rethink, and improve as a developer.
 
-The name of the site is **Tomokichi's Engineering Growth Log**.
+The name is **Tomokichi's Engineering Growth Log**.
 
-I do not want this to be just a place for technical notes. I want it to become a place where I can record the reasoning behind my technical decisions, the architecture choices I make in my own projects, the lessons I learn from working with AI coding agents, and the process of becoming a better engineer over time.
+This blog is not completely new.
 
-## Why I Built This Blog
+It originally existed as a technical blog built with Next.js.
 
-I have built and operated other websites before.
+However, the previous version used too many animations and included many features that were not really necessary for a personal engineering blog. As a result, it became heavier than it needed to be.
 
-Through my travel blog, **Tomokichi's Travel Diary**, I learned how difficult it is to keep writing, think about SEO, manage content, and run a site over the long term.
+There is nothing wrong with caring about design or motion.
 
-Through **Tabidea**, an AI-powered itinerary generation service, I have been working with more practical web application topics such as Next.js, Supabase, Cloud Run, Gemini API, Google Maps API, Stripe, CI/CD, row-level security, authentication, billing, and performance.
+But when I thought about the purpose of this site as a place for reading technical articles, I started to wonder whether all of those features were really necessary.
 
-However, many of these lessons tend to stay scattered across conversations, notes, GitHub issues, and prompts given to AI agents.
+Another trigger was the repeated need to deal with React Server Components-related security issues.
 
-I created this blog so that I can organize those thoughts into proper articles and keep a visible record of my engineering growth.
+This does not mean that Next.js is bad.
 
-## Technical Stack
+For a web application, Next.js is extremely useful.
 
-This blog is designed to be simple, fast, and easy to maintain.
+But for a personal engineering blog that is not updated every day and does not need authentication, billing, a database, or many APIs, I started to question whether I really needed to keep using Next.js.
+
+So instead of slightly modifying the old blog, I decided to rethink the entire technical stack and rebuild it.
+
+## Why I Rebuilt It
+
+I have built several blogs and web services so far.
+
+Through my travel blog, **Tomokichi's Travel Diary**, I learned how difficult it is to write articles, think about SEO, and operate a website over a long period of time.
+
+Through my AI itinerary generation service, **Tabidea**, I have worked with more practical web application topics such as Next.js, Supabase, Cloud Run, the Gemini API, the Google Maps API, Stripe, CI/CD, RLS, authentication, billing, and performance.
+
+As I kept building things, I kept learning more.
+
+But those learnings often ended up scattered across daily conversations, notes, GitHub issues, and prompts for AI coding agents.
+
+Recently, I have been thinking not only about implementation itself, but also about questions like:
+
+- Why did I choose this technology?
+- Why did I design it this way?
+- How much should I delegate to AI coding agents?
+- Where should humans still make the final decision?
+- How much maintainability and security should a small indie project care about?
+
+I wanted a proper place to write down those thoughts.
+
+That is why I decided not just to keep the old blog alive, but to rebuild it in a way that fits my current thinking.
+
+## The Previous Version Used Next.js
+
+The previous version of Tomokichi's Engineering Growth Log was built with Next.js.
+
+Next.js is a very powerful framework.
+
+It includes routing, image optimization, API Routes, Server Components, dynamic rendering, authentication patterns, data fetching, caching strategies, and many other features for building modern web applications.
+
+For a web application like Tabidea, Next.js is a great fit.
+
+But this blog needs very little.
+
+I basically need to write articles in Markdown, convert them to HTML at build time, and serve them quickly from Cloudflare.
+
+I do not need authentication.
+
+I do not need billing.
+
+I do not need a database.
+
+I barely need APIs.
+
+This is not a media site that gets updated many times a day.
+
+With that in mind, Next.js started to feel too large for this blog.
+
+Of course, it is possible to build a static blog with Next.js.
+
+But because Next.js can do so many things, it is also easy to gradually make the design more application-like than necessary.
+
+That is exactly what happened with my previous blog.
+
+I added too many animations and features, and the site became heavier than a technical blog needed to be.
+
+So I started to think that it would be better to choose a stack that is centered on content delivery from the beginning.
+
+That led me to consider alternatives to Next.js.
+
+## Vite + React Was Also a Candidate
+
+After reconsidering Next.js, the next candidate was **Vite + React**.
+
+I had used Vite + React before, and I liked its lightweight development experience.
+
+If I wanted to avoid a large framework and build only what I needed, Vite + React seemed like a reasonable choice.
+
+However, once I thought about what a blog actually needs, I realized that I would have to build many things myself.
+
+For example:
+
+- Loading Markdown files
+- Generating article lists
+- Creating tag pages
+- Supporting multiple languages
+- Generating RSS
+- Generating sitemap.xml
+- Managing OGP metadata
+- Designing article URLs
+- Generating HTML at build time
+
+Building screens with React is easy.
+
+But building all the surrounding structure needed for a content-focused site would require a lot of custom work.
+
+Also, if I chose Vite + React, I would naturally think of the site as a React application.
+
+But what I wanted to build was not an interactive application experience.
+
+I wanted fast, readable, reliable article delivery.
+
+So Vite + React also felt slightly off for this particular use case.
+
+## Other Options I Considered
+
+Besides Next.js and Vite + React, I also considered a few other options around the React ecosystem.
+
+One of them was **Remix**.
+
+Remix has an attractive design philosophy based on web standards, routing, data loading, and form handling.
+
+With the movement toward React Router v7, it is also a very interesting option for building React-based web applications.
+
+However, what I wanted to build this time was not a web application.
+
+It was a personal engineering blog with relatively infrequent updates.
+
+I did not need forms, authentication, or dynamic data fetching.
+
+So instead of using the strengths of Remix, I felt that a more content-focused stack would fit better.
+
+**TanStack Router** and **TanStack Start** were also interesting options in the React ecosystem.
+
+TanStack Router is appealing because of its type-safe routing.
+
+TanStack Start is also interesting as a full-stack React framework built on top of Vite and TanStack Router.
+
+But this blog does not need advanced routing or full-stack features.
+
+I just need to write articles, convert them to HTML at build time, and serve them quickly from Cloudflare.
+
+So TanStack's ecosystem also felt a bit too application-oriented for this blog.
+
+There are also options like **Nuxt** in the Vue ecosystem and **SvelteKit** in the Svelte ecosystem.
+
+However, I have mainly worked with React and TypeScript so far.
+
+I did not have a strong reason to move to Vue or Svelte just for this blog.
+
+There are also web frameworks in other languages, such as Ruby on Rails, Django, and Laravel, but since I have mostly worked in TypeScript and have little experience with those backend frameworks, they were not realistic candidates for this project.
+
+In the end, what I needed was not a full-stack web application framework.
+
+I needed a system that could handle Markdown articles well, serve static HTML quickly, and allow small extensions only when necessary.
+
+Astro fit that requirement best.
+
+## Why I Chose Astro
+
+The final choice was **Astro**.
+
+This was my first time adopting Astro.
+
+I was not familiar with it from the beginning.
+
+Even so, Astro felt like the best fit for this blog.
+
+The reason is simple.
+
+Astro is well suited for content-focused websites.
+
+Writing Markdown, converting it to HTML at build time, and generating static pages is very close to what I wanted to do.
+
+The biggest reasons were:
+
+- It works well with Markdown
+- Astro Content Collections make article management easier
+- It naturally generates static HTML
+- It makes it easier to avoid unnecessary JavaScript
+- Interactive parts can be added only where needed
+- It is suitable for multilingual site design
+- It works well with Cloudflare Workers Static Assets
+- It is harder for AI coding agents to accidentally push the site toward an overly complex architecture
+
+This blog does not parse Markdown in the browser.
+
+Markdown is converted to HTML at build time.
+
+When a reader opens an article, they receive already generated HTML.
+
+This makes the initial page load easier to keep light, and it allows the article to remain readable without relying on JavaScript.
+
+## Tech Stack
+
+This blog is designed to be simple, fast, and maintainable.
 
 The main stack is:
 
@@ -42,171 +224,204 @@ The main stack is:
 - Cloudflare Workers Static Assets
 - GitHub Actions
 
-React and MDX are not part of the initial setup.
+I do not use React or MDX for this site.
 
-I think of this site not as a web application, but as a **static document delivery system**.
+The priority is to make the site readable with HTML and CSS first.
 
-If the primary user action is simply reading an article, there is no need to ship heavy client-side JavaScript. Markdown is converted into HTML at build time, and the browser does not parse Markdown on the client side.
+JavaScript is added only where it is actually needed.
 
-## Why Astro
+## Page Design Philosophy
 
-At first, I considered building a custom static blog with Vite and React.
+The most important idea behind this blog is to deliver articles as straightforward HTML.
 
-But what I wanted to build was not an application. It was a content-focused blog.
+Article pages are basically generated as static HTML.
 
-Astro made more sense for several reasons:
+CSS is used to make them readable, and JavaScript is added only when necessary.
 
-- It works naturally with Markdown
-- It can generate static HTML by default
-- It avoids unnecessary client-side JavaScript
-- It makes multilingual routing easier to design
-- It allows interactivity to be added only where needed
-- It reduces the risk of accidentally turning the blog into a SPA when working with AI coding agents
+In particular, I care about the following principles:
 
-The most important idea is: **do not over-applicationize a blog**.
+- Convert article content to HTML at build time
+- Do not assemble article content on the client side
+- Keep articles readable even without JavaScript
+- Use JavaScript only for necessary features
+- Avoid adding external scripts or web fonts casually
+- Serve pages as quickly as possible from Cloudflare
+- Prioritize speed and maintainability over adding more features
 
-It is possible to make page transitions feel like a SPA, or to render article content on the client side. But for a site built mainly for reading, that can easily become unnecessary complexity.
+In the future, I may use CSS View Transitions or Astro's ClientRouter to improve the perceived speed of page transitions.
 
-So this blog prioritizes fast, static, readable HTML first.
+Even then, the core idea should remain the same: the article content itself should still be delivered as static HTML.
 
-## Design and Feature Philosophy
+Even if I add smoother transitions, I do not want the pages themselves to become unnecessarily heavy.
 
-The initial version intentionally keeps the feature set small.
+## Features I May Add, and Features I Probably Won't
 
-The following features are not included at the beginning:
+This blog intentionally keeps its feature set small.
+
+The main features I may add in the future are:
 
 - Search
 - Syntax highlighting
-- Images inside articles
+
+As the number of articles grows, search may become useful.
+
+Since this is a technical blog, syntax highlighting will probably become useful once I write more articles with code.
+
+On the other hand, I do not plan to add many other large features.
+
+For example:
+
 - Comments
 - User accounts
-- API routes
-- Database
-- CMS
-- Web fonts
+- A CMS
+- A database
+- APIs
 - Heavy animations
+- Complex permanent interactions
 
-On the other hand, a few things are included from the start:
+These do not feel necessary for this blog.
 
-- Dark mode
-- Japanese and English support
-- RSS
-- sitemap.xml
-- robots.txt
-- llms.txt
-- Open Graph meta tags
-- A shared Open Graph image
+That said, this does not mean that I reject images or animations themselves.
 
-Search and syntax highlighting can be added later if the number of articles grows enough to justify them.
+If a diagram, screenshot, or comparison image helps explain an article, I will use it.
 
-For now, I want the site to remain lightweight, fast, and hard to break.
+I may also use lightweight animation where it makes sense.
 
-## Multilingual Structure
+What I want to avoid is adding permanent features or heavy decorative effects that are not necessary for reading articles.
 
-This blog uses Japanese as the default language and also provides English pages.
+The previous version of the blog went a little too far in that direction.
 
-Japanese pages live under the normal route, while English pages live under `/en/`.
+This time, I want the site to stay focused on reading.
 
-For example, this article has the following paths:
+## Multilingual Support
+
+This blog uses Japanese as the default language, but it also provides English versions of articles.
+
+Japanese articles use the normal URL structure, while English articles live under `/en/`.
+
+For example, this article would use the following URLs:
 
 - `/articles/about-this-blog/`
 - `/en/articles/about-this-blog/`
 
-I am not adding English pages only for external visibility.
+I am not adding English versions only to reach readers outside Japan.
 
-A large amount of engineering knowledge is shared in English. Being able to explain my own ideas, technical decisions, and architecture in English is also part of becoming a better engineer.
+A lot of technical information is written in English, and I think being able to explain my own design decisions and implementation ideas in English is important for an engineer.
 
-As AI-assisted development becomes more common, I also think that the ability to clearly describe design intent in English will become increasingly useful.
+Also, as I work more with AI coding agents, the ability to organize design intent in English will probably become more useful.
 
-## Built with AI Agents in Mind
+I want this blog to be a place where I practice explaining in English what I first thought through in Japanese.
 
-This blog is also designed to be easy to maintain with AI coding agents.
+## Built with AI Coding Agents in Mind
 
-Recently, I have been using tools such as Claude Code, Codex, and Gemini CLI in my development workflow.
+This blog is also designed with AI coding agents in mind.
 
-The more I rely on AI agents, the more important it becomes to clearly define the design philosophy and constraints of a project.
+Recently, I have been using tools such as Claude Code, Codex, and Gemini CLI more often in my development workflow.
 
-For this site, I intentionally decided that the initial version should:
+However, the more I delegate to AI, the more important it becomes to clearly define the design philosophy and constraints.
 
-- Not introduce React
-- Not use MDX
-- Not render articles on the client side
-- Not add images or search too early
-- Keep the site fast as static HTML first
+For this site, I have decided things like:
 
-These constraints are not just limitations. They are guardrails.
+- Do not introduce React
+- Do not use MDX
+- Do not render articles on the client side
+- Do not add APIs or a database
+- Do not add unnecessary permanent features
+- Keep the site readable as fast static HTML first
 
-They help prevent AI agents from adding convenient features too early and drifting away from the original goal of the site.
+These constraints are not just restrictions.
 
-## What I Plan to Write About
+They help prevent AI agents from adding too many convenient-looking features and pushing the site away from its original direction.
 
-I plan to write about topics like the following.
+AI coding agents can speed up implementation a lot.
 
-## Architecture and Thinking Behind Indie Projects
+But if the goal and constraints are vague, the architecture can easily become more complicated than necessary.
 
-I want to write about the decisions behind my own projects, including services like Tabidea.
+That is why I think humans still need to decide what not to build, and how much responsibility the site should actually have.
 
-Not just what I implemented, but why I chose a particular design, what I was unsure about, and what trade-offs I considered.
+## What I Want to Write About
 
-## Development with AI Coding Agents
+I plan to write mainly about the following topics.
 
-I will write about how I use tools such as Claude Code, Codex, and Gemini CLI.
+### Indie Development Design and Thinking
 
-This includes their strengths, weaknesses, failure cases, how I write instructions for them, and how I review their output.
+I want to write about how I design personal projects like Tabidea, where I struggled, and why I chose certain technologies.
 
-As AI writes more code, I think the human role in design, review, and judgment becomes even more important.
+I do not want to write only step-by-step tutorials.
 
-## Web App Infrastructure and Operations
+I also want to record the reasoning behind my decisions.
 
-I plan to write about infrastructure and deployment topics such as Cloud Run, Cloudflare, Vercel, Netlify, Supabase, and GitHub Actions.
+### Development with AI Coding Agents
 
-I am especially interested in realistic infrastructure choices for indie developers and students: free tiers, low-cost deployments, and simple but reliable operations.
+I want to write about how I use Claude Code, Codex, Gemini CLI, and similar tools.
 
-## Frontend and User Experience
+This includes workflows, strengths and weaknesses, failure cases, how to write instructions, and how to review AI-generated code.
 
-I will also write about frontend topics such as Next.js, Astro, Tailwind CSS, performance, error pages, waiting-time UX, multilingual sites, and dark mode.
+In an era where AI writes code, I want to clarify what humans should still think about.
 
-I do not want to write only about using AI for the sake of using AI. I want to think about how to build experiences that are actually useful and pleasant.
+### Web App Infrastructure and Operations
 
-## Security and Maintainability
+I also want to write about infrastructure and deployment tools used in indie development, such as Cloud Run, Cloudflare, Vercel, Netlify, Supabase, and GitHub Actions.
 
-Even small personal projects need security and maintainability.
+I especially want to focus on realistic low-cost setups for students and indie developers.
 
-I plan to write about topics such as Supabase RLS, authentication, cookies, OAuth, secret management, and CI checks.
+### Frontend and UX
 
-Small projects do not need enterprise-level complexity, but I still believe they need a clear baseline.
+I will write about Next.js, Astro, Tailwind CSS, performance, error pages, waiting-time UX, multilingual support, dark mode, and other topics related to user experience.
 
-## Learning and Career Growth
+Instead of saying "it is impressive because it uses AI," I want to think about how to build experiences that are actually useful.
 
-I started with the basics of HTML and CSS, then moved through JavaScript, Next.js, personal blogs, AI applications, and cloud deployments.
+### Security and Maintenance
 
-I want to write about what I learn through that process, and also about how I think about growing into an engineer professionally.
+I also want to write about security and maintenance topics that even small indie projects cannot ignore, such as Supabase RLS, authentication, cookies, OAuth, secret management, and CI checks.
 
-## What I Want to Value
+Even small projects have lines they should not cross.
 
-This blog is not meant to show only polished conclusions.
+### Learning and Career
 
-I want to keep a record of things like:
+I started with basic HTML and CSS, then moved on to JavaScript, Next.js, personal blogs, AI applications, and cloud deployment little by little.
+
+I want to write about what I learned through that process, and what I am thinking about as I work toward becoming an engineer.
+
+## What I Care About
+
+What I care about most in this blog is not presenting perfect answers.
+
+Instead, I want to record:
 
 - What I was unsure about
 - What failed
-- Where my thinking changed
-- When AI agents helped
-- When AI agents became risky
-- When I realized design mattered more than implementation
+- How my thinking changed later
+- What worked well when I delegated to AI
+- What became risky when I delegated to AI
+- Moments when I realized design mattered more than implementation
 
-Technical articles often present clean conclusions.
+Technical articles often make us want to present only clean conclusions.
 
-But real development is usually much messier.
+But real development involves a lot of messy decisions.
 
-I want this blog to preserve some of that process too.
+Reconsidering a blog built with Next.js because of RSC-related security work.
+
+Considering Vite + React.
+
+Thinking about other React ecosystem options such as Remix and TanStack.
+
+Then deciding that Astro fits this use case best.
+
+That entire decision-making process is also part of what I learned.
+
+I want this blog to record that process, not just the final answer.
 
 ## Closing
 
-This blog is just getting started.
+This blog is not just a modified version of the old Next.js blog.
 
-I am not trying to turn it into a large media site from day one.
+I stopped, reconsidered what a personal engineering blog really needs, and rebuilt it with Astro.
 
-For now, I want it to be a quiet place where I can keep adding what I learn, what I build, what I question, and what I improve.
+I do not intend to turn it into a large media site from the beginning.
 
-If I can look back later and see a clear record of my growth as an engineer, this blog will have done its job.
+For now, I want it to be a quiet place where I steadily accumulate what I learn, think, build, and fail at.
+
+Fast, lightweight, readable, and maintainable.
+
+I hope that when I look back later, this blog will show the traces of my growth as an engineer.
