@@ -1,7 +1,5 @@
 ---
 import {
-  getArchivedPath,
-  getArticlesPath,
   getDisclaimerPath,
   getPrivacyPath,
   getRssPath,
@@ -22,6 +20,10 @@ const t = getUi(locale);
 
 <footer class="site-footer">
   <div class="site-footer__inner">
+    <div class="site-footer__actions">
+      <LanguageSwitcher locale={locale} alternateHref={alternateHref} />
+      <ThemeToggle locale={locale} />
+    </div>
     <div class="site-footer__main">
       <div class="site-footer__brand">
         <p>Made with <span aria-hidden="true">❤️</span> by Tomokichi
@@ -39,13 +41,8 @@ const t = getUi(locale);
         <p class="copyright">© 2025-2026 ともきちのエンジニア成長記 All Rights Reserved.</p>
       </div>
 
-      <div class="site-footer__actions">
-        <LanguageSwitcher locale={locale} alternateHref={alternateHref} />
-        <ThemeToggle locale={locale} />
-      </div>
     </div>
     <nav aria-label="Footer navigation">
-      <a href={getArchivedPath(locale)}>{t.archived}</a>
       <a href={getPrivacyPath(locale)}>{t.privacy}</a>
       <a href={getDisclaimerPath(locale)}>{t.disclaimer}</a>
       <a href={getRssPath(locale)}>{t.rss}</a>

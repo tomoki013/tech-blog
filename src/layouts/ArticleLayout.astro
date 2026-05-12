@@ -49,7 +49,6 @@ const articleUrl = `${siteConfig.url}${canonicalPath}`;
   <article class="article-detail">
     <header class="article-detail__header">
       <h2>{title}</h2>
-      <p class="article-detail__description">{description}</p>
       <div class="article-detail__dates">
         <time datetime={publishedAt.toISOString()}>{t.published}: {formatDate(publishedAt, locale)}</time>
         {updatedAt && (
@@ -117,16 +116,9 @@ const articleUrl = `${siteConfig.url}${canonicalPath}`;
 
   .article-detail__header h2 {
     margin: 0;
-    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    font-size: clamp(2rem, 5vw, 2.8rem);
     line-height: 1.2;
     letter-spacing: -0.035em;
-  }
-
-  .article-detail__description {
-    max-width: 42rem;
-    color: var(--color-text-muted);
-    font-size: clamp(1.04rem, 2vw, 1.18rem);
-    line-height: 1.9;
   }
 
   .article-detail__dates {
