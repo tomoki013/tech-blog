@@ -13,7 +13,7 @@
     "format": "biome format --write .",
     "lint": "biome lint .",
     "typecheck": "astro check && tsc --noEmit",
-    "deploy": "wrangler deploy"
+    "deploy": "pnpm build && wrangler deploy"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.0",

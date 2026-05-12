@@ -22,7 +22,7 @@ const t = getUi(locale);
 
 <header class="site-header">
   <div class="site-header__inner">
-    <a class="site-header__brand" href={getHomePath(locale)} aria-label={siteConfig.name[locale]}>
+    <a class="site-header__brand" href={getHomePath(locale)} aria-label={siteConfig.name[locale]} data-astro-prefetch>
       <img
         src={siteConfig.profileImageSmall}
         alt="logo"
@@ -39,10 +39,10 @@ const t = getUi(locale);
     </a>
 
     <nav class="site-header__nav" aria-label="Primary navigation">
-      <a href={getHomePath(locale)}>{t.home}</a>
-      <a href={getArticlesPath(locale)}>{t.articles}</a>
-      <a href={getArchivedPath(locale)}>{t.archived}</a>
-      <a href={getAboutPath(locale)}>{t.about}</a>
+      <a href={getHomePath(locale)} data-astro-prefetch>{t.home}</a>
+      <a href={getArticlesPath(locale)} data-astro-prefetch>{t.articles}</a>
+      <a href={getArchivedPath(locale)} data-astro-prefetch>{t.archived}</a>
+      <a href={getAboutPath(locale)} data-astro-prefetch>{t.about}</a>
     </nav>
 
     <div class="site-header__actions">

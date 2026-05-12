@@ -56,30 +56,32 @@ const articleUrl = `${siteConfig.url}${canonicalPath}`;
           <time datetime={updatedAt.toISOString()}>{t.updated}: {formatDate(updatedAt, locale)}</time>
         )}
       </div>
-      {tags.length > 0 && (
-        <ul class="tag-list" aria-label={t.tags}>
-          {tags.map((tag) => <li>{tag}</li>)}
-        </ul>
-      )}
-      <div class="article-detail__share">
-        <a
-          href={`https://x.com/intent/tweet?url=${encodeURIComponent(articleUrl)}&text=${encodeURIComponent(title)}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="share-link"
-          aria-label="Share on X"
-          title="Share on X"
-        >
-          <svg
-            class="share-icon"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
+      <div class="article-detail__meta">
+        {tags.length > 0 && (
+          <ul class="tag-list" aria-label={t.tags}>
+            {tags.map((tag) => <li>{tag}</li>)}
+          </ul>
+        )}
+        <div class="article-detail__share">
+          <a
+            href={`https://x.com/intent/tweet?url=${encodeURIComponent(articleUrl)}&text=${encodeURIComponent(title)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="share-link"
+            aria-label="Share on X"
+            title="Share on X"
           >
-            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-          </svg>
-        </a>
+            <svg
+              class="share-icon"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </a>
+        </div>
       </div>
     </header>
     <div class="article-content">
@@ -135,12 +137,20 @@ const articleUrl = `${siteConfig.url}${canonicalPath}`;
     font-size: 0.9rem;
   }
 
+  .article-detail__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
   .tag-list {
     display: flex;
     flex-wrap: wrap;
     gap: 0.45rem;
     padding: 0;
-    margin: 1rem 0 0;
+    margin: 0;
     list-style: none;
   }
 
@@ -150,6 +160,26 @@ const articleUrl = `${siteConfig.url}${canonicalPath}`;
     color: var(--color-text-muted);
     font-size: 0.82rem;
     padding: 0.25rem 0.56rem;
+  }
+
+  .article-detail__share {
+    flex-shrink: 0;
+  }
+
+  .share-link {
+    display: flex;
+    align-items: center;
+    color: var(--color-text-muted);
+    transition: color 0.2s ease;
+  }
+
+  .share-link:hover {
+    color: var(--color-text);
+  }
+
+  .share-icon {
+    width: 1.15rem;
+    height: 1.15rem;
   }
 
   .article-content {
@@ -221,8 +251,30 @@ const articleUrl = `${siteConfig.url}${canonicalPath}`;
     padding: 0;
   }
 
-  .article-detail__share {
-...
+  .article-detail__profile {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-top: 5rem;
+    padding: 2.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 1.5rem;
+    background: var(--color-surface);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .article-detail__avatar {
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+  }
+
+  .article-detail__author-name {
+    display: block;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+  }
+
   .article-detail__author-bio {
     font-size: 0.85rem;
     color: var(--color-text-muted);
