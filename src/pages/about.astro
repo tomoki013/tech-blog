@@ -19,7 +19,7 @@ const locale = "ja";
 >
   <section class="page-header">
     <p class="eyebrow">About</p>
-    <h1>このブログについて</h1>
+    <h2>このブログについて</h2>
     <p>学習・開発・設計・運用で得た気づきを、未来の自分と誰かのために残していきます。</p>
   </section>
 
@@ -75,6 +75,32 @@ const locale = "ja";
 </BaseLayout>
 
 <style>
+  .page-header {
+    margin-bottom: 2.25rem;
+  }
+
+  .page-header h2 {
+    margin: 0;
+    font-size: clamp(2.35rem, 8vw, 5.2rem);
+    line-height: 0.98;
+    letter-spacing: -0.07em;
+  }
+
+  .page-header p {
+    color: var(--color-text-muted);
+    font-size: clamp(1.04rem, 2vw, 1.18rem);
+    line-height: 1.9;
+  }
+
+  .eyebrow {
+    margin: 0 0 0.8rem;
+    color: var(--color-text-muted);
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
   .about-profile {
     display: flex;
     align-items: center;
@@ -137,7 +163,7 @@ const locale = "ja";
 
   .contact-card:hover {
     border-color: var(--color-link);
-    background: color-mix(in srgb, var(--color-surface) 90%, var(--color-link) 10%);
+    background: var(--color-surface);
     box-shadow: 0 8px 24px rgb(28 27 24 / 0.12);
     transform: translateY(-2px);
   }

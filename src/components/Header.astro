@@ -23,10 +23,8 @@ const t = getUi(locale);
 <header class="site-header">
   <div class="site-header__inner">
     <a class="site-header__brand" href={getHomePath(locale)} aria-label={siteConfig.name[locale]} data-astro-prefetch>
-      <div class="site-header__brand-text">
-        <span>{siteConfig.name[locale]}</span>
-        <span class="site-header__author">{siteConfig.author}</span>
-      </div>
+      <span>{siteConfig.name[locale]}</span>
+      <span class="site-header__author">{siteConfig.author}</span>
     </a>
 
     <nav class="site-header__nav" aria-label="Primary navigation">
@@ -44,7 +42,7 @@ const t = getUi(locale);
 </header>
 
 <style>
-  .site-header__brand-text {
+  .site-header__brand {
     display: flex;
     flex-direction: column;
     gap: 0.125rem;
