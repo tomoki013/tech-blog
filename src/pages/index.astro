@@ -46,7 +46,7 @@ const articles = (await getArticlesWithPaths(locale)).slice(0, 5);
   <section aria-labelledby="latest-articles">
     <div class="section-header">
       <h2 id="latest-articles">{t.latestArticles}</h2>
-      <a href={getArticlesPath(locale)} data-astro-prefetch>{t.allArticles}</a>
+      <a href={getArticlesPath(locale)}>{t.allArticles}</a>
     </div>
     <div class="article-list">
       {articles.length === 0 ? (

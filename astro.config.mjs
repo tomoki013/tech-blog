@@ -8,9 +8,12 @@ export default defineConfig({
   site,
   output: "static",
   trailingSlash: "always",
-  prefetch: true,
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: "tap",
+  },
   build: {
-    inlineStylesheets: "always",
+    inlineStylesheets: "auto",
   },
   vite: {
     plugins: [tailwindcss()],
