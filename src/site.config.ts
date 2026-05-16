@@ -9,8 +9,8 @@ export const siteConfig = {
     en: "Tomokichi's Engineering Growth Log",
   },
   description: {
-    ja: "エンジニアとしての学習、開発、試行錯誤を記録する個人技術ブログです。",
-    en: "A personal engineering blog about learning, building, and growing as a developer.",
+    ja: "個人開発、Web開発、AI活用、設計、運用改善の試行錯誤を記録する、軽量で高速な個人技術ブログです。",
+    en: "A lightweight personal engineering blog about indie development, web engineering, AI-assisted work, product design, and operational improvements.",
   },
   author: "Tomokichi",
   bio: {
