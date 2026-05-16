@@ -141,6 +141,14 @@ URL は次のような構成になります。
 
 日本語版を正本とし、英語版はその翻訳・補足として扱います。
 
+## ライセンス
+
+このリポジトリ内のソースコードは MIT License のもとで公開しています。
+
+ただし、記事本文、テキストコンテンツ、写真、画像、アイコン、OGP画像、デザイン素材、その他のコード以外のアセットは、明示がない限り MIT License の対象外です。これらのコンテンツに関する権利は Tomokichi が留保します。
+
+詳細は [LICENSE](./LICENSE) および [CONTENT_RIGHTS.md](./CONTENT_RIGHTS.md) を参照してください。
+
 ---
 
 # Tomokichi's Engineering Growth Log
@@ -291,3 +299,11 @@ The URL structure is as follows:
 ```
 
 The Japanese version is treated as the canonical source, and the English version is treated as its translation or supplement.
+
+## License
+
+The source code in this repository is licensed under the MIT License.
+
+Articles, text content, photographs, images, icons, OGP images, design assets, and other non-code assets are not covered by the MIT License unless explicitly stated otherwise. All rights to such content are reserved by Tomokichi.
+
+See [LICENSE](./LICENSE) and [CONTENT_RIGHTS.md](./CONTENT_RIGHTS.md) for details.

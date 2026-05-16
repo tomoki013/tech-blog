@@ -1,5 +1,11 @@
 ---
-import { getDisclaimerPath, getPrivacyPath, getRssPath, type Locale } from "@/i18n/config";
+import {
+  getDisclaimerPath,
+  getLicensePath,
+  getPrivacyPath,
+  getRssPath,
+  type Locale,
+} from "@/i18n/config";
 import { getUi } from "@/i18n/ui";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import ThemeToggle from "./ThemeToggle.astro";
@@ -37,6 +43,7 @@ const t = getUi(locale);
     <nav aria-label="Footer navigation">
       <a href={getPrivacyPath(locale)}>{t.privacy}</a>
       <a href={getDisclaimerPath(locale)}>{t.disclaimer}</a>
+      <a href={getLicensePath(locale)}>{t.license}</a>
       <a href={getRssPath(locale)}>{t.rss}</a>
     </nav>
   </div>

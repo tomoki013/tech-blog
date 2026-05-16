@@ -21,6 +21,8 @@ export const getPrivacyPath = (locale: Locale) =>
   locale === defaultLocale ? "/privacy/" : `/${locale}/privacy/`;
 export const getDisclaimerPath = (locale: Locale) =>
   locale === defaultLocale ? "/disclaimer/" : `/${locale}/disclaimer/`;
+export const getLicensePath = (locale: Locale) =>
+  locale === defaultLocale ? "/license/" : `/${locale}/license/`;
 export const getArticlePath = (locale: Locale, slug: string) =>
   locale === defaultLocale ? `/articles/${slug}/` : `/${locale}/articles/${slug}/`;
 export const getRssPath = (locale: Locale) =>

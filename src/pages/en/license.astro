@@ -1,0 +1,133 @@
+---
+import { getUi } from "@/i18n/ui";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const locale = "en";
+const t = getUi(locale);
+---
+
+<BaseLayout
+  title={t.license}
+  description="License and rights information for the source code, articles, photographs, images, and other content of Tomokichi's Engineering Growth Log."
+  locale={locale}
+  canonicalPath="/en/license/"
+  alternateHref="/license/"
+  alternateLocales={[
+    { locale: "ja", path: "/license/" },
+    { locale: "en", path: "/en/license/" },
+    { locale: "x-default", path: "/license/" },
+  ]}
+>
+  <section class="page-header">
+    <p class="eyebrow">License</p>
+    <h1>{t.license}</h1>
+  </section>
+
+  <section class="prose">
+    <div class="prose__section">
+      <h3>ソースコードについて</h3>
+      <p>
+        このサイトのソースコードは、MIT License のもとで公開しています。
+      </p>
+      <p>
+        MIT License の詳細は、リポジトリ内の <code>LICENSE</code> を参照してください。
+      </p>
+    </div>
+
+    <div class="prose__section">
+      <h3>コンテンツについて</h3>
+      <p>
+        記事本文、テキストコンテンツ、写真、画像、アイコン、OGP画像、デザイン素材、その他のコード以外のコンテンツは、明示がない限り MIT License の対象外です。
+      </p>
+      <p>
+        これらのコンテンツに関する権利は Tomokichi が留保します。引用など法令上認められる場合を除き、許可なく複製、転載、再配布、改変、利用することはできません。
+      </p>
+    </div>
+
+    <div class="prose__section">
+      <h3>第三者の素材について</h3>
+      <p>
+        使用しているライブラリ、ツール、依存パッケージ等には、それぞれのライセンスが適用されます。
+      </p>
+    </div>
+
+    <div class="prose__section">
+      <h3>Source code</h3>
+      <p>
+        The source code of this site is licensed under the MIT License.
+      </p>
+      <p>
+        See the <code>LICENSE</code> file in the repository for details.
+      </p>
+    </div>
+
+    <div class="prose__section">
+      <h3>Content</h3>
+      <p>
+        Articles, text content, photographs, images, icons, OGP images, design assets, and other non-code content are not covered by the MIT License unless explicitly stated otherwise.
+      </p>
+      <p>
+        All rights to such content are reserved by Tomokichi. You may not reproduce, redistribute, modify, or use these materials without permission, except where permitted by applicable law, such as quotation or other legally recognized exceptions.
+      </p>
+    </div>
+
+    <div class="prose__section">
+      <h3>Third-party materials</h3>
+      <p>
+        Third-party libraries, tools, and dependencies are subject to their respective licenses.
+      </p>
+    </div>
+  </section>
+
+  <style>
+    .page-header {
+      text-align: center;
+      margin-bottom: 4rem;
+      width: 100%;
+    }
+
+    .page-header h1 {
+      margin: 0;
+      font-size: clamp(2.35rem, 8vw, 5.2rem);
+      line-height: 0.98;
+      letter-spacing: -0.07em;
+    }
+
+    .eyebrow {
+      margin: 0 0 0.8rem;
+      color: var(--color-text-muted);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .prose {
+      max-width: 42rem;
+      margin-inline: auto;
+      line-height: 1.9;
+    }
+
+    .prose__section + .prose__section {
+      margin-top: 2.5rem;
+    }
+
+    .prose__section h3 {
+      margin: 0 0 1rem;
+      font-size: 1.35rem;
+      letter-spacing: -0.035em;
+    }
+
+    .prose__section p {
+      color: var(--color-text-muted);
+    }
+
+    code {
+      border: 1px solid var(--color-border);
+      border-radius: 0.4rem;
+      background: var(--color-surface-muted);
+      padding: 0.1rem 0.32rem;
+      font-size: 0.9em;
+    }
+  </style>
+</BaseLayout>
