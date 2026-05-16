@@ -12,7 +12,7 @@ If the app only needs to return a short chat-style response, the wait may not be
 
 I am currently building **Tabidea**, an AI travel planner. It is a web app that creates travel itineraries based on the destination, number of days, preferences, and other conditions entered by the user.
 
-[Tabidea](https://tabide.ai)
+https://tabide.ai
 
 The frontend is built with **Next.js / React / TypeScript**. For itinerary generation, I use the **Gemini API**. After generating an itinerary, I also plan to combine it with external APIs such as the **Google Maps API** to supplement spot information and improve the realism of routes and travel times.
 
@@ -306,4 +306,4 @@ I think it begins little by little **during the time the user is waiting for the
 
 Please try the generation waiting experience in **Tabidea**.
 
-[Tabidea](https://tabide.ai)
+https://tabide.ai
