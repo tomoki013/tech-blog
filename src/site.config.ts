@@ -1,3 +1,4 @@
+import defaultOgImage from "@/assets/og/default.png";
 import type { Locale } from "@/i18n/config";
 
 const normalizeSiteUrl = (url: string) => url.replace(/\/$/, "");
@@ -19,7 +20,7 @@ export const siteConfig = {
   },
   profileImage: "/icon-256.webp",
   profileImageSmall: "/icon-64.webp",
-  ogImage: "/og/default.png",
+  ogImage: defaultOgImage.src,
 } satisfies {
   url: string;
   name: Record<Locale, string>;
