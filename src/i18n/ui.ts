@@ -4,11 +4,11 @@ export const ui = {
   ja: {
     home: "ホーム",
     articles: "記事一覧",
-    archived: "Archive",
+    archived: "アーカイブ",
     privacy: "プライバシーポリシー",
     disclaimer: "免責事項",
     license: "ライセンス",
-    about: "About",
+    about: "このサイトについて",
     latestArticles: "最新記事",
     allArticles: "すべての記事",
     readMore: "続きを読む",

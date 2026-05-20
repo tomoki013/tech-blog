@@ -1,6 +1,6 @@
 ---
 import ArticleCard from "@/components/ArticleCard.astro";
-import { getArticlesPath } from "@/i18n/config";
+import { getArchivedPath } from "@/i18n/config";
 import { getUi } from "@/i18n/ui";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getArticlesWithPaths } from "@/lib/articles";
@@ -46,7 +46,7 @@ const articles = (await getArticlesWithPaths(locale)).slice(0, 5);
   <section aria-labelledby="latest-articles">
     <div class="section-header">
       <h2 id="latest-articles">{t.latestArticles}</h2>
-      <a href={getArticlesPath(locale)} data-astro-prefetch>{t.allArticles}</a>
+      <a href={getArchivedPath(locale)} data-astro-prefetch>{t.allArticles}</a>
     </div>
     <div class="article-list">
       {articles.length === 0 ? (
