@@ -10,7 +10,7 @@ export default defineConfig({
   trailingSlash: "always",
   prefetch: {
     prefetchAll: true,
-    defaultStrategy: "tap",
+    defaultStrategy: "hover",
   },
   markdown: {
     rehypePlugins: [

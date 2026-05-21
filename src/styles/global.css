@@ -210,10 +210,47 @@ img {
   gap: 1.4rem;
 }
 
+/* Named view-transition layers — header/footer stay put, only main content moves */
+.site-header {
+  view-transition-name: site-header;
+}
+.site-main {
+  view-transition-name: site-main;
+}
+.site-footer {
+  view-transition-name: site-footer;
+}
+
+/* Root (background layer) and chrome: instant swap, no crossfade */
 ::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 120ms;
-  animation-timing-function: ease-out;
+::view-transition-new(root),
+::view-transition-old(site-header),
+::view-transition-new(site-header),
+::view-transition-old(site-footer),
+::view-transition-new(site-footer) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Main content: slide-up entrance / slide-up exit */
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+@keyframes vt-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+::view-transition-old(site-main) {
+  animation: 120ms ease-in forwards vt-fade-out;
+}
+::view-transition-new(site-main) {
+  animation: 200ms ease-out forwards vt-fade-in;
 }
 
 @media (max-width: 760px) {
