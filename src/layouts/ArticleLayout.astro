@@ -388,7 +388,23 @@ const articleUrl = `${siteConfig.url}${canonicalPath}`;
     font-size: 0.92em;
   }
 
-  .article-content :global(pre) {
+  .article-content :global(pre.astro-code) {
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    padding: 1.25rem 1.5rem;
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+
+  .article-content :global(pre.astro-code code) {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    font-size: inherit;
+  }
+
+  /* Fallback for non-Shiki pre blocks */
+  .article-content :global(pre:not(.astro-code)) {
     overflow-x: auto;
     border: 1px solid var(--color-border);
     border-radius: 1rem;
@@ -396,7 +412,7 @@ const articleUrl = `${siteConfig.url}${canonicalPath}`;
     padding: 1rem;
   }
 
-  .article-content :global(pre code) {
+  .article-content :global(pre:not(.astro-code) code) {
     border: 0;
     background: transparent;
     padding: 0;

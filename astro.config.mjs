@@ -13,6 +13,14 @@ export default defineConfig({
     defaultStrategy: "hover",
   },
   markdown: {
+    shikiConfig: {
+      themes: {
+        light: "github-light",
+        dark: "github-dark",
+      },
+      defaultColor: "light",
+      wrap: false,
+    },
     rehypePlugins: [
       () => async (tree) => {
         const ogCache = new Map();
