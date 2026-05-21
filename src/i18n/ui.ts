@@ -2,13 +2,13 @@ import type { Locale } from "./config";
 
 export const ui = {
   ja: {
-    home: "ホーム",
+    home: "Home",
     articles: "記事一覧",
-    archived: "アーカイブ",
+    archived: "Archive",
     privacy: "プライバシーポリシー",
     disclaimer: "免責事項",
     license: "ライセンス",
-    about: "このサイトについて",
+    about: "About",
     latestArticles: "最新記事",
     allArticles: "すべての記事",
     readMore: "続きを読む",

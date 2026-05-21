@@ -210,6 +210,12 @@ img {
   gap: 1.4rem;
 }
 
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 120ms;
+  animation-timing-function: ease-out;
+}
+
 @media (max-width: 760px) {
   .site-header__inner {
     align-items: center;
