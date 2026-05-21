@@ -211,9 +211,15 @@ img {
 }
 
 /* Named view-transition layers — header/footer stay put, only main content moves */
-.site-header { view-transition-name: site-header; }
-.site-main   { view-transition-name: site-main;   }
-.site-footer { view-transition-name: site-footer; }
+.site-header {
+  view-transition-name: site-header;
+}
+.site-main {
+  view-transition-name: site-main;
+}
+.site-footer {
+  view-transition-name: site-footer;
+}
 
 /* Root (background layer) and chrome: instant swap, no crossfade */
 ::view-transition-old(root),
@@ -228,10 +234,16 @@ img {
 
 /* Main content: slide-up entrance / slide-up exit */
 @keyframes vt-fade-out {
-  to { opacity: 0; transform: translateY(-6px); }
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
 }
 @keyframes vt-fade-in {
-  from { opacity: 0; transform: translateY(10px); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
 }
 
 ::view-transition-old(site-main) {
