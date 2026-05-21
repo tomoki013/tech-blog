@@ -1,6 +1,6 @@
 ---
 title: "Lighthouseの点数だけを追いかけると、体感速度を見失うかもしれない"
-description: "個人技術ブログを作る中で考えた、パフォーマンス改善とページ遷移体験の話。Lighthouse、MPA、SPA、アニメーション、体感速度について。"
+description: "個人技術ブログに CSS View Transitions を実装して気づいた、パフォーマンスの実測値と体感速度の違い。Lighthouse、MPA、SPA、アニメーションについて。"
 publishedAt: "2026-05-16 17:00"
 tags: ["performance", "frontend", "astro", "ux", "web"]
 draft: true
@@ -24,7 +24,9 @@ FCP、LCP、TBT、CLS、Speed Index。
 
 **Lighthouse の点数が良いことと、実際に使って気持ちいいことは、必ずしも同じではない。**
 
-この記事では、個人ブログを作る中で考えた、パフォーマンスとページ遷移体験について書いてみる。
+このことを実感したのが、SPA 風のページ遷移アニメーションを実装したときだった。
+
+この記事では、その体験をもとに、パフォーマンスの実測値と体感速度の違いについて書いてみる。
 
 ## 最初は Lighthouse のスコアをかなり気にしていた
 
@@ -152,6 +154,54 @@ SEO やアクセシビリティの面でも扱いやすい。
 つまり、速度には **実測値としての速さ** と **体感としての速さ** がある。
 
 この2つは近いけれど、完全には一致しない。
+
+## CSS View Transitions を実装してみた
+
+このブログに、実際に SPA 風のページ遷移を実装してみた。
+
+使ったのは Astro の `ClientRouter` と、CSS の View Transitions API だ。
+
+`ClientRouter` は、Astro が提供するクライアントサイドルーターで、ページ遷移時にフルリロードをなくして SPA 的な挙動を実現する。  
+ブラウザのネイティブな View Transitions API と組み合わせることで、ページ間で要素をスムーズに切り替えるアニメーションが実装できる。
+
+やったことは大きく2つだ。
+
+まず、ヘッダー・メインコンテンツ・フッターにそれぞれ `view-transition-name` を設定する。  
+これにより、ページ遷移時にどの要素をどう扱うかをブラウザに伝えられる。
+
+```css
+.site-header { view-transition-name: site-header; }
+.site-main   { view-transition-name: site-main; }
+.site-footer { view-transition-name: site-footer; }
+```
+
+次に、ヘッダーとフッターはアニメーションなし（即時切り替え）にして、メインコンテンツだけに遷移アニメーションを当てる。  
+ヘッダーが毎回フェードすると落ち着かない。メインだけ動かすことで、「ページが変わった」という自然な文脈が生まれる。
+
+```css
+::view-transition-old(site-header),
+::view-transition-new(site-header),
+::view-transition-old(site-footer),
+::view-transition-new(site-footer) {
+  animation: none;
+}
+```
+
+この実装の前後で、Lighthouse のスコアはほとんど変わらなかった。
+
+Performance、FCP、LCP、TBT、CLS——数字は動かない。
+
+でも、実際にリンクをクリックしたときの体感はかなり変わった。
+
+実装前は、クリックするとページが一瞬白くなり、次のページが表示される。  
+実装後は、コンテンツがフッと消えて、次のコンテンツが現れる。  
+ヘッダーはその間もずっとそこにある。
+
+「速くなった」というより「引っかかりがなくなった」に近い感覚だ。
+
+これが、実測値と体感速度の差を最も強く感じた体験だった。
+
+Lighthouse では測れない部分に、体感の改善が確かにあった。
 
 ## アニメーションは悪ではない
 

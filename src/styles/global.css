@@ -232,25 +232,11 @@ img {
   mix-blend-mode: normal;
 }
 
-/* Main content: slide-up entrance / slide-up exit */
-@keyframes vt-fade-out {
-  to {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-}
-@keyframes vt-fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-}
-
-::view-transition-old(site-main) {
-  animation: 120ms ease-in forwards vt-fade-out;
-}
+/* Main content: instant swap, no animation */
+::view-transition-old(site-main),
 ::view-transition-new(site-main) {
-  animation: 200ms ease-out forwards vt-fade-in;
+  animation: none;
+  mix-blend-mode: normal;
 }
 
 @media (max-width: 760px) {

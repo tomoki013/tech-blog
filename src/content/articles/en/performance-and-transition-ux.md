@@ -1,6 +1,6 @@
 ---
 title: "Lighthouse Scores Are Not the Same as Perceived Performance"
-description: "Thoughts on performance optimization and page transition UX while building my personal tech blog. A reflection on Lighthouse, MPA, SPA, animations, and perceived speed."
+description: "What I learned after implementing CSS View Transitions on my static blog — how measured performance and perceived speed can tell very different stories."
 publishedAt: "2026-05-16 17:00"
 tags: ["performance", "frontend", "astro", "ux", "web"]
 draft: true
@@ -20,11 +20,13 @@ At first, I cared a lot about Lighthouse scores.
 FCP, LCP, TBT, CLS, Speed Index.  
 Seeing those numbers improve felt good, and it made performance improvements feel visible.
 
-But while building the blog, my thinking started to change a little.
+But while building the blog, my thinking started to change.
 
 **A good Lighthouse score and a good user experience are not always the same thing.**
 
-In this article, I want to write about performance and page transition UX from the perspective of building a personal blog.
+The moment that made this concrete for me was when I added SPA-style page transition animations to the blog.
+
+In this article, I want to write about what that experience taught me — specifically, the gap between measured performance numbers and how fast a site actually feels.
 
 ## At first, I cared a lot about Lighthouse
 
@@ -152,6 +154,53 @@ On the other hand, in an SPA, even if some processing is happening in the backgr
 In other words, there is **measured speed** and **perceived speed**.
 
 These two are related, but they are not the same.
+
+## I actually implemented CSS View Transitions
+
+I added SPA-style page transitions to this blog to see what would happen.
+
+The tools I used were Astro's `ClientRouter` and the browser-native View Transitions API.
+
+`ClientRouter` is Astro's client-side router. It removes full-page reloads during navigation, giving the site SPA-like behavior. Combined with the View Transitions API, it makes it possible to animate elements between pages using nothing but CSS.
+
+There were two main things I set up.
+
+First, I assigned `view-transition-name` to the header, main content area, and footer.  
+This tells the browser which elements to treat as distinct layers during a transition.
+
+```css
+.site-header { view-transition-name: site-header; }
+.site-main   { view-transition-name: site-main; }
+.site-footer { view-transition-name: site-footer; }
+```
+
+Second, I disabled animation on the header and footer — keeping them instant — and only animated the main content area.  
+If the header fades in and out on every navigation, it becomes distracting. Animating only the content creates a natural sense of "the page changed" without the chrome feeling unstable.
+
+```css
+::view-transition-old(site-header),
+::view-transition-new(site-header),
+::view-transition-old(site-footer),
+::view-transition-new(site-footer) {
+  animation: none;
+}
+```
+
+Before and after this implementation, I ran Lighthouse again.
+
+The scores barely moved. Performance, FCP, LCP, TBT, CLS — the numbers looked the same.
+
+But the experience of clicking a link felt noticeably different.
+
+Before: click a link, the page flashes white, the next page appears.  
+After: the content fades out, the next content fades in. The header stays exactly where it is throughout.
+
+It was not that the site felt "faster" in a measurable sense.  
+It felt more like the friction was gone.
+
+That was the clearest example I found of the gap between measured performance and perceived speed.
+
+Lighthouse had nothing to say about it. The improvement was real, but invisible to the tool.
 
 ## Animation is not the enemy
 
