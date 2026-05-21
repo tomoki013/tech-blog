@@ -3,7 +3,7 @@ title: "Lighthouse Scores Are Not the Same as Perceived Performance"
 description: "What I learned after implementing CSS View Transitions on my static blog — how measured performance and perceived speed can tell very different stories."
 publishedAt: "2026-05-16 17:00"
 tags: ["performance", "frontend", "astro", "ux", "web"]
-draft: true
+draft: false
 ---
 
 ## Introduction
