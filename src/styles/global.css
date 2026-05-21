@@ -231,22 +231,20 @@ img {
   view-transition-name: site-footer;
 }
 
-/* Root (background layer) and chrome: instant swap, no crossfade */
+/* Instant swap: hide old snapshots so old and new content never overlap */
 ::view-transition-old(root),
-::view-transition-new(root),
 ::view-transition-old(site-header),
-::view-transition-new(site-header),
-::view-transition-old(site-footer),
-::view-transition-new(site-footer) {
+::view-transition-old(site-main),
+::view-transition-old(site-footer) {
   animation: none;
-  mix-blend-mode: normal;
+  opacity: 0;
 }
 
-/* Main content: instant swap, no animation */
-::view-transition-old(site-main),
-::view-transition-new(site-main) {
+::view-transition-new(root),
+::view-transition-new(site-header),
+::view-transition-new(site-main),
+::view-transition-new(site-footer) {
   animation: none;
-  mix-blend-mode: normal;
 }
 
 @media (max-width: 760px) {
