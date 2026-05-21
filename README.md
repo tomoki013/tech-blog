@@ -28,7 +28,7 @@ Astro と Tailwind CSS v4 で構築した、軽量・高速・多言語対応の
 - **最小限の機能**
   - 認証、課金、DB、API、CMS は持たない
   - React や MDX は使わない
-  - 検索機能やシンタックスハイライトは必要になった時に追加する
+  - 検索機能などは必要になった時に追加する
 
 - **AI エージェントに任せやすい構成**
   - 技術選定と制約を明確にする
@@ -58,6 +58,7 @@ Astro と Tailwind CSS v4 で構築した、軽量・高速・多言語対応の
   - RSS
   - robots.txt
   - OGP メタタグ
+- Shiki によるシンタックスハイライト
 - Cloudflare Workers Static Assets へのデプロイ
 - Biome による lint / format
 - TypeScript による型チェック
@@ -69,7 +70,6 @@ Astro と Tailwind CSS v4 で構築した、軽量・高速・多言語対応の
 ただし、記事数や内容に応じて、以下は追加する可能性があります。
 
 - サイト内検索
-- シンタックスハイライト
 
 それ以外の大きな常設機能は、基本的には追加しない予定です。
 
@@ -185,7 +185,7 @@ The goal is to deliver articles as static HTML generated from Markdown, avoid un
 
   * No authentication, billing, database, API, or CMS
   * No React or MDX
-  * Search and syntax highlighting may be added only when needed
+  * Search may be added only when needed
 
 * **Designed for AI-assisted development**
 
@@ -217,6 +217,7 @@ The goal is to deliver articles as static HTML generated from Markdown, avoid un
   * RSS
   * robots.txt
   * Open Graph metadata
+* Syntax highlighting with Shiki
 * Deployment to Cloudflare Workers Static Assets
 * Linting and formatting with Biome
 * Type checking with TypeScript
@@ -228,7 +229,6 @@ This blog intentionally keeps its feature set small.
 Depending on the number and type of articles, the following features may be added in the future:
 
 * Site search
-* Syntax highlighting
 
 Other large permanent features are not planned for now.
 
