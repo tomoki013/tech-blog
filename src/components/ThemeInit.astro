@@ -9,5 +9,14 @@
     } catch {
       // Keep the default light theme if localStorage is unavailable.
     }
+
+    // Preserve theme across View Transitions — copy to new document before swap
+    // to prevent the flash caused by the new (statically-rendered) page resetting
+    // the dark class on <html>.
+    document.addEventListener("astro:before-swap", (event) => {
+      const theme = document.documentElement.dataset.theme ?? "light";
+      event.newDocument.documentElement.classList.toggle("dark", theme === "dark");
+      event.newDocument.documentElement.dataset.theme = theme;
+    });
   })();
 </script>

@@ -67,7 +67,11 @@ const t = getUi(locale);
     // Run on initial load
     init();
 
-    // Re-run on View Transitions (if used)
-    document.addEventListener("astro:after-swap", init);
+    // Re-run on View Transitions — guard prevents duplicate listeners from accumulating
+    // across navigations because this inline script re-executes on every page swap.
+    if (!window.__themeToggleListenerAdded) {
+      window.__themeToggleListenerAdded = true;
+      document.addEventListener("astro:after-swap", init);
+    }
   })();
 </script>
