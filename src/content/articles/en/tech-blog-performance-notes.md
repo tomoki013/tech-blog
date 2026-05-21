@@ -501,3 +501,7 @@ A good Lighthouse score is useful, but the real goal is not the score itself.
 The goal is to make the blog feel fast, stable, and comfortable to read.
 
 I want to keep improving this blog while maintaining that balance.
+
+---
+
+**Update (2026-05-21):** After publishing this article, I added syntax highlighting to this blog using Shiki. The reasoning behind the decision — including how I thought about the trade-off between readability and keeping the site lightweight — is covered in [Why I Added Syntax Highlighting with Shiki to My Fast Tech Blog](/en/articles/add-shiki-syntax-highlight/).
