@@ -40,6 +40,54 @@ draft: false
 
 「コードを読みやすくしたいが、初回表示の負荷は増やしたくない」という今回の要件には、Shiki がちょうどよかった。
 
+## 実際のコード例
+
+Shiki では、たとえば次のようにコードを HTML に変換できる。
+
+```ts
+import { codeToHtml } from "shiki";
+
+const html = await codeToHtml(`const message = "Hello, Shiki";`, {
+  lang: "ts",
+  theme: "github-dark",
+});
+
+console.log(html);
+```
+
+この処理はビルド時やサーバー側で実行できるため、記事を読むユーザーのブラウザでハイライト用の JavaScript を動かす必要がない。
+
+このブログでは、こうした仕組みを使って、コードブロックを読みやすくしつつ、記事ページ自体は静的で軽いまま保つ方針にしている。
+
+個人的には **GitHub Actions の YAML** がかなり相性いい。
+
+理由は、単色だと読みづらいけど、ハイライトされると効果がわかりやすいから。
+
+たとえば、設定ファイル系のコードもハイライトがあるだけでかなり読みやすくなる。
+
+```yaml
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+```
+
 ## 自作しなかった理由
 
 最初は、必要最低限のシンタックスハイライトを自作することも考えた。
