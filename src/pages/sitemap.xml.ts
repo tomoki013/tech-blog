@@ -1,33 +1,41 @@
 import type { APIRoute } from "astro";
 import {
   getAboutPath,
-  getArchivedPath,
   getArticlePath,
   getArticlesPath,
   getDisclaimerPath,
   getHomePath,
   getPrivacyPath,
+  getWorkPath,
+  getWorksPath,
 } from "@/i18n/config";
 import { getArticlesWithPaths } from "@/lib/articles";
+import { projects } from "@/lib/projects";
 import { absoluteUrl, toDateOnly } from "@/lib/seo";
 
 export const GET: APIRoute = async () => {
   const jaArticles = await getArticlesWithPaths("ja");
   const enArticles = await getArticlesWithPaths("en");
 
+  const worksPages = [
+    { loc: getWorksPath("ja"), lastmod: undefined },
+    { loc: getWorksPath("en"), lastmod: undefined },
+    ...projects.map((p) => ({ loc: getWorkPath("ja", p.id), lastmod: undefined })),
+    ...projects.map((p) => ({ loc: getWorkPath("en", p.id), lastmod: undefined })),
+  ];
+
   const staticPages = [
     { loc: getHomePath("ja"), lastmod: undefined },
     { loc: getArticlesPath("ja"), lastmod: undefined },
-    { loc: getArchivedPath("ja"), lastmod: undefined },
     { loc: getAboutPath("ja"), lastmod: undefined },
     { loc: getPrivacyPath("ja"), lastmod: undefined },
     { loc: getDisclaimerPath("ja"), lastmod: undefined },
     { loc: getHomePath("en"), lastmod: undefined },
     { loc: getArticlesPath("en"), lastmod: undefined },
-    { loc: getArchivedPath("en"), lastmod: undefined },
     { loc: getAboutPath("en"), lastmod: undefined },
     { loc: getPrivacyPath("en"), lastmod: undefined },
     { loc: getDisclaimerPath("en"), lastmod: undefined },
+    ...worksPages,
   ];
 
   const articlePages = [

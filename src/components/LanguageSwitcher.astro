@@ -13,6 +13,6 @@ const targetLocale = locale === "ja" ? "en" : "ja";
 const label = locale === "ja" ? t.switchToEnglish : t.switchToJapanese;
 ---
 
-<a class="language-switcher" href={alternateHref} hreflang={targetLocale} aria-label={t.language}>
+<a class="language-switcher" href={alternateHref} hreflang={targetLocale}>
   {label}
 </a>

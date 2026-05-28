@@ -14,7 +14,10 @@
     "format": "biome format --write .",
     "lint": "biome lint .",
     "typecheck": "astro check && tsc --noEmit",
-    "deploy": "pnpm build && wrangler deploy"
+    "deploy": "pnpm build && wrangler deploy",
+    "perf:js-budget": "node scripts/check-js-budget.mjs",
+    "perf:lhci": "lhci autorun",
+    "perf": "pnpm build && pnpm perf:js-budget && pnpm perf:lhci"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.0",
@@ -24,6 +27,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
     "@biomejs/biome": "^2.0.0",
+    "@lhci/cli": "^0.14.0",
     "typescript": "^5.0.0",
     "wrangler": "^4.0.0"
   }

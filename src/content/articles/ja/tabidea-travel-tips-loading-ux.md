@@ -4,6 +4,7 @@ description: "AI旅行プランナーTabideaで、生成の待ち時間を単な
 publishedAt: "2026-05-11 19:00"
 tags: ["AI", "UX", "個人開発", "旅行", "Tabidea"]
 draft: false
+projectIds: ["tabidea"]
 ---
 
 AIを使ったアプリを作っていると、どうしても避けて通れない問題がある。

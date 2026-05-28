@@ -21,3 +21,9 @@ export const formatDate = (date: Date, locale: "ja" | "en") =>
 
 export const toRfc822 = (date: Date) => date.toUTCString();
 export const toDateOnly = (date: Date) => date.toISOString().slice(0, 10);
+
+export const safeJsonLd = (data: object): string =>
+  JSON.stringify(data)
+    .replaceAll("<", "\\u003c")
+    .replaceAll(">", "\\u003e")
+    .replaceAll("&", "\\u0026");

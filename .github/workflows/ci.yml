@@ -45,3 +45,9 @@ jobs:
         run: pnpm build
         env:
           PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL }}
+
+      - name: Check JavaScript budget
+        run: pnpm perf:js-budget
+
+      - name: Run Lighthouse CI
+        run: pnpm perf:lhci

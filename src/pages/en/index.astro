@@ -1,14 +1,36 @@
 ---
 import ArticleCard from "@/components/ArticleCard.astro";
-import { getArchivedPath } from "@/i18n/config";
+import ProjectCard from "@/components/ProjectCard.astro";
+import { getArticlesPath, getWorksPath } from "@/i18n/config";
 import { getUi } from "@/i18n/ui";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getArticlesWithPaths } from "@/lib/articles";
+import { getFeaturedProjects } from "@/lib/projects";
+import { safeJsonLd } from "@/lib/seo";
 import { siteConfig } from "@/site.config";
 
 const locale = "en";
 const t = getUi(locale);
 const articles = (await getArticlesWithPaths(locale)).slice(0, 5);
+const featuredProjects = getFeaturedProjects();
+
+const focusAreas = [
+  "Performance optimization / Core Web Vitals",
+  "AI-assisted product development",
+  "Static site architecture / edge deployment",
+  "Web frontend development",
+  "Developer experience (DX)",
+];
+
+const websiteJsonLd = safeJsonLd({
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: siteConfig.name[locale],
+  url: siteConfig.url,
+  description: siteConfig.description[locale],
+  inLanguage: "en",
+  author: { "@type": "Person", name: siteConfig.author },
+});
 ---
 
 <BaseLayout
@@ -22,12 +44,17 @@ const articles = (await getArticlesWithPaths(locale)).slice(0, 5);
     { locale: "en", path: "/en/" },
     { locale: "x-default", path: "/" },
   ]}
+  jsonLd={websiteJsonLd}
 >
   <section class="hero">
     <div>
       <p class="eyebrow">Engineering Growth Log</p>
-      <h2>{siteConfig.name[locale]}</h2>
+      <h1>{siteConfig.name[locale]}</h1>
       <p>{t.topLead}</p>
+      <div class="hero__cta">
+        <a href={getArticlesPath(locale)} class="hero__cta-primary" data-astro-prefetch>{t.readArticles}</a>
+        <a href={getWorksPath(locale)} class="hero__cta-secondary" data-astro-prefetch>{t.seeMyWorks}</a>
+      </div>
     </div>
     <img
       class="hero__profile"
@@ -43,10 +70,29 @@ const articles = (await getArticlesWithPaths(locale)).slice(0, 5);
     />
   </section>
 
+  <section aria-labelledby="featured-works">
+    <div class="section-header">
+      <h2 id="featured-works">{t.featuredWorks}</h2>
+      <a href={getWorksPath(locale)} data-astro-prefetch>{t.seeAllWorks}</a>
+    </div>
+    <div class="project-grid">
+      {featuredProjects.map((project) => (
+        <ProjectCard project={project} locale={locale} />
+      ))}
+    </div>
+  </section>
+
+  <section aria-labelledby="focus-areas" class="focus-areas">
+    <h2 id="focus-areas">{t.focusAreas}</h2>
+    <ul class="focus-areas__list">
+      {focusAreas.map((area) => <li>{area}</li>)}
+    </ul>
+  </section>
+
   <section aria-labelledby="latest-articles">
     <div class="section-header">
       <h2 id="latest-articles">{t.latestArticles}</h2>
-      <a href={getArchivedPath(locale)} data-astro-prefetch>{t.allArticles}</a>
+      <a href={getArticlesPath(locale)} data-astro-prefetch>{t.allArticles}</a>
     </div>
     <div class="article-list">
       {articles.length === 0 ? (
@@ -76,7 +122,7 @@ const articles = (await getArticlesWithPaths(locale)).slice(0, 5);
     margin-bottom: 4rem;
   }
 
-  .hero h2 {
+  .hero h1 {
     margin: 0;
     font-size: clamp(1.6rem, 4vw, 2.2rem);
     line-height: 1.2;
@@ -88,6 +134,45 @@ const articles = (await getArticlesWithPaths(locale)).slice(0, 5);
     color: var(--color-text-muted);
     font-size: clamp(1.04rem, 2vw, 1.18rem);
     line-height: 1.9;
+  }
+
+  .hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .hero__cta-primary {
+    display: inline-block;
+    padding: 0.6rem 1.4rem;
+    background: var(--color-text);
+    color: var(--color-bg);
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.15s ease;
+  }
+
+  .hero__cta-primary:hover {
+    opacity: 0.8;
+  }
+
+  .hero__cta-secondary {
+    display: inline-block;
+    padding: 0.6rem 1.4rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text);
+    text-decoration: none;
+    transition: border-color 0.15s ease;
+  }
+
+  .hero__cta-secondary:hover {
+    border-color: var(--color-text-muted);
   }
 
   .hero__profile {
@@ -126,6 +211,45 @@ const articles = (await getArticlesWithPaths(locale)).slice(0, 5);
     font-size: 0.95rem;
   }
 
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
+    gap: 1rem;
+    margin-bottom: 4rem;
+  }
+
+  .focus-areas {
+    margin-bottom: 4rem;
+    padding: 2rem;
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    background: var(--color-surface);
+  }
+
+  .focus-areas h2 {
+    margin: 0 0 1rem;
+    font-size: clamp(1.3rem, 3vw, 1.6rem);
+    letter-spacing: -0.03em;
+  }
+
+  .focus-areas__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .focus-areas__list li {
+    font-size: 0.88rem;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    color: var(--color-text-muted);
+    background: var(--color-surface-muted);
+  }
+
   .article-list {
     display: grid;
     gap: 1rem;
@@ -139,6 +263,10 @@ const articles = (await getArticlesWithPaths(locale)).slice(0, 5);
     .section-header {
       align-items: flex-start;
       flex-direction: column;
+    }
+
+    .project-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>

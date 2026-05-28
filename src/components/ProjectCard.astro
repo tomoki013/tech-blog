@@ -1,0 +1,170 @@
+---
+import type { Project } from "@/data/projects";
+import type { Locale } from "@/i18n/config";
+import { getUi } from "@/i18n/ui";
+import { getProjectPath } from "@/lib/projects";
+
+interface Props {
+  project: Project;
+  locale: Locale;
+}
+
+const { project, locale } = Astro.props;
+const t = getUi(locale);
+const detailHref = getProjectPath(locale, project.id);
+---
+
+<article class="project-card">
+  <div class="project-card__body">
+    <div class="project-card__meta">
+      <span class="project-card__category">{project.category}</span>
+      <span class="project-card__status" data-status={project.status}>{project.status}</span>
+    </div>
+    <h2 class="project-card__title">
+      <a href={detailHref} data-astro-prefetch>{project.title[locale]}</a>
+    </h2>
+    <p class="project-card__description">{project.shortDescription[locale]}</p>
+    {project.stack.length > 0 && (
+      <ul class="project-card__stack" aria-label={t.stack}>
+        {project.stack.map((tech) => <li>{tech}</li>)}
+      </ul>
+    )}
+  </div>
+  <div class="project-card__links">
+    <a href={detailHref} class="project-card__detail-link" data-astro-prefetch>
+      {t.seeWork}
+    </a>
+    {project.links.website && (
+      <a
+        href={project.links.website}
+        class="project-card__ext-link"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Website
+      </a>
+    )}
+    {project.links.github && (
+      <a
+        href={project.links.github}
+        class="project-card__ext-link"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub
+      </a>
+    )}
+  </div>
+</article>
+
+<style>
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.25rem;
+    padding: 1.4rem;
+    border: 1px solid var(--color-border);
+    border-radius: 1.4rem;
+    background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .project-card__meta {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+  }
+
+  .project-card__category,
+  .project-card__status {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    background: var(--color-surface-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .project-card__status[data-status="active"] {
+    color: var(--color-text);
+    border-color: currentColor;
+  }
+
+  .project-card__title {
+    margin: 0 0 0.55rem;
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    line-height: 1.25;
+    letter-spacing: -0.03em;
+  }
+
+  .project-card__title a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .project-card__title a:hover {
+    text-decoration: underline;
+  }
+
+  .project-card__description {
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.75;
+    font-size: 0.95rem;
+  }
+
+  .project-card__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0;
+    margin: 0.9rem 0 0;
+    list-style: none;
+  }
+
+  .project-card__stack li {
+    font-size: 0.78rem;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.4rem;
+    color: var(--color-text-muted);
+    background: var(--color-surface-muted);
+  }
+
+  .project-card__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    align-items: center;
+  }
+
+  .project-card__detail-link {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity 0.15s ease;
+  }
+
+  .project-card__detail-link:hover {
+    opacity: 0.7;
+  }
+
+  .project-card__ext-link {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity 0.15s ease;
+  }
+
+  .project-card__ext-link:hover {
+    opacity: 0.7;
+  }
+</style>

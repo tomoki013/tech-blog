@@ -4,6 +4,7 @@ description: "個人技術ブログに CSS View Transitions を実装して気�
 publishedAt: "2026-05-16 17:00"
 tags: ["performance", "frontend", "astro", "ux", "web"]
 draft: false
+projectIds: ["tech-blog"]
 ---
 
 ## はじめに

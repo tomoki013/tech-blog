@@ -1,0 +1,294 @@
+---
+import type { ProjectId } from "@/data/project-ids";
+import { getWorkPath, getWorksPath } from "@/i18n/config";
+import { getUi } from "@/i18n/ui";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getArticlesWithPathsByProjectId } from "@/lib/articles";
+import { projects } from "@/lib/projects";
+
+const locale = "en";
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { id: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const t = getUi(locale);
+const canonicalPath = getWorkPath(locale, project.id);
+const japanesePath = getWorkPath("ja", project.id);
+const relatedArticles = await getArticlesWithPathsByProjectId(locale, project.id as ProjectId);
+---
+
+<BaseLayout
+  title={`${project.title[locale]} — Works`}
+  description={project.shortDescription[locale]}
+  locale={locale}
+  canonicalPath={canonicalPath}
+  alternateHref={japanesePath}
+  alternateLocales={[
+    { locale: "ja", path: japanesePath },
+    { locale: "en", path: canonicalPath },
+    { locale: "x-default", path: japanesePath },
+  ]}
+>
+  <article class="project-detail">
+    <header class="project-detail__header">
+      <p class="eyebrow"><a href={getWorksPath(locale)}>Works</a></p>
+      <h1 class="project-detail__title">{project.title[locale]}</h1>
+      <p class="project-detail__lead">{project.shortDescription[locale]}</p>
+      <dl class="project-detail__meta">
+        <div>
+          <dt>{t.status}</dt>
+          <dd data-status={project.status}>{project.status}</dd>
+        </div>
+        <div>
+          <dt>{t.category}</dt>
+          <dd>{project.category}</dd>
+        </div>
+        {project.stack.length > 0 && (
+          <div class="project-detail__stack-entry">
+            <dt>{t.stack}</dt>
+            <dd>
+              <ul class="project-detail__stack">
+                {project.stack.map((tech) => <li>{tech}</li>)}
+              </ul>
+            </dd>
+          </div>
+        )}
+      </dl>
+      {(project.links.website || project.links.github) && (
+        <div class="project-detail__ext-links">
+          {project.links.website && (
+            <a href={project.links.website} target="_blank" rel="noopener noreferrer" class="project-detail__ext-link">
+              Website ↗
+            </a>
+          )}
+          {project.links.github && (
+            <a href={project.links.github} target="_blank" rel="noopener noreferrer" class="project-detail__ext-link">
+              GitHub ↗
+            </a>
+          )}
+        </div>
+      )}
+    </header>
+
+    <section class="project-detail__section" aria-labelledby="overview">
+      <h2 id="overview">{t.overview}</h2>
+      <p>{project.description[locale]}</p>
+    </section>
+
+    <section class="project-detail__section" aria-labelledby="problem">
+      <h2 id="problem">{t.problem}</h2>
+      <p>{project.problem[locale]}</p>
+    </section>
+
+    <section class="project-detail__section" aria-labelledby="approach">
+      <h2 id="approach">{t.approach}</h2>
+      <p>{project.approach[locale]}</p>
+    </section>
+
+    <section class="project-detail__section" aria-labelledby="technical-decisions">
+      <h2 id="technical-decisions">{t.technicalDecisions}</h2>
+      <ul>
+        {project.technicalDecisions[locale].map((item) => <li>{item}</li>)}
+      </ul>
+    </section>
+
+    <section class="project-detail__section" aria-labelledby="learnings">
+      <h2 id="learnings">{t.learnings}</h2>
+      <ul>
+        {project.learnings[locale].map((item) => <li>{item}</li>)}
+      </ul>
+    </section>
+
+    <section class="project-detail__section" aria-labelledby="related-articles">
+      <h2 id="related-articles">{t.relatedArticles}</h2>
+      {relatedArticles.length === 0 ? (
+        <p class="project-detail__empty">{t.noRelatedArticles}</p>
+      ) : (
+        <ul class="project-detail__article-list">
+          {relatedArticles.map(({ article, href }) => (
+            <li>
+              <a href={href} data-astro-prefetch>{article.data.title}</a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .project-detail {
+    width: min(100%, 46rem);
+    margin-inline: auto;
+  }
+
+  .project-detail__header {
+    margin-bottom: 2.5rem;
+  }
+
+  .eyebrow {
+    margin: 0 0 0.8rem;
+    color: var(--color-text-muted);
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .eyebrow a:hover {
+    text-decoration: underline;
+  }
+
+  .project-detail__title {
+    margin: 0 0 0.5rem;
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    line-height: 1.2;
+    letter-spacing: -0.035em;
+  }
+
+  .project-detail__lead {
+    margin: 0 0 1.25rem;
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  .project-detail__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+    margin: 0 0 1.25rem;
+  }
+
+  .project-detail__meta > div {
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+  }
+
+  .project-detail__stack-entry {
+    width: 100%;
+  }
+
+  .project-detail__stack-entry dd {
+    display: inline;
+  }
+
+  .project-detail__meta dt {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .project-detail__meta dd {
+    font-size: 0.88rem;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .project-detail__meta dd[data-status="active"] {
+    font-weight: 600;
+  }
+
+  .project-detail__stack {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .project-detail__stack li {
+    font-size: 0.78rem;
+    padding: 0.18rem 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.4rem;
+    color: var(--color-text-muted);
+    background: var(--color-surface-muted);
+  }
+
+  .project-detail__ext-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .project-detail__ext-link {
+    font-size: 0.9rem;
+    color: var(--color-link);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity 0.15s ease;
+  }
+
+  .project-detail__ext-link:hover {
+    opacity: 0.7;
+  }
+
+  .project-detail__section {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .project-detail__section h2 {
+    margin: 0 0 0.9rem;
+    font-size: 1.45rem;
+    letter-spacing: -0.03em;
+  }
+
+  .project-detail__section p {
+    margin: 0;
+    line-height: 1.9;
+    color: color-mix(in srgb, var(--color-text) 88%, var(--color-text-muted));
+  }
+
+  .project-detail__section ul {
+    padding-left: 1.4rem;
+    margin: 0;
+  }
+
+  .project-detail__section li {
+    margin-bottom: 0.55rem;
+    line-height: 1.75;
+    color: color-mix(in srgb, var(--color-text) 88%, var(--color-text-muted));
+  }
+
+  .project-detail__empty {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+
+  .project-detail__article-list {
+    padding-left: 1.4rem;
+    margin: 0;
+  }
+
+  .project-detail__article-list li {
+    margin-bottom: 0.5rem;
+  }
+
+  .project-detail__article-list a {
+    color: var(--color-link);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity 0.15s ease;
+  }
+
+  .project-detail__article-list a:hover {
+    opacity: 0.7;
+  }
+</style>
