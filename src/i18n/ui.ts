@@ -3,7 +3,7 @@ import type { Locale } from "./config";
 export const ui = {
   ja: {
     home: "Home",
-    articles: "記事一覧",
+    articles: "Articles",
     archived: "Archive",
     privacy: "プライバシーポリシー",
     disclaimer: "免責事項",

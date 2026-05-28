@@ -31,8 +31,8 @@ export const projects: Project[] = [
     status: "active",
     category: "app",
     title: {
-      ja: "tabidea",
-      en: "tabidea",
+      ja: "Tabidea",
+      en: "Tabidea",
     },
     shortDescription: {
       ja: "AIが旅程を自動生成する旅行計画アプリ",
@@ -85,8 +85,8 @@ export const projects: Project[] = [
     status: "maintained",
     category: "blog",
     title: {
-      ja: "旅日記",
-      en: "Travel Diary",
+      ja: "ともきちの旅行日記",
+      en: "Tomokichi's Travel Diary",
     },
     shortDescription: {
       ja: "実運用中の旅行ブログ。SEOとパフォーマンス改善を継続的に実践しています。",
@@ -132,8 +132,8 @@ export const projects: Project[] = [
     status: "active",
     category: "blog",
     title: {
-      ja: "エンジニア成長記",
-      en: "Engineering Growth Log",
+      ja: "ともきちのエンジニア成長記",
+      en: "Tomokichi's Engineering Growth Log",
     },
     shortDescription: {
       ja: "このサイト自体。Astroで構築した静的ブログ兼ポートフォリオサイトです。",
