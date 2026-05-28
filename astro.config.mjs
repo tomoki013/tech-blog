@@ -195,6 +195,27 @@ export default defineConfig({
         }
         await traverse(tree);
       },
+      // Labels unlabeled GFM task-list checkboxes (<input type="checkbox" disabled>)
+      // so screen readers have an accessible name.
+      () => (tree) => {
+        function visit(node) {
+          if (!node?.children) return;
+          for (const child of node.children) {
+            if (
+              child.type === "element" &&
+              child.tagName === "input" &&
+              child.properties?.type === "checkbox" &&
+              "disabled" in (child.properties ?? {}) &&
+              !child.properties?.["aria-label"] &&
+              !child.properties?.id
+            ) {
+              child.properties["aria-label"] = "Task item";
+            }
+            visit(child);
+          }
+        }
+        visit(tree);
+      },
     ],
   },
   build: {

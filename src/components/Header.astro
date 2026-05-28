@@ -1,5 +1,11 @@
 ---
-import { getAboutPath, getArchivedPath, getHomePath, type Locale } from "@/i18n/config";
+import {
+  getAboutPath,
+  getArticlesPath,
+  getHomePath,
+  getWorksPath,
+  type Locale,
+} from "@/i18n/config";
 import { getUi } from "@/i18n/ui";
 import { siteConfig } from "@/site.config";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
@@ -16,14 +22,15 @@ const t = getUi(locale);
 
 <header class="site-header">
   <div class="site-header__inner">
-    <a class="site-header__brand" href={getHomePath(locale)} aria-label={siteConfig.name[locale]} data-astro-prefetch>
+    <a class="site-header__brand" href={getHomePath(locale)} data-astro-prefetch>
       <span>{siteConfig.name[locale]}</span>
       <span class="site-header__author">{siteConfig.author}</span>
     </a>
 
     <nav class="site-header__nav" aria-label="Primary navigation">
       <a href={getHomePath(locale)} data-astro-prefetch>{t.home}</a>
-      <a href={getArchivedPath(locale)} data-astro-prefetch>{t.archived}</a>
+      <a href={getArticlesPath(locale)} data-astro-prefetch>{t.articles}</a>
+      <a href={getWorksPath(locale)} data-astro-prefetch>{t.works}</a>
       <a href={getAboutPath(locale)} data-astro-prefetch>{t.about}</a>
     </nav>
 

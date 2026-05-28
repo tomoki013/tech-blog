@@ -1,0 +1,92 @@
+---
+import ProjectCard from "@/components/ProjectCard.astro";
+import { getUi } from "@/i18n/ui";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getFeaturedProjects, projects } from "@/lib/projects";
+
+const locale = "en";
+const t = getUi(locale);
+const featured = getFeaturedProjects();
+const all = projects;
+---
+
+<BaseLayout
+  title="Works"
+  description="A list of personal projects and works — apps, blogs, and tools I have built and maintained."
+  locale={locale}
+  canonicalPath="/en/works/"
+  alternateHref="/works/"
+  alternateLocales={[
+    { locale: "ja", path: "/works/" },
+    { locale: "en", path: "/en/works/" },
+    { locale: "x-default", path: "/works/" },
+  ]}
+>
+  <section class="page-header">
+    <p class="eyebrow">Works</p>
+    <h2>Works</h2>
+    <p>A list of projects I have built and continue to work on.</p>
+  </section>
+
+  <section class="works-section" aria-labelledby="featured-works">
+    <h2 id="featured-works" class="section-title">{t.featuredWorks}</h2>
+    <div class="works-grid">
+      {featured.map((project) => (
+        <ProjectCard project={project} locale={locale} />
+      ))}
+    </div>
+  </section>
+
+  <section class="works-section" aria-labelledby="all-works">
+    <h2 id="all-works" class="section-title">{t.allWorks}</h2>
+    <div class="works-grid">
+      {all.map((project) => (
+        <ProjectCard project={project} locale={locale} />
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header {
+    margin-bottom: 3rem;
+  }
+
+  .page-header h2 {
+    margin: 0;
+    font-size: clamp(2.35rem, 8vw, 5.2rem);
+    line-height: 0.98;
+    letter-spacing: -0.07em;
+  }
+
+  .page-header p {
+    color: var(--color-text-muted);
+    font-size: clamp(1.04rem, 2vw, 1.18rem);
+    line-height: 1.9;
+  }
+
+  .eyebrow {
+    margin: 0 0 0.8rem;
+    color: var(--color-text-muted);
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .works-section {
+    margin-bottom: 3.5rem;
+  }
+
+  .section-title {
+    margin: 0 0 1.5rem;
+    font-size: clamp(1.35rem, 3vw, 1.75rem);
+    letter-spacing: -0.035em;
+  }
+
+  .works-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+    gap: 1.25rem;
+  }
+</style>

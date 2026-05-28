@@ -3,6 +3,7 @@ import { render } from "astro:content";
 import { getArticlePath, getArticlesPath } from "@/i18n/config";
 import ArticleLayout from "@/layouts/ArticleLayout.astro";
 import { getPublishedArticleSlugs, getPublishedArticles, getSlugFromId } from "@/lib/articles";
+import { getProjectById } from "@/lib/projects";
 
 const locale = "en";
 
@@ -25,6 +26,9 @@ export async function getStaticPaths() {
 const { article, slug, hasJapanese } = Astro.props;
 const { Content } = await render(article);
 const canonicalPath = getArticlePath(locale, slug);
+const relatedProjects = article.data.projectIds
+  .map((id) => getProjectById(id))
+  .filter((p) => p !== undefined);
 const japanesePath = hasJapanese ? getArticlePath("ja", slug) : getArticlesPath("ja");
 const alternateLocales = hasJapanese
   ? [
@@ -45,6 +49,8 @@ const alternateLocales = hasJapanese
   publishedAt={article.data.publishedAt}
   updatedAt={article.data.updatedAt}
   tags={article.data.tags}
+  projectIds={article.data.projectIds}
+  relatedProjects={relatedProjects}
 >
   <Content />
 </ArticleLayout>

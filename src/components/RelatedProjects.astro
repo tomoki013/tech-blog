@@ -1,0 +1,80 @@
+---
+import type { Project } from "@/data/projects";
+import type { Locale } from "@/i18n/config";
+import { getUi } from "@/i18n/ui";
+import { getProjectPath } from "@/lib/projects";
+
+interface Props {
+  projects: Project[];
+  locale: Locale;
+}
+
+const { projects, locale } = Astro.props;
+const t = getUi(locale);
+---
+
+{projects.length > 0 && (
+  <section class="related-projects" aria-labelledby="related-projects-heading">
+    <h2 id="related-projects-heading">{t.relatedProjects}</h2>
+    <ul class="related-projects__list">
+      {projects.map((project) => (
+        <li class="related-projects__item">
+          <a href={getProjectPath(locale, project.id)} class="related-projects__link" data-astro-prefetch>
+            <span class="related-projects__title">{project.title[locale]}</span>
+            <span class="related-projects__description">{project.shortDescription[locale]}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}
+
+<style>
+  .related-projects {
+    margin-top: 3.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .related-projects h2 {
+    margin: 0 0 1.25rem;
+    font-size: 1.25rem;
+    letter-spacing: -0.03em;
+  }
+
+  .related-projects__list {
+    display: grid;
+    gap: 0.75rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .related-projects__link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    background: var(--color-surface);
+    text-decoration: none;
+    transition: border-color 0.15s ease;
+  }
+
+  .related-projects__link:hover {
+    border-color: var(--color-text-muted);
+  }
+
+  .related-projects__title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--color-text);
+  }
+
+  .related-projects__description {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+</style>

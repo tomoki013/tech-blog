@@ -4,6 +4,7 @@ description: "Astroで作った爆速技術ブログに、Shikiでシンタッ�
 publishedAt: "2026-05-21 16:30"
 tags: [ "Astro", "Shiki", "Web", "Performance", "技術ブログ"]
 draft: false
+projectIds: ["tech-blog"]
 ---
 
 ## はじめに

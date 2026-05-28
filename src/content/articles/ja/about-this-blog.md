@@ -5,6 +5,7 @@ publishedAt: "2026-05-11 15:30"
 updatedAt: "2026-05-13 15:00"
 tags: ["Astro", "Cloudflare", "技術ブログ", "個人開発"]
 draft: false
+projectIds: ["tech-blog"]
 ---
 
 ## 爆速な技術ブログを作り直した理由

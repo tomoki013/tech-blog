@@ -1,13 +1,27 @@
 ---
+import { getUi } from "@/i18n/ui";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { absoluteUrl, safeJsonLd } from "@/lib/seo";
 import { siteConfig } from "@/site.config";
 
 const locale = "en";
+const t = getUi(locale);
+
+const personJsonLd = safeJsonLd({
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Tomokichi",
+  url: absoluteUrl("/en/about/"),
+  description:
+    "Web engineer building apps, blogs, and tools — documenting the process of learning through real projects.",
+  jobTitle: "Web Engineer",
+  sameAs: ["https://x.com/tomokichi178694", "https://github.com/tomoki013"],
+});
 ---
 
 <BaseLayout
-  title="About"
-  description="About Tomokichi and this blog, covering indie development, web engineering, AI-assisted work, product design, and operational improvements."
+  title={`About — ${siteConfig.name[locale]}`}
+  description="Tomokichi is a web engineer building apps, blogs, and tools while documenting the journey — performance, AI, static sites, and developer experience."
   locale={locale}
   canonicalPath="/en/about/"
   alternateHref="/about/"
@@ -16,137 +30,254 @@ const locale = "en";
     { locale: "en", path: "/en/about/" },
     { locale: "x-default", path: "/about/" },
   ]}
+  jsonLd={personJsonLd}
 >
-  <section class="page-header">
-    <p class="eyebrow">About</p>
-    <h2>About this blog</h2>
-    <p>I write down what I learn from building, designing, operating, and improving software.</p>
-  </section>
+  <article class="about">
+    <header class="about__header">
+      <p class="eyebrow">About</p>
+      <h1 class="about__title">About me</h1>
+      <div class="about__intro">
+        <img
+          class="about__avatar"
+          src="/icon-256.webp"
+          srcset="/icon-256.webp 256w, /icon-512.webp 512w"
+          sizes="120px"
+          alt="Tomokichi profile"
+          width="120"
+          height="120"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
+        <p class="about__bio">
+          I'm Tomokichi, a web engineer building apps, blogs, and tools on the side — and writing
+          about what I learn along the way.
+        </p>
+      </div>
+    </header>
 
-  <section class="about-card">
-    <img
-      class="hero__profile"
-      src="/icon-256.webp"
-      srcset="/icon-256.webp 256w, /icon-512.webp 512w"
-      sizes="179px"
-      alt="Tomokichi profile"
-      width="179"
-      height="179"
-      loading="eager"
-      fetchpriority="high"
-      decoding="async"
-    />
-    <p>
-      I am Tomokichi. This blog focuses on indie development, web engineering, AI-assisted development,
-      product design, and operational improvements.
-    </p>
-    <p>
-      I value not only polished conclusions, but also the messy process of learning and iteration.
-    </p>
-  </section>
+    <section class="about__section" aria-labelledby="what-i-build">
+      <h2 id="what-i-build">{t.whatIBuild}</h2>
+      <ul>
+        <li><strong>Web apps</strong> — practical tools like an AI-powered travel itinerary planner</li>
+        <li><strong>Blogs</strong> — this engineering log and an active travel blog in production</li>
+        <li><strong>Dev tools</strong> — small utilities that make everyday development a bit faster</li>
+      </ul>
+    </section>
 
-  <section class="contact-cards">
-    <a href="https://x.com/tomokichi178694" target="_blank" rel="noopener noreferrer" class="contact-card" aria-label="Contact on X">
-      <div class="contact-card__icon">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-        </svg>
-      </div>
-      <div class="contact-card__content">
-        <h3>Contact on X</h3>
-        <p>@tomokichi178694</p>
-      </div>
-    </a>
+    <section class="about__section" aria-labelledby="engineering-interests">
+      <h2 id="engineering-interests">{t.engineeringInterests}</h2>
+      <ul>
+        <li>Performance optimization and Core Web Vitals — measure, improve, repeat</li>
+        <li>Static site architecture and edge deployment with Cloudflare Workers</li>
+        <li>AI-assisted product development and prompt design</li>
+        <li>Developer experience (DX) — tooling, linting, build pipelines</li>
+        <li>Accessibility and SEO — baked in from the design phase, not bolted on later</li>
+      </ul>
+    </section>
 
-    <a href="https://github.com/tomoki013/tech-blog/issues" target="_blank" rel="noopener noreferrer" class="contact-card" aria-label="Contact via Issues">
-      <div class="contact-card__icon">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-        </svg>
+    <section class="about__section" aria-labelledby="current-focus">
+      <h2 id="current-focus">{t.currentFocus}</h2>
+      <ul>
+        <li>Refining this Astro-based static site — architecture, performance, and SEO</li>
+        <li>Expanding tabidea — an AI travel-planning app built with Next.js and Supabase</li>
+      </ul>
+    </section>
+
+    <section class="about__section" aria-labelledby="my-tech-stack">
+      <h2 id="my-tech-stack">{t.myTechStack}</h2>
+      <ul class="about__stack">
+        {["TypeScript", "Astro", "Next.js", "React", "Tailwind CSS", "Cloudflare Workers", "Supabase", "Biome"].map((tech) => (
+          <li>{tech}</li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="about__section" aria-labelledby="contact-section">
+      <h2 id="contact-section">{t.contactMe}</h2>
+      <div class="contact-cards">
+        <a
+          href="https://x.com/tomokichi178694"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="contact-card"
+          aria-label="Contact on X"
+        >
+          <div class="contact-card__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </div>
+          <div class="contact-card__content">
+            <p class="contact-card__name">Contact on X</p>
+            <p class="contact-card__handle">@tomokichi178694</p>
+          </div>
+        </a>
+
+        <a
+          href="https://github.com/tomoki013/tech-blog/issues"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="contact-card"
+          aria-label="Contact via GitHub Issues"
+        >
+          <div class="contact-card__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+          </div>
+          <div class="contact-card__content">
+            <p class="contact-card__name">Contact via GitHub Issues</p>
+            <p class="contact-card__handle">tech-blog</p>
+          </div>
+        </a>
       </div>
-      <div class="contact-card__content">
-        <h3>Contact via Issues</h3>
-        <p>tech-blog</p>
-      </div>
-    </a>
-  </section>
+    </section>
+  </article>
 </BaseLayout>
 
 <style>
-  .about-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-    text-align: center;
+  .about {
+    width: min(100%, 46rem);
+    margin-inline: auto;
+  }
+
+  .about__header {
     margin-bottom: 3rem;
   }
 
-  .about-card p {
-    max-width: 42rem;
+  .eyebrow {
+    margin: 0 0 0.8rem;
     color: var(--color-text-muted);
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .about__title {
+    margin: 0 0 1.5rem;
+    font-size: clamp(2.35rem, 8vw, 5.2rem);
+    line-height: 0.98;
+    letter-spacing: -0.07em;
+  }
+
+  .about__intro {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .about__avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 9999px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .about__bio {
+    margin: 0;
     font-size: 1.06rem;
     line-height: 1.85;
+    color: color-mix(in srgb, var(--color-text) 88%, var(--color-text-muted));
+  }
+
+  @media (max-width: 560px) {
+    .about__intro {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.25rem;
+    }
+  }
+
+  .about__section {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .about__section h2 {
+    margin: 0 0 0.9rem;
+    font-size: 1.45rem;
+    letter-spacing: -0.03em;
+  }
+
+  .about__section > ul {
+    padding-left: 1.4rem;
     margin: 0;
   }
 
-  .about-card p + p {
-    margin-top: 1.2rem;
+  .about__section li {
+    margin-bottom: 0.55rem;
+    line-height: 1.75;
+    color: color-mix(in srgb, var(--color-text) 88%, var(--color-text-muted));
+  }
+
+  .about__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .about__stack li {
+    font-size: 0.82rem;
+    padding: 0.25rem 0.65rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.4rem;
+    color: var(--color-text-muted);
+    background: var(--color-surface-muted);
+    margin: 0;
+    line-height: 1.5;
   }
 
   .contact-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
-    gap: 1.5rem;
-    margin-top: 3rem;
+    gap: 1.25rem;
   }
 
   .contact-card {
     display: flex;
     align-items: center;
     gap: 1.25rem;
-    padding: 1.5rem;
+    padding: 1.25rem 1.5rem;
     border: 1px solid var(--color-border);
     border-radius: 1rem;
     background: var(--color-surface);
-    box-shadow: var(--shadow-soft);
     text-decoration: none;
-    transition: all 0.2s ease;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
 
   .contact-card:hover {
     border-color: var(--color-link);
-    background: color-mix(in srgb, var(--color-surface) 90%, var(--color-link) 10%);
-    box-shadow: 0 8px 24px rgb(28 27 24 / 0.12);
-    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgb(28 27 24 / 0.08);
   }
 
   .contact-card__icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 3.5rem;
-    height: 3.5rem;
+    width: 3rem;
+    height: 3rem;
     border-radius: 0.75rem;
     background: var(--color-surface-muted);
     color: var(--color-text);
     flex-shrink: 0;
   }
 
-  .contact-card__content {
-    flex: 1;
-    text-align: left;
-  }
-
-  .contact-card__content h3 {
+  .contact-card__name {
     margin: 0;
-    font-size: 1.1rem;
+    font-size: 1rem;
+    font-weight: 600;
     color: var(--color-text);
   }
 
-  .contact-card__content p {
-    margin: 0.35rem 0 0 0;
-    font-size: 0.95rem;
+  .contact-card__handle {
+    margin: 0.2rem 0 0;
+    font-size: 0.88rem;
     color: var(--color-text-muted);
   }
 </style>

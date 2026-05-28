@@ -1,4 +1,5 @@
 import { type CollectionEntry, getCollection } from "astro:content";
+import type { ProjectId } from "@/data/project-ids";
 import type { Locale } from "@/i18n/config";
 import { getArticlePath } from "@/i18n/config";
 
@@ -48,4 +49,14 @@ export const getArticlesWithPaths = async (locale: Locale) => {
       href: getArticlePath(locale, slug),
     };
   });
+};
+
+export const getArticlesByProjectId = async (locale: Locale, projectId: ProjectId) => {
+  const articles = await getPublishedArticles(locale);
+  return articles.filter((article) => article.data.projectIds.includes(projectId));
+};
+
+export const getArticlesWithPathsByProjectId = async (locale: Locale, projectId: ProjectId) => {
+  const articles = await getArticlesWithPaths(locale);
+  return articles.filter(({ article }) => article.data.projectIds.includes(projectId));
 };

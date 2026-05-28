@@ -1,6 +1,7 @@
 import { defineCollection } from "astro:content";
 import { z } from "astro:schema";
 import { glob } from "astro/loaders";
+import { projectIds } from "@/data/project-ids";
 
 const articles = defineCollection({
   loader: glob({
@@ -14,6 +15,7 @@ const articles = defineCollection({
     updatedAt: z.coerce.date().optional(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
+    projectIds: z.array(z.enum(projectIds)).default([]),
   }),
 });
 

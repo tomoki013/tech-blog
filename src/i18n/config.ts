@@ -27,3 +27,7 @@ export const getArticlePath = (locale: Locale, slug: string) =>
   locale === defaultLocale ? `/articles/${slug}/` : `/${locale}/articles/${slug}/`;
 export const getRssPath = (locale: Locale) =>
   locale === defaultLocale ? "/rss.xml" : `/${locale}/rss.xml`;
+export const getWorksPath = (locale: Locale) =>
+  locale === defaultLocale ? "/works/" : `/${locale}/works/`;
+export const getWorkPath = (locale: Locale, id: string) =>
+  locale === defaultLocale ? `/works/${id}/` : `/${locale}/works/${id}/`;

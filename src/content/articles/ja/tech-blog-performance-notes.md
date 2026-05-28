@@ -4,6 +4,7 @@ description: "Astroで静的な技術ブログを作るときに意識した、H
 publishedAt: "2026-05-16 15:00"
 tags: ["Astro", "Web Performance", "Lighthouse", "技術ブログ"]
 draft: false
+projectIds: ["tech-blog"]
 ---
 
 ## はじめに
