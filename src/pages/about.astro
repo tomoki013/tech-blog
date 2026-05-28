@@ -13,8 +13,13 @@ const personJsonLd = safeJsonLd({
   name: "Tomokichi",
   url: absoluteUrl("/about/"),
   description: siteConfig.bio[locale],
-  jobTitle: "Web Engineer",
-  sameAs: ["https://x.com/tomokichi178694", "https://github.com/tomoki013"],
+  jobTitle: "Frontend Engineer",
+  sameAs: [
+    "https://x.com/tomokichi178694",
+    "https://github.com/tomoki013",
+    "https://zenn.dev/tomokichi",
+    "https://www.linkedin.com/in/tomoki-takagi-5b08a738b/",
+  ],
 });
 ---
 
@@ -48,10 +53,13 @@ const personJsonLd = safeJsonLd({
           fetchpriority="high"
           decoding="async"
         />
-        <p class="about__bio">
-          ともきちです。Web エンジニアとして個人開発・ブログ・ツールを作りながら、
-          学んだことを記録・発信しています。
-        </p>
+        <div class="about__intro-text">
+          <p class="about__role">Frontend Engineer · Web Developer</p>
+          <p class="about__bio">
+            ともきちです。フロントエンドエンジニアとして、TypeScript・Astro・Next.js を中心に
+            個人開発・ブログ・ツールを作りながら、学んだことを記録・発信しています。
+          </p>
+        </div>
       </div>
     </header>
 
@@ -79,7 +87,7 @@ const personJsonLd = safeJsonLd({
       <h2 id="current-focus">{t.currentFocus}</h2>
       <ul>
         <li>Astro ベースの静的サイトの設計最適化と継続的なパフォーマンス改善</li>
-        <li>AI 駆動の旅行計画アプリ「tabidea」の機能拡張と UX 改善</li>
+        <li>AI 駆動の旅行計画アプリ「Tabidea」の機能拡張と UX 改善</li>
       </ul>
     </section>
 
@@ -114,11 +122,11 @@ const personJsonLd = safeJsonLd({
         </a>
 
         <a
-          href="https://github.com/tomoki013/tech-blog/issues"
+          href="https://github.com/tomoki013"
           target="_blank"
           rel="noopener noreferrer"
           class="contact-card"
-          aria-label="GitHub Issue で連絡する"
+          aria-label="GitHub プロフィールを見る"
         >
           <div class="contact-card__icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -126,8 +134,44 @@ const personJsonLd = safeJsonLd({
             </svg>
           </div>
           <div class="contact-card__content">
-            <p class="contact-card__name">GitHub Issue で連絡する</p>
-            <p class="contact-card__handle">tech-blog</p>
+            <p class="contact-card__name">GitHub プロフィール</p>
+            <p class="contact-card__handle">@tomoki013</p>
+          </div>
+        </a>
+
+        <a
+          href="https://zenn.dev/tomokichi"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="contact-card"
+          aria-label="Zenn プロフィールを見る"
+        >
+          <div class="contact-card__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M.264 23.771h4.984c.264 0 .498-.147.645-.352L19.614.874c.147-.234.176-.498.029-.733A.765.765 0 0 0 18.998 0H14.01c-.293 0-.527.147-.673.41L.03 23.039c-.117.234-.088.527.088.703.118.088.234.029.146.029zm10.786 0h12.673c.322 0 .615-.176.762-.44a.77.77 0 0 0-.03-.82l-6.35-10.28c-.146-.235-.41-.382-.702-.382h-4.985c-.293 0-.556.147-.703.382l-6.35 10.28a.783.783 0 0 0-.029.82.832.832 0 0 0 .762.44h4.952z"/>
+            </svg>
+          </div>
+          <div class="contact-card__content">
+            <p class="contact-card__name">Zenn プロフィール</p>
+            <p class="contact-card__handle">@tomokichi</p>
+          </div>
+        </a>
+
+        <a
+          href="https://www.linkedin.com/in/tomoki-takagi-5b08a738b/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="contact-card"
+          aria-label="LinkedIn プロフィールを見る"
+        >
+          <div class="contact-card__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+          </div>
+          <div class="contact-card__content">
+            <p class="contact-card__name">LinkedIn プロフィール</p>
+            <p class="contact-card__handle">Tomoki Takagi</p>
           </div>
         </a>
       </div>
@@ -163,7 +207,7 @@ const personJsonLd = safeJsonLd({
 
   .about__intro {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 2rem;
   }
 
@@ -173,6 +217,23 @@ const personJsonLd = safeJsonLd({
     border-radius: 9999px;
     object-fit: cover;
     flex-shrink: 0;
+  }
+
+  .about__intro-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .about__role {
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
   }
 
   .about__bio {

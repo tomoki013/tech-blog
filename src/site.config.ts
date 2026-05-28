@@ -15,8 +15,8 @@ export const siteConfig = {
   },
   author: "Tomokichi",
   bio: {
-    ja: "Webエンジニア。個人開発、Web開発、AI活用、プロダクト設計、運用改善などを中心に活動しています。技術の力で日常を少し便利に、面白くすることを目指しています。",
-    en: "Web Developer. Passionate about personal development, Web development, AI utilization, product design, and operational improvement.",
+    ja: "フロントエンドエンジニア。個人開発、Web開発、AI活用、プロダクト設計、運用改善などを中心に活動しています。技術の力で日常を少し便利に、面白くすることを目指しています。",
+    en: "Frontend Engineer. Passionate about indie development, web engineering, AI-assisted development, product design, and operational improvements.",
   },
   profileImage: "/icon-256.webp",
   profileImageSmall: "/icon-64.webp",

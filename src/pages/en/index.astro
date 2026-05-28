@@ -47,10 +47,15 @@ const websiteJsonLd = safeJsonLd({
   jsonLd={websiteJsonLd}
 >
   <section class="hero">
-    <div>
+    <div class="hero__text">
       <p class="eyebrow">Engineering Growth Log</p>
       <h1>{siteConfig.name[locale]}</h1>
-      <p>{t.topLead}</p>
+      <p class="hero__role">
+        <span>Frontend Engineer</span>
+        <span class="hero__role-sep" aria-hidden="true">·</span>
+        <span>Web Developer</span>
+      </p>
+      <p class="hero__lead">{t.topLead}</p>
       <div class="hero__cta">
         <a href={getArticlesPath(locale)} class="hero__cta-primary" data-astro-prefetch>{t.readArticles}</a>
         <a href={getWorksPath(locale)} class="hero__cta-secondary" data-astro-prefetch>{t.seeMyWorks}</a>
@@ -117,22 +122,47 @@ const websiteJsonLd = safeJsonLd({
   .hero {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: 2rem;
+    gap: 2.5rem;
     align-items: center;
     margin-bottom: 4rem;
+    padding: 2.5rem 0 3rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .hero__text {
+    display: flex;
+    flex-direction: column;
   }
 
   .hero h1 {
     margin: 0;
-    font-size: clamp(1.6rem, 4vw, 2.2rem);
-    line-height: 1.2;
-    letter-spacing: -0.035em;
+    font-size: clamp(1.7rem, 4.5vw, 2.4rem);
+    line-height: 1.15;
+    letter-spacing: -0.04em;
   }
 
-  .hero p {
-    max-width: 42rem;
+  .hero__role {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.6rem 0 0;
+    font-size: 0.88rem;
+    font-weight: 600;
     color: var(--color-text-muted);
-    font-size: clamp(1.04rem, 2vw, 1.18rem);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .hero__role-sep {
+    font-weight: 300;
+    opacity: 0.5;
+  }
+
+  .hero__lead {
+    max-width: 42rem;
+    margin: 1rem 0 0;
+    color: var(--color-text-muted);
+    font-size: clamp(1.04rem, 2vw, 1.14rem);
     line-height: 1.9;
   }
 
@@ -145,11 +175,11 @@ const websiteJsonLd = safeJsonLd({
 
   .hero__cta-primary {
     display: inline-block;
-    padding: 0.6rem 1.4rem;
+    padding: 0.65rem 1.5rem;
     background: var(--color-text);
     color: var(--color-bg);
     border-radius: 999px;
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     font-weight: 600;
     text-decoration: none;
     transition: opacity 0.15s ease;
@@ -161,10 +191,10 @@ const websiteJsonLd = safeJsonLd({
 
   .hero__cta-secondary {
     display: inline-block;
-    padding: 0.6rem 1.4rem;
+    padding: 0.65rem 1.5rem;
     border: 1px solid var(--color-border);
     border-radius: 999px;
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     font-weight: 600;
     color: var(--color-text);
     text-decoration: none;
@@ -183,11 +213,11 @@ const websiteJsonLd = safeJsonLd({
   }
 
   .eyebrow {
-    margin: 0 0 0.8rem;
+    margin: 0 0 0.5rem;
     color: var(--color-text-muted);
-    font-size: 0.88rem;
+    font-size: 0.8rem;
     font-weight: 700;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
   }
 
@@ -208,7 +238,8 @@ const websiteJsonLd = safeJsonLd({
 
   .section-header a {
     color: var(--color-text-muted);
-    font-size: 0.95rem;
+    font-size: 0.92rem;
+    white-space: nowrap;
   }
 
   .project-grid {
@@ -242,7 +273,7 @@ const websiteJsonLd = safeJsonLd({
   }
 
   .focus-areas__list li {
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     padding: 0.3rem 0.75rem;
     border: 1px solid var(--color-border);
     border-radius: 999px;
@@ -258,6 +289,13 @@ const websiteJsonLd = safeJsonLd({
   @media (max-width: 760px) {
     .hero {
       grid-template-columns: 1fr;
+      padding: 1.5rem 0 2.5rem;
+    }
+
+    .hero__profile {
+      order: -1;
+      width: 96px;
+      height: 96px;
     }
 
     .section-header {
