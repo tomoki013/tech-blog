@@ -25,42 +25,39 @@ const t = getUi(locale);
 
   <section class="prose">
     <div class="prose__section">
-      <h3>ソースコードについて</h3>
+      <h2>ソースコード</h2>
       <p>
-        このサイトのソースコードは、MIT License のもとで公開しています。
+        このサイトのソースコードは、<strong>MIT License</strong> のもとで公開しています。
       </p>
       <p>
-        MIT License の詳細は、リポジトリ内の <code>LICENSE</code> を参照してください。
-      </p>
-    </div>
-
-    <div class="prose__section">
-      <h3>コンテンツについて</h3>
-      <p>
-        記事本文、テキストコンテンツ、写真、画像、アイコン、OGP画像、デザイン素材、その他のコード以外のコンテンツは、明示がない限り MIT License の対象外です。
-      </p>
-      <p>
-        これらのコンテンツに関する権利は Tomokichi が留保します。引用など法令上認められる場合を除き、許可なく複製、転載、再配布、改変、利用することはできません。
+        MIT License の詳細は、リポジトリ内の <code>LICENSE</code> ファイルを参照してください。
       </p>
     </div>
 
     <div class="prose__section">
-      <h3>第三者の素材について</h3>
+      <h2>記事・コンテンツ</h2>
       <p>
-        使用しているライブラリ、ツール、依存パッケージ等には、それぞれのライセンスが適用されます。
+        記事本文、テキストコンテンツ、写真、画像、アイコン、OGP 画像、デザイン素材その他コード以外のコンテンツは、明示がない限り MIT License の対象外です。
+      </p>
+      <p>
+        これらのコンテンツに関する一切の権利は <strong>Tomokichi</strong> が留保します。
       </p>
     </div>
 
     <div class="prose__section">
-      <h3>English</h3>
+      <h2>著作権・禁止事項</h2>
       <p>
-        The source code of this site is licensed under the MIT License.
+        引用など法令上認められる場合を除き、許可なく複製・転載・再配布・改変・商業利用することはできません。
       </p>
       <p>
-        Articles, text content, photographs, images, icons, OGP images, design assets, and other non-code content are not covered by the MIT License unless explicitly stated otherwise. All rights to such content are reserved by Tomokichi.
+        二次利用を希望される場合は、フッターのリンクよりご連絡ください。
       </p>
+    </div>
+
+    <div class="prose__section">
+      <h2>第三者の素材</h2>
       <p>
-        Third-party libraries, tools, and dependencies are subject to their respective licenses.
+        使用しているライブラリ、ツール、依存パッケージなどには、それぞれのライセンスが適用されます。
       </p>
     </div>
   </section>
@@ -96,16 +93,23 @@ const t = getUi(locale);
 
     .prose__section + .prose__section {
       margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--color-border);
     }
 
-    .prose__section h3 {
+    .prose__section h2 {
       margin: 0 0 1rem;
       font-size: 1.35rem;
       letter-spacing: -0.035em;
     }
 
     .prose__section p {
+      margin: 0 0 0.75rem;
       color: var(--color-text-muted);
+    }
+
+    .prose__section p:last-child {
+      margin-bottom: 0;
     }
 
     code {
