@@ -54,75 +54,106 @@ const articleUrl = `${siteConfig.url}${canonicalPath}`;
   alternateLocales={alternateLocales}
 >
   <article class="article-detail">
-    <header class="article-detail__header">
-      <h2>{title}</h2>
-      <div class="article-detail__dates">
-        <time datetime={publishedAt.toISOString()}>{t.published}: {formatDate(publishedAt, locale)}</time>
-        {updatedAt && (
-          <time datetime={updatedAt.toISOString()}>{t.updated}: {formatDate(updatedAt, locale)}</time>
-        )}
-      </div>
-      <div class="article-detail__meta">
-        <div class="article-detail__meta-left">
-          {tags.length > 0 && (
-            <ul class="tag-list" aria-label={t.tags}>
-              {tags.map((tag) => <li>{tag}</li>)}
-            </ul>
-          )}
-          {projectIds.length > 0 && (
-            <ul class="project-id-list" aria-label="Related projects">
-              {projectIds.map((id) => <li>#{id}</li>)}
-            </ul>
-          )}
+    <div class="article-detail__body">
+      <div class="article-detail__main">
+        <header class="article-detail__header">
+          <h2>{title}</h2>
+          <div class="article-detail__dates">
+            <time datetime={publishedAt.toISOString()}>{t.published}: {formatDate(publishedAt, locale)}</time>
+            {updatedAt && (
+              <time datetime={updatedAt.toISOString()}>{t.updated}: {formatDate(updatedAt, locale)}</time>
+            )}
+          </div>
+          <div class="article-detail__meta">
+            <div class="article-detail__meta-left">
+              {tags.length > 0 && (
+                <ul class="tag-list" aria-label={t.tags}>
+                  {tags.map((tag) => <li>{tag}</li>)}
+                </ul>
+              )}
+            </div>
+            <div class="article-detail__share">
+              <a
+                href={`https://x.com/intent/tweet?url=${encodeURIComponent(articleUrl)}&text=${encodeURIComponent(title)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="share-link"
+                aria-label="Share on X"
+                title="Share on X"
+              >
+                <svg
+                  class="share-icon"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </header>
+        <div class="article-content">
+          <slot />
         </div>
-        <div class="article-detail__share">
-          <a
-            href={`https://x.com/intent/tweet?url=${encodeURIComponent(articleUrl)}&text=${encodeURIComponent(title)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="share-link"
-            aria-label="Share on X"
-            title="Share on X"
-          >
-            <svg
-              class="share-icon"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-            >
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-            </svg>
-          </a>
+      </div>
+
+      <aside class="article-detail__sidebar" aria-label="Article sidebar">
+        <div class="article-detail__profile">
+          <img
+            src={siteConfig.profileImage}
+            alt={siteConfig.author}
+            class="article-detail__avatar"
+            width="48"
+            height="48"
+            loading="lazy"
+            decoding="async"
+          />
+          <div class="article-detail__author-info">
+            <span class="article-detail__author-name">{siteConfig.author}</span>
+            <p class="article-detail__author-bio">{siteConfig.bio[locale]}</p>
+          </div>
         </div>
-      </div>
-    </header>
-    <div class="article-content">
-      <slot />
-    </div>
-    <RelatedProjects projects={relatedProjects} locale={locale} />
-    <div class="article-detail__profile">
-      <img
-        src={siteConfig.profileImage}
-        alt={siteConfig.author}
-        class="article-detail__avatar"
-        width="56"
-        height="56"
-        loading="lazy"
-        decoding="async"
-      />
-      <div class="article-detail__author-info">
-        <span class="article-detail__author-name">{siteConfig.author}</span>
-        <p class="article-detail__author-bio">{siteConfig.bio[locale]}</p>
-      </div>
+        <RelatedProjects projects={relatedProjects} locale={locale} />
+      </aside>
     </div>
   </article>
 </BaseLayout>
 
 <style>
   .article-detail {
-    width: min(100%, 46rem);
-    margin-inline: auto;
+    width: 100%;
+  }
+
+  .article-detail__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 17rem;
+    gap: 3.5rem;
+    align-items: start;
+  }
+
+  .article-detail__main {
+    min-width: 0;
+  }
+
+  .article-detail__sidebar {
+    position: sticky;
+    top: calc(4.5rem + 2rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .article-detail__sidebar :global(.related-projects) {
+    margin-top: 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .article-detail__sidebar :global(.related-projects h2) {
+    font-size: 1rem;
+    margin-bottom: 0.85rem;
   }
 
   .article-detail__header {
@@ -174,21 +205,6 @@ const articleUrl = `${siteConfig.url}${canonicalPath}`;
     color: var(--color-text-muted);
     font-size: 0.82rem;
     padding: 0.25rem 0.56rem;
-  }
-
-  .project-id-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-
-  .project-id-list li {
-    color: var(--color-text);
-    font-size: 0.82rem;
-    font-family: monospace;
   }
 
   .article-detail__share {
@@ -457,32 +473,70 @@ const articleUrl = `${siteConfig.url}${canonicalPath}`;
 
   .article-detail__profile {
     display: flex;
-    align-items: center;
-    gap: 1.2rem;
-    margin-top: 5rem;
-    padding: 2.5rem;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem;
     border: 1px solid var(--color-border);
-    border-radius: 1.5rem;
+    border-radius: 1rem;
     background: var(--color-surface);
-    box-shadow: var(--shadow-soft);
   }
 
   .article-detail__avatar {
     border-radius: 999px;
     border: 1px solid var(--color-border);
+    flex-shrink: 0;
   }
 
   .article-detail__author-name {
     display: block;
     font-weight: 700;
-    font-size: 1.1rem;
-    margin-bottom: 0.25rem;
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
   }
 
   .article-detail__author-bio {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     color: var(--color-text-muted);
-    line-height: 1.5;
+    line-height: 1.55;
     margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .article-detail__body {
+      grid-template-columns: 1fr;
+    }
+
+    .article-detail__sidebar {
+      position: static;
+      margin-top: 3rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .article-detail__sidebar :global(.related-projects) {
+      padding-top: 0;
+      border-top: none;
+    }
+
+    .article-detail__sidebar :global(.related-projects h2) {
+      font-size: 1.25rem;
+    }
+
+    .article-detail__profile {
+      padding: 2rem;
+    }
+
+    .article-detail__avatar {
+      width: 56px;
+      height: 56px;
+    }
+
+    .article-detail__author-name {
+      font-size: 1.05rem;
+    }
+
+    .article-detail__author-bio {
+      font-size: 0.85rem;
+    }
   }
 </style>
