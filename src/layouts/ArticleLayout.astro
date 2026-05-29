@@ -239,6 +239,7 @@ const hasToc = filteredToc.length > 0;
     const closeBtn = document.getElementById("toc-close");
     if (!fab || !sentinel || !dialog) return;
 
+    const dlg = dialog;
     const sbw = window.innerWidth - document.documentElement.clientWidth;
 
     new IntersectionObserver(
@@ -247,20 +248,20 @@ const hasToc = filteredToc.length > 0;
     ).observe(sentinel);
 
     function openToc() {
-      dialog.showModal();
+      dlg.showModal();
       document.body.style.paddingRight = sbw + "px";
       document.body.style.overflow = "hidden";
     }
     function closeToc() {
       document.body.style.paddingRight = "";
       document.body.style.overflow = "";
-      dialog.close();
+      dlg.close();
     }
 
     fab.addEventListener("click", openToc);
     closeBtn?.addEventListener("click", closeToc);
-    dialog.addEventListener("click", (e) => { if (e.target === dialog) closeToc(); });
-    dialog.querySelectorAll("a").forEach((a) => a.addEventListener("click", closeToc));
+    dlg.addEventListener("click", (e) => { if (e.target === dlg) closeToc(); });
+    dlg.querySelectorAll("a").forEach((a) => a.addEventListener("click", closeToc));
 
     const tocLinks = document.querySelectorAll<HTMLAnchorElement>(".toc-list a");
     const headings = document.querySelectorAll<HTMLElement>(
