@@ -52,6 +52,8 @@ export const ui = {
     contactMe: "連絡先",
     prevArticle: "前の記事",
     nextArticle: "次の記事",
+    toc: "目次",
+    closeToc: "目次を閉じる",
   },
   en: {
     home: "Home",
@@ -105,6 +107,8 @@ export const ui = {
     contactMe: "Get in Touch",
     prevArticle: "Prev Article",
     nextArticle: "Next Article",
+    toc: "Table of Contents",
+    closeToc: "Close table of contents",
   },
 } as const satisfies Record<Locale, Record<string, string>>;
 
