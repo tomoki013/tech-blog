@@ -50,6 +50,8 @@ export const ui = {
     currentFocus: "今取り組んでいること",
     myTechStack: "技術スタック",
     contactMe: "連絡先",
+    prevArticle: "前の記事",
+    nextArticle: "次の記事",
   },
   en: {
     home: "Home",
@@ -101,6 +103,8 @@ export const ui = {
     currentFocus: "Current Focus",
     myTechStack: "Tech Stack",
     contactMe: "Get in Touch",
+    prevArticle: "Prev Article",
+    nextArticle: "Next Article",
   },
 } as const satisfies Record<Locale, Record<string, string>>;
 

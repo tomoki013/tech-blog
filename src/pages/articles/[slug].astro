@@ -12,18 +12,33 @@ export async function getStaticPaths() {
   const articles = await getPublishedArticles(locale);
   const englishSlugs = await getPublishedArticleSlugs("en");
 
-  return articles.map((article) => {
+  return articles.map((article, index) => {
     const slug = getSlugFromId(article.id, locale);
     const hasEnglish = englishSlugs.has(slug);
+    // articles is sorted newest-first; index-1 = newer, index+1 = older
+    const nextArticleEntry = index > 0 ? articles[index - 1] : undefined;
+    const prevArticleEntry = index < articles.length - 1 ? articles[index + 1] : undefined;
+    const nextArticle = nextArticleEntry
+      ? {
+          title: nextArticleEntry.data.title,
+          href: getArticlePath(locale, getSlugFromId(nextArticleEntry.id, locale)),
+        }
+      : undefined;
+    const prevArticle = prevArticleEntry
+      ? {
+          title: prevArticleEntry.data.title,
+          href: getArticlePath(locale, getSlugFromId(prevArticleEntry.id, locale)),
+        }
+      : undefined;
 
     return {
       params: { slug },
-      props: { article, slug, hasEnglish },
+      props: { article, slug, hasEnglish, prevArticle, nextArticle },
     };
   });
 }
 
-const { article, slug, hasEnglish } = Astro.props;
+const { article, slug, hasEnglish, prevArticle, nextArticle } = Astro.props;
 const { Content } = await render(article);
 const canonicalPath = getArticlePath(locale, slug);
 const relatedProjects = article.data.projectIds
@@ -54,6 +69,8 @@ const alternateLocales = hasEnglish
   tags={article.data.tags}
   projectIds={article.data.projectIds}
   relatedProjects={relatedProjects}
+  prevArticle={prevArticle}
+  nextArticle={nextArticle}
 >
   <Content />
 </ArticleLayout>
