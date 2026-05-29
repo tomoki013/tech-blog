@@ -1,4 +1,5 @@
 ---
+import type { MarkdownHeading } from "astro";
 import RelatedProjects from "@/components/RelatedProjects.astro";
 import type { ProjectId } from "@/data/project-ids";
 import type { Project } from "@/data/projects";
@@ -32,6 +33,7 @@ interface Props {
   relatedProjects?: Project[];
   prevArticle?: AdjacentArticle;
   nextArticle?: AdjacentArticle;
+  toc?: MarkdownHeading[];
 }
 
 const {
@@ -48,9 +50,12 @@ const {
   relatedProjects = [],
   prevArticle,
   nextArticle,
+  toc = [],
 } = Astro.props;
 const t = getUi(locale);
 const articleUrl = `${siteConfig.url}${canonicalPath}`;
+const filteredToc = toc.filter((h) => h.depth >= 2 && h.depth <= 3);
+const hasToc = filteredToc.length > 0;
 ---
 
 <BaseLayout
@@ -100,7 +105,34 @@ const articleUrl = `${siteConfig.url}${canonicalPath}`;
           </a>
         </div>
       </div>
+
+      {hasToc && (
+        <details class="toc-header" open>
+          <summary class="toc-header__summary">
+            <svg class="toc-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+              <line x1="3" y1="5" x2="17" y2="5"/>
+              <line x1="3" y1="10" x2="17" y2="10"/>
+              <line x1="3" y1="15" x2="12" y2="15"/>
+            </svg>
+            <span>{t.toc}</span>
+            <svg class="toc-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="5 8 10 13 15 8"/>
+            </svg>
+          </summary>
+          <nav class="toc-header__body" aria-label={t.toc}>
+            <ol class="toc-list">
+              {filteredToc.map((h) => (
+                <li class:list={["toc-item", `toc-item--${h.depth}`]}>
+                  <a href={`#${h.slug}`} class="toc-link">{h.text}</a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        </details>
+      )}
     </header>
+
+    {hasToc && <div id="toc-sentinel" aria-hidden="true" />}
 
     <div class="article-content">
       <slot />
@@ -148,7 +180,115 @@ const articleUrl = `${siteConfig.url}${canonicalPath}`;
       <RelatedProjects projects={relatedProjects} locale={locale} />
     </div>
   </article>
+
+  {hasToc && (
+    <button
+      id="toc-fab"
+      class="toc-fab"
+      type="button"
+      aria-label={t.toc}
+      aria-haspopup="dialog"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="9" y1="6" x2="20" y2="6"/>
+        <line x1="9" y1="12" x2="20" y2="12"/>
+        <line x1="9" y1="18" x2="20" y2="18"/>
+        <circle cx="4" cy="6" r="1" fill="currentColor" stroke="none"/>
+        <circle cx="4" cy="12" r="1" fill="currentColor" stroke="none"/>
+        <circle cx="4" cy="18" r="1" fill="currentColor" stroke="none"/>
+      </svg>
+    </button>
+  )}
+
+  {hasToc && (
+    <dialog id="toc-dialog" class="toc-dialog" aria-labelledby="toc-dialog-title">
+      <div class="toc-dialog__header">
+        <span id="toc-dialog-title" class="toc-dialog__title">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <line x1="3" y1="5" x2="17" y2="5"/>
+            <line x1="3" y1="10" x2="17" y2="10"/>
+            <line x1="3" y1="15" x2="12" y2="15"/>
+          </svg>
+          {t.toc}
+        </span>
+        <button id="toc-close" class="toc-dialog__close" type="button" aria-label={t.closeToc}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <nav class="toc-dialog__body" aria-label={t.toc}>
+        <ol class="toc-list toc-list--dialog">
+          {filteredToc.map((h) => (
+            <li class:list={["toc-item", `toc-item--${h.depth}`]}>
+              <a href={`#${h.slug}`} class="toc-link">{h.text}</a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+    </dialog>
+  )}
 </BaseLayout>
+
+<script>
+  function setupToc() {
+    const fab = document.getElementById("toc-fab") as HTMLButtonElement | null;
+    const sentinel = document.getElementById("toc-sentinel");
+    const dialog = document.getElementById("toc-dialog") as HTMLDialogElement | null;
+    const closeBtn = document.getElementById("toc-close");
+    if (!fab || !sentinel || !dialog) return;
+
+    const sbw = window.innerWidth - document.documentElement.clientWidth;
+
+    new IntersectionObserver(
+      ([e]) => fab.classList.toggle("toc-fab--visible", !e.isIntersecting),
+      { rootMargin: "0px 0px -50% 0px" }
+    ).observe(sentinel);
+
+    function openToc() {
+      dialog.showModal();
+      document.body.style.paddingRight = sbw + "px";
+      document.body.style.overflow = "hidden";
+    }
+    function closeToc() {
+      document.body.style.paddingRight = "";
+      document.body.style.overflow = "";
+      dialog.close();
+    }
+
+    fab.addEventListener("click", openToc);
+    closeBtn?.addEventListener("click", closeToc);
+    dialog.addEventListener("click", (e) => { if (e.target === dialog) closeToc(); });
+    dialog.querySelectorAll("a").forEach((a) => a.addEventListener("click", closeToc));
+
+    const tocLinks = document.querySelectorAll<HTMLAnchorElement>(".toc-list a");
+    const headings = document.querySelectorAll<HTMLElement>(
+      ".article-content h2[id], .article-content h3[id]"
+    );
+    if (!tocLinks.length || !headings.length) return;
+
+    let activeId = "";
+    const io = new IntersectionObserver(
+      (entries) => {
+        let top: IntersectionObserverEntry | null = null;
+        for (const e of entries) {
+          if (e.isIntersecting && (!top || e.boundingClientRect.top < top.boundingClientRect.top)) {
+            top = e;
+          }
+        }
+        if (top) activeId = (top.target as HTMLElement).id;
+        tocLinks.forEach((link) =>
+          link.classList.toggle("toc-link--active", link.hash === "#" + activeId)
+        );
+      },
+      { rootMargin: "-10% 0px -80% 0px" }
+    );
+    headings.forEach((h) => io.observe(h));
+  }
+
+  document.addEventListener("astro:page-load", setupToc);
+</script>
 
 <style>
   .article-detail {
@@ -228,6 +368,250 @@ const articleUrl = `${siteConfig.url}${canonicalPath}`;
     height: 1.15rem;
   }
 
+  /* ── Header TOC ── */
+  .toc-header {
+    margin-top: 1.25rem;
+    border: 1px solid color-mix(in srgb, #f97316 28%, var(--color-border));
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background: var(--color-surface);
+  }
+
+  .toc-header__summary {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.6rem 0.85rem;
+    cursor: pointer;
+    list-style: none;
+    font-weight: 600;
+    font-size: 0.84rem;
+    color: #f97316;
+    user-select: none;
+    transition: background 0.15s ease;
+  }
+
+  .toc-header__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .toc-header__summary:hover {
+    background: color-mix(in srgb, #f97316 6%, transparent);
+  }
+
+  .toc-icon {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+  }
+
+  .toc-chevron {
+    width: 1rem;
+    height: 1rem;
+    margin-left: auto;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+
+  .toc-header[open] .toc-chevron {
+    transform: rotate(180deg);
+  }
+
+  .toc-header__body {
+    padding: 0.5rem 0.85rem 0.65rem;
+    border-top: 1px solid color-mix(in srgb, #f97316 18%, var(--color-border));
+  }
+
+  /* ── TOC list (shared by header + dialog) ── */
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.06rem;
+  }
+
+  .toc-link {
+    display: block;
+    border-radius: 0.35rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    line-height: 1.45;
+    transition: color 0.15s ease, background 0.15s ease;
+  }
+
+  .toc-link:hover {
+    color: #f97316;
+    background: color-mix(in srgb, #f97316 8%, transparent);
+  }
+
+  .toc-link--active {
+    color: #f97316;
+    font-weight: 600;
+    background: color-mix(in srgb, #f97316 7%, transparent);
+  }
+
+  .toc-item--2 .toc-link {
+    padding: 0.27rem 0.45rem;
+    font-size: 0.87rem;
+    font-weight: 500;
+  }
+
+  .toc-item--3 .toc-link {
+    padding: 0.24rem 0.45rem 0.24rem 1.3rem;
+    font-size: 0.82rem;
+  }
+
+  /* Dialog variants */
+  .toc-list--dialog .toc-item--2 .toc-link {
+    padding: 0.38rem 0.55rem;
+    font-size: 0.92rem;
+  }
+
+  .toc-list--dialog .toc-item--3 .toc-link {
+    padding: 0.33rem 0.55rem 0.33rem 1.6rem;
+    font-size: 0.87rem;
+  }
+
+  /* ── FAB ── */
+  .toc-fab {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 40;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    border-radius: 50%;
+    border: 1.5px solid #f97316;
+    background: var(--color-surface);
+    color: #f97316;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgb(0 0 0 / 0.14);
+    opacity: 0;
+    transform: translateY(0.5rem);
+    pointer-events: none;
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease,
+      background 0.15s ease;
+  }
+
+  .toc-fab svg {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  .toc-fab--visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .toc-fab:hover {
+    background: color-mix(in srgb, #f97316 10%, var(--color-surface));
+  }
+
+  /* ── Dialog ── */
+  @keyframes toc-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.75rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .toc-dialog {
+    padding: 0;
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    background: var(--color-surface);
+    color: var(--color-text);
+    width: min(90vw, 420px);
+    max-height: 80vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .toc-dialog[open] {
+    animation: toc-in 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .toc-dialog::backdrop {
+    background: rgb(0 0 0 / 0.45);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  .toc-dialog__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.9rem 1rem 0.75rem;
+    border-bottom: 1px solid color-mix(in srgb, #f97316 18%, var(--color-border));
+    position: sticky;
+    top: 0;
+    background: var(--color-surface);
+    z-index: 1;
+  }
+
+  .toc-dialog__title {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: #f97316;
+  }
+
+  .toc-dialog__title svg {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+  }
+
+  .toc-dialog__close {
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition:
+      background 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .toc-dialog__close svg {
+    width: 0.9rem;
+    height: 0.9rem;
+  }
+
+  .toc-dialog__close:hover {
+    background: var(--color-surface-muted);
+    color: var(--color-text);
+  }
+
+  .toc-dialog__body {
+    padding: 0.65rem 1rem 1rem;
+  }
+
+  /* ── Article content ── */
   .article-content {
     color: var(--color-text);
     font-size: 1.04rem;

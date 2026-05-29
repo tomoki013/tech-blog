@@ -38,7 +38,7 @@ export async function getStaticPaths() {
 }
 
 const { article, slug, hasJapanese, prevArticle, nextArticle } = Astro.props;
-const { Content } = await render(article);
+const { Content, headings } = await render(article);
 const canonicalPath = getArticlePath(locale, slug);
 const relatedProjects = article.data.projectIds
   .map((id) => getProjectById(id))
@@ -67,6 +67,7 @@ const alternateLocales = hasJapanese
   relatedProjects={relatedProjects}
   prevArticle={prevArticle}
   nextArticle={nextArticle}
+  toc={headings}
 >
   <Content />
 </ArticleLayout>
