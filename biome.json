@@ -7,7 +7,15 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["**", "!dist", "!node_modules", "!**/.astro", "!**/.wrangler", "!.lighthouseci"]
+    "includes": [
+      "**",
+      "!dist",
+      "!node_modules",
+      "!**/.astro",
+      "!**/.wrangler",
+      "!.lighthouseci",
+      "!.claude"
+    ]
   },
   "formatter": {
     "enabled": true,
