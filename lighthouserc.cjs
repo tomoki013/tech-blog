@@ -1,9 +1,8 @@
 // @ts-check
 "use strict";
 
-// Thresholds calibrated for numberOfRuns:1 on GitHub Actions Ubuntu (2026-05).
-// Single-run mode has high variance — thresholds are set conservatively to
-// avoid flaky failures while still catching real regressions.
+// Thresholds calibrated for numberOfRuns:3 on GitHub Actions Ubuntu (2026-05).
+// Median of 3 runs reduces variance significantly compared to single-run mode.
 //
 // Observed CI baseline (Ubuntu, 1 run):
 //   Performance score: 0.68         → threshold 0.60
@@ -28,7 +27,7 @@ module.exports = {
         "http://localhost/en/",
         "http://localhost/en/about/",
       ],
-      numberOfRuns: 1,
+      numberOfRuns: 3,
       settings: {
         chromeFlags: "--no-sandbox --disable-dev-shm-usage",
       },
