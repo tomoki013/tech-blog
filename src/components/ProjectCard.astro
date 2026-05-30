@@ -23,7 +23,7 @@ const detailHref = getProjectPath(locale, project.id);
     <h2 class="project-card__title">
       <a href={detailHref} data-astro-prefetch>{project.title[locale]}</a>
     </h2>
-    <p class="project-card__description">{project.shortDescription[locale]}</p>
+    <p class="project-card__description">{project.tagline[locale]}</p>
     {project.stack.length > 0 && (
       <ul class="project-card__stack" aria-label={t.stack}>
         {project.stack.map((tech) => <li>{tech}</li>)}

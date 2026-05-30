@@ -40,7 +40,8 @@ const t = getUi(locale);
           label.textContent = theme === "dark" ? button.dataset.lightLabel : button.dataset.darkLabel;
         }
         if (icon) {
-          icon.textContent = theme === "dark" ? "●" : "○";
+          // Both modes use filled circle. Color follows text color (Black/White).
+          icon.textContent = "●";
         }
       });
     };

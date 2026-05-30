@@ -24,7 +24,7 @@ const relatedArticles = await getArticlesWithPathsByProjectId(locale, project.id
 
 <BaseLayout
   title={`${project.title[locale]} — Works`}
-  description={project.shortDescription[locale]}
+  description={project.tagline[locale]}
   locale={locale}
   canonicalPath={canonicalPath}
   alternateHref={englishPath}
@@ -38,7 +38,7 @@ const relatedArticles = await getArticlesWithPathsByProjectId(locale, project.id
     <header class="project-detail__header">
       <p class="eyebrow"><a href={getWorksPath(locale)}>Works</a></p>
       <h1 class="project-detail__title">{project.title[locale]}</h1>
-      <p class="project-detail__lead">{project.shortDescription[locale]}</p>
+      <p class="project-detail__tagline">{project.tagline[locale]}</p>
       <dl class="project-detail__meta">
         <div>
           <dt>{t.status}</dt>
@@ -49,58 +49,210 @@ const relatedArticles = await getArticlesWithPathsByProjectId(locale, project.id
           <dd>{project.category}</dd>
         </div>
         {project.stack.length > 0 && (
-          <div class="project-detail__stack-entry">
+          <div>
             <dt>{t.stack}</dt>
-            <dd>
-              <ul class="project-detail__stack">
-                {project.stack.map((tech) => <li>{tech}</li>)}
-              </ul>
-            </dd>
+            <dd>{project.stack.join(", ")}</dd>
           </div>
         )}
       </dl>
-      {(project.links.website || project.links.github) && (
-        <div class="project-detail__ext-links">
-          {project.links.website && (
-            <a href={project.links.website} target="_blank" rel="noopener noreferrer" class="project-detail__ext-link">
-              Website ↗
-            </a>
-          )}
-          {project.links.github && (
-            <a href={project.links.github} target="_blank" rel="noopener noreferrer" class="project-detail__ext-link">
-              GitHub ↗
-            </a>
-          )}
-        </div>
-      )}
     </header>
+
+    {project.highlights[locale].length > 0 && (
+      <section class="project-detail__section" aria-labelledby="highlights">
+        <h2 id="highlights">{t.highlights}</h2>
+        <ul>
+          {project.highlights[locale].map((item) => <li>{item}</li>)}
+        </ul>
+      </section>
+    )}
 
     <section class="project-detail__section" aria-labelledby="overview">
       <h2 id="overview">{t.overview}</h2>
       <p>{project.description[locale]}</p>
     </section>
 
-    <section class="project-detail__section" aria-labelledby="problem">
-      <h2 id="problem">{t.problem}</h2>
-      <p>{project.problem[locale]}</p>
+    {project.background[locale] && (
+      <section class="project-detail__section" aria-labelledby="background">
+        <h2 id="background">{t.background}</h2>
+        <p>{project.background[locale]}</p>
+      </section>
+    )}
+
+    {(project.challenges.user[locale] || project.challenges.technical[locale] || project.challenges.operational[locale]) && (
+      <section class="project-detail__section" aria-labelledby="challenges">
+        <h2 id="challenges">{t.challengesSolved}</h2>
+        {project.challenges.user[locale] && (
+          <div class="project-detail__subsection">
+            <h3>{t.userChallenges}</h3>
+            <p>{project.challenges.user[locale]}</p>
+          </div>
+        )}
+        {project.challenges.technical[locale] && (
+          <div class="project-detail__subsection">
+            <h3>{t.technicalChallenges}</h3>
+            <p>{project.challenges.technical[locale]}</p>
+          </div>
+        )}
+        {project.challenges.operational[locale] && (
+          <div class="project-detail__subsection">
+            <h3>{t.operationalChallenges}</h3>
+            <p>{project.challenges.operational[locale]}</p>
+          </div>
+        )}
+      </section>
+    )}
+
+    {project.features[locale].length > 0 && (
+      <section class="project-detail__section" aria-labelledby="features">
+        <h2 id="features">{t.features}</h2>
+        <ul>
+          {project.features[locale].map((item) => (
+            <li>
+              <strong>{item.title}</strong>
+              {item.description && <span>: {item.description}</span>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {project.responsibilities[locale].length > 0 && (
+      <section class="project-detail__section" aria-labelledby="responsibilities">
+        <h2 id="responsibilities">{t.responsibilities}</h2>
+        <ul>
+          {project.responsibilities[locale].map((item) => <li>{item}</li>)}
+        </ul>
+      </section>
+    )}
+
+    <section class="project-detail__section" aria-labelledby="tech-stack">
+      <h2 id="tech-stack">{t.myTechStack}</h2>
+      {project.stackBreakdown.frontend && (
+        <div class="project-detail__subsection">
+          <h3>Frontend</h3>
+          <ul>{project.stackBreakdown.frontend.map((item) => <li>{item}</li>)}</ul>
+        </div>
+      )}
+      {project.stackBreakdown.backend && (
+        <div class="project-detail__subsection">
+          <h3>Backend / API</h3>
+          <ul>{project.stackBreakdown.backend.map((item) => <li>{item}</li>)}</ul>
+        </div>
+      )}
+      {project.stackBreakdown.databaseAuth && (
+        <div class="project-detail__subsection">
+          <h3>Database / Auth</h3>
+          <ul>{project.stackBreakdown.databaseAuth.map((item) => <li>{item}</li>)}</ul>
+        </div>
+      )}
+      {project.stackBreakdown.infrastructure && (
+        <div class="project-detail__subsection">
+          <h3>Infrastructure / Hosting</h3>
+          <ul>{project.stackBreakdown.infrastructure.map((item) => <li>{item}</li>)}</ul>
+        </div>
+      )}
+      {project.stackBreakdown.tooling && (
+        <div class="project-detail__subsection">
+          <h3>Tooling</h3>
+          <ul>{project.stackBreakdown.tooling.map((item) => <li>{item}</li>)}</ul>
+        </div>
+      )}
     </section>
 
-    <section class="project-detail__section" aria-labelledby="approach">
-      <h2 id="approach">{t.approach}</h2>
-      <p>{project.approach[locale]}</p>
-    </section>
+    {project.systemArchitecture.description[locale] && (
+      <section class="project-detail__section" aria-labelledby="architecture">
+        <h2 id="architecture">{t.systemArchitecture}</h2>
+        <p>{project.systemArchitecture.description[locale]}</p>
+        {project.systemArchitecture.diagram && (
+          <pre class="project-detail__diagram"><code>{project.systemArchitecture.diagram}</code></pre>
+        )}
+      </section>
+    )}
 
-    <section class="project-detail__section" aria-labelledby="technical-decisions">
-      <h2 id="technical-decisions">{t.technicalDecisions}</h2>
-      <ul>
-        {project.technicalDecisions[locale].map((item) => <li>{item}</li>)}
-      </ul>
-    </section>
+    {project.technicalRefinement[locale].length > 0 && (
+      <section class="project-detail__section" aria-labelledby="refinement">
+        <h2 id="refinement">{t.technicalRefinement}</h2>
+        {project.technicalRefinement[locale].map((item) => (
+          <div class="project-detail__subsection">
+            <h3>{item.title}</h3>
+            {item.content && <p>{item.content}</p>}
+          </div>
+        ))}
+      </section>
+    )}
+
+    {project.uiUxDesign[locale].length > 0 && (
+      <section class="project-detail__section" aria-labelledby="ui-ux">
+        <h2 id="ui-ux">{t.uiUxDesign}</h2>
+        <ul>{project.uiUxDesign[locale].map((item) => <li>{item}</li>)}</ul>
+      </section>
+    )}
+
+    {project.performanceSeoAccessibility[locale].length > 0 && (
+      <section class="project-detail__section" aria-labelledby="perf-seo-a11y">
+        <h2 id="perf-seo-a11y">{t.performanceSeoAccessibility}</h2>
+        <ul>{project.performanceSeoAccessibility[locale].map((item) => <li>{item}</li>)}</ul>
+      </section>
+    )}
+
+    {project.securityPrivacy[locale].length > 0 && (
+      <section class="project-detail__section" aria-labelledby="security-privacy">
+        <h2 id="security-privacy">{t.securityPrivacy}</h2>
+        <ul>{project.securityPrivacy[locale].map((item) => <li>{item}</li>)}</ul>
+      </section>
+    )}
+
+    {project.difficulties[locale].length > 0 && (
+      <section class="project-detail__section" aria-labelledby="difficulties">
+        <h2 id="difficulties">{t.difficultiesImprovements}</h2>
+        {project.difficulties[locale].map((item) => (
+          <div class="project-detail__difficulty-card">
+            <div class="project-detail__subsection">
+              <h3>{t.difficulty}</h3>
+              <p>{item.challenge}</p>
+            </div>
+            <div class="project-detail__subsection">
+              <h3>{t.solution}</h3>
+              <p>{item.solution}</p>
+            </div>
+            <div class="project-detail__subsection">
+              <h3>{t.result}</h3>
+              <p>{item.result}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+    )}
 
     <section class="project-detail__section" aria-labelledby="learnings">
       <h2 id="learnings">{t.learnings}</h2>
       <ul>
         {project.learnings[locale].map((item) => <li>{item}</li>)}
+      </ul>
+    </section>
+
+    {project.futurePlans[locale].length > 0 && (
+      <section class="project-detail__section" aria-labelledby="future-plans">
+        <h2 id="future-plans">{t.futurePlans}</h2>
+        <ul>{project.futurePlans[locale].map((item) => <li>{item}</li>)}</ul>
+      </section>
+    )}
+
+    <section class="project-detail__section" aria-labelledby="links">
+      <h2 id="links">{t.links}</h2>
+      <ul class="project-detail__link-list">
+        {project.links.website && (
+          <li>{t.site}: <a href={project.links.website} target="_blank" rel="noopener noreferrer">{project.links.website}</a></li>
+        )}
+        {project.links.github && (
+          <li>{t.github}: <a href={project.links.github} target="_blank" rel="noopener noreferrer">{project.links.github}</a></li>
+        )}
+        {project.links.article && (
+          <li>{t.article}: <a href={project.links.article}>{project.links.article}</a></li>
+        )}
+        {project.links.related?.map((link) => (
+          <li>{t.relatedPage}: <a href={link.url}>{link.title}</a></li>
+        ))}
       </ul>
     </section>
 
@@ -156,7 +308,7 @@ const relatedArticles = await getArticlesWithPathsByProjectId(locale, project.id
     letter-spacing: -0.035em;
   }
 
-  .project-detail__lead {
+  .project-detail__tagline {
     margin: 0 0 1.25rem;
     font-size: 1.1rem;
     color: var(--color-text-muted);
@@ -165,23 +317,19 @@ const relatedArticles = await getArticlesWithPathsByProjectId(locale, project.id
 
   .project-detail__meta {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem 1.5rem;
+    flex-direction: column;
+    gap: 0.5rem;
     margin: 0 0 1.25rem;
+    padding: 1.25rem;
+    background: var(--color-surface-muted);
+    border-radius: 1rem;
+    border: 1px solid var(--color-border);
   }
 
   .project-detail__meta > div {
     display: flex;
     align-items: baseline;
-    gap: 0.45rem;
-  }
-
-  .project-detail__stack-entry {
-    width: 100%;
-  }
-
-  .project-detail__stack-entry dd {
-    display: inline;
+    gap: 0.75rem;
   }
 
   .project-detail__meta dt {
@@ -190,6 +338,7 @@ const relatedArticles = await getArticlesWithPathsByProjectId(locale, project.id
     color: var(--color-text-muted);
     text-transform: uppercase;
     letter-spacing: 0.06em;
+    min-width: 6rem;
   }
 
   .project-detail__meta dd {
@@ -200,60 +349,45 @@ const relatedArticles = await getArticlesWithPathsByProjectId(locale, project.id
 
   .project-detail__meta dd[data-status="active"] {
     font-weight: 600;
-  }
-
-  .project-detail__stack {
-    display: inline-flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-
-  .project-detail__stack li {
-    font-size: 0.78rem;
-    padding: 0.18rem 0.5rem;
-    border: 1px solid var(--color-border);
-    border-radius: 0.4rem;
-    color: var(--color-text-muted);
-    background: var(--color-surface-muted);
-  }
-
-  .project-detail__ext-links {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .project-detail__ext-link {
-    font-size: 0.9rem;
-    color: var(--color-link);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    transition: opacity 0.15s ease;
-  }
-
-  .project-detail__ext-link:hover {
-    opacity: 0.7;
+    color: var(--color-text);
   }
 
   .project-detail__section {
-    margin-top: 2.5rem;
-    padding-top: 2rem;
+    margin-top: 3rem;
+    padding-top: 2.5rem;
     border-top: 1px solid var(--color-border);
   }
 
   .project-detail__section h2 {
-    margin: 0 0 0.9rem;
-    font-size: 1.45rem;
+    margin: 0 0 1.5rem;
+    font-size: 1.6rem;
     letter-spacing: -0.03em;
+    position: relative;
+  }
+
+  .project-detail__section h2::before {
+    content: "#";
+    position: absolute;
+    left: -1.5rem;
+    color: var(--color-text-muted);
+    opacity: 0.4;
+    font-weight: 400;
+  }
+
+  .project-detail__subsection {
+    margin-top: 1.5rem;
+  }
+
+  .project-detail__subsection h3 {
+    margin: 0 0 0.75rem;
+    font-size: 1.15rem;
+    color: var(--color-text);
   }
 
   .project-detail__section p {
     margin: 0;
     line-height: 1.9;
-    color: color-mix(in srgb, var(--color-text) 88%, var(--color-text-muted));
+    color: color-mix(in srgb, var(--color-text) 92%, var(--color-text-muted));
   }
 
   .project-detail__section ul {
@@ -262,9 +396,49 @@ const relatedArticles = await getArticlesWithPathsByProjectId(locale, project.id
   }
 
   .project-detail__section li {
-    margin-bottom: 0.55rem;
-    line-height: 1.75;
-    color: color-mix(in srgb, var(--color-text) 88%, var(--color-text-muted));
+    margin-bottom: 0.6rem;
+    line-height: 1.8;
+    color: color-mix(in srgb, var(--color-text) 92%, var(--color-text-muted));
+  }
+
+  .project-detail__diagram {
+    margin: 1.5rem 0;
+    padding: 1.25rem;
+    background: var(--color-surface-muted);
+    border-radius: 0.8rem;
+    overflow-x: auto;
+    font-size: 0.9rem;
+    border: 1px solid var(--color-border);
+  }
+
+  .project-detail__difficulty-card {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: var(--color-surface-muted);
+    border-radius: 1rem;
+    border: 1px solid var(--color-border);
+  }
+
+  .project-detail__difficulty-card .project-detail__subsection:first-child {
+    margin-top: 0;
+  }
+
+  .project-detail__link-list {
+    list-style: none !important;
+    padding-left: 0 !important;
+  }
+
+  .project-detail__link-list li {
+    margin-bottom: 0.75rem;
+    display: flex;
+    gap: 0.5rem;
+    word-break: break-all;
+  }
+
+  .project-detail__link-list a {
+    color: var(--color-link);
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   .project-detail__empty {
@@ -290,5 +464,11 @@ const relatedArticles = await getArticlesWithPathsByProjectId(locale, project.id
 
   .project-detail__article-list a:hover {
     opacity: 0.7;
+  }
+
+  @media (max-width: 640px) {
+    .project-detail__section h2::before {
+      display: none;
+    }
   }
 </style>

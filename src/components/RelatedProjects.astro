@@ -21,7 +21,7 @@ const t = getUi(locale);
         <li class="related-projects__item">
           <a href={getProjectPath(locale, project.id)} class="related-projects__link" data-astro-prefetch>
             <span class="related-projects__title">{project.title[locale]}</span>
-            <span class="related-projects__description">{project.shortDescription[locale]}</span>
+            <span class="related-projects__description">{project.tagline[locale]}</span>
           </a>
         </li>
       ))}
