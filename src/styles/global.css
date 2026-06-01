@@ -176,14 +176,26 @@ img {
 }
 
 /* Sun/moon icon visibility driven by theme class */
-.theme-icon--sun { display: none; }
-.theme-icon--moon { display: block; }
-.dark .theme-icon--sun { display: block; }
-.dark .theme-icon--moon { display: none; }
+.theme-icon--sun {
+  display: none;
+}
+.theme-icon--moon {
+  display: block;
+}
+.dark .theme-icon--sun {
+  display: block;
+}
+.dark .theme-icon--moon {
+  display: none;
+}
 
 /* Globe icon */
-.lang-globe { color: currentColor; }
-.lang-code { line-height: 1; }
+.lang-globe {
+  color: currentColor;
+}
+.lang-code {
+  line-height: 1;
+}
 
 .site-main {
   padding-block: 5.5rem;
@@ -238,10 +250,15 @@ img {
 /* Shiki syntax highlighting — dark mode override for class-based dark theme */
 .dark .astro-code,
 .dark .astro-code span {
+  /* biome-ignore lint/complexity/noImportantStyles: must override Shiki's inline styles */
   color: var(--shiki-dark) !important;
+  /* biome-ignore lint/complexity/noImportantStyles: must override Shiki's inline styles */
   background-color: var(--shiki-dark-bg) !important;
+  /* biome-ignore lint/complexity/noImportantStyles: must override Shiki's inline styles */
   font-style: var(--shiki-dark-font-style) !important;
+  /* biome-ignore lint/complexity/noImportantStyles: must override Shiki's inline styles */
   font-weight: var(--shiki-dark-font-weight) !important;
+  /* biome-ignore lint/complexity/noImportantStyles: must override Shiki's inline styles */
   text-decoration: var(--shiki-dark-text-decoration) !important;
 }
 
