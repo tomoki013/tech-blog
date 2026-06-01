@@ -281,38 +281,46 @@ const hasToc = filteredToc.length > 0;
     dlg.addEventListener("click", (e) => { if (e.target === dlg) closeToc(); });
     dlg.querySelectorAll("a").forEach((a) => a.addEventListener("click", closeToc));
 
-    const tocLinks = document.querySelectorAll<HTMLAnchorElement>(".toc-list a");
+    const tocLinks = Array.from(
+      document.querySelectorAll<HTMLAnchorElement>(".toc-list a")
+    );
     const headings = Array.from(
       document.querySelectorAll<HTMLElement>(".article-content h2[id], .article-content h3[id]")
     );
     if (!tocLinks.length || !headings.length) return;
 
-    // Scroll-based highlight: find last heading at or above the offset line
-    function getActiveId() {
-      const offset = 96;
-      let id = "";
+    let rafId = 0;
+    let prevActiveId = "";
+
+    function applyHighlight() {
+      rafId = 0;
+      const THRESHOLD = 100;
+      let activeId = "";
       for (const h of headings) {
-        if (h.getBoundingClientRect().top <= offset) id = h.id;
+        if (h.getBoundingClientRect().top < THRESHOLD) activeId = h.id;
         else break;
       }
-      return id;
+      if (activeId === prevActiveId) return;
+      prevActiveId = activeId;
+      for (const link of tocLinks) {
+        link.classList.toggle(
+          "toc-link--active",
+          decodeURIComponent(link.hash) === "#" + activeId
+        );
+      }
     }
 
-    let lastActiveId = "";
-    function syncHighlight() {
-      const id = getActiveId();
-      if (id === lastActiveId) return;
-      lastActiveId = id;
-      tocLinks.forEach((link) =>
-        link.classList.toggle("toc-link--active", link.hash === "#" + id)
-      );
+    function onScroll() {
+      if (rafId) return;
+      rafId = requestAnimationFrame(applyHighlight);
     }
 
-    window.addEventListener("scroll", syncHighlight, { passive: true });
-    syncHighlight();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    applyHighlight();
 
     document.addEventListener("astro:before-swap", () => {
-      window.removeEventListener("scroll", syncHighlight);
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(rafId);
     }, { once: true });
   }
 
@@ -498,7 +506,7 @@ const hasToc = filteredToc.length > 0;
     color: var(--color-text);
     font-weight: 600;
     border-left-color: #f97316;
-    background: color-mix(in srgb, #f97316 6%, transparent);
+    background: color-mix(in srgb, #f97316 8%, transparent);
   }
 
   .toc-item--2 .toc-link {
@@ -695,7 +703,7 @@ const hasToc = filteredToc.length > 0;
 
   .toc-dialog__body {
     padding: 0.75rem 1rem;
-    padding-bottom: max(4rem, env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(4rem + env(safe-area-inset-bottom, 0px));
   }
 
   /* ── Article content ── */
