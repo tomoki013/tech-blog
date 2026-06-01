@@ -205,14 +205,27 @@ const websiteJsonLd = safeJsonLd({
   }
 
   .hero__cta-primary {
-    background: #f97316;
-    color: #fff;
-    box-shadow: 0 2px 16px rgb(249 115 22 / 0.28);
+    background: var(--color-text);
+    color: var(--color-bg);
+    box-shadow: 0 2px 12px rgb(0 0 0 / 0.12);
   }
 
   .hero__cta-primary:hover {
+    background: var(--color-text);
+    color: var(--color-bg);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgb(0 0 0 / 0.18);
+  }
+
+  :global(.dark) .hero__cta-primary {
+    background: #f97316;
+    color: #111;
+    box-shadow: 0 2px 16px rgb(249 115 22 / 0.28);
+  }
+
+  :global(.dark) .hero__cta-primary:hover {
     background: #fb923c;
-    color: #fff;
+    color: #111;
     transform: translateY(-2px);
     box-shadow: 0 6px 28px rgb(249 115 22 / 0.45);
   }
@@ -220,7 +233,7 @@ const websiteJsonLd = safeJsonLd({
   .hero__cta-secondary {
     background: transparent;
     border: 1.5px solid var(--color-border);
-    color: var(--color-text-muted);
+    color: var(--color-text);
   }
 
   .hero__cta-secondary:hover {

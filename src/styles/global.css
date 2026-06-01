@@ -292,19 +292,19 @@ img {
     gap: 0.6rem;
   }
 
-  /* Nav pushes to second row, full width, centered */
+  /* Nav pushes to second row, full width, left-aligned */
   .site-header__nav {
     order: 3;
     flex-basis: 100%;
-    justify-content: center;
-    gap: 1.25rem;
-    padding-top: 0.4rem;
-    padding-bottom: 0.1rem;
+    justify-content: flex-start;
+    gap: 1.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.15rem;
     border-top: 1px solid var(--color-border);
   }
 
   .site-header__nav a {
-    font-size: 0.82rem;
+    font-size: 0.88rem;
   }
 
   /* Author subline hidden on mobile to keep brand compact */
