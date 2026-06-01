@@ -82,8 +82,10 @@ img {
 }
 
 .site-header {
-  border-bottom: 1px solid var(--color-border);
-  background: var(--color-bg);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
+  background: color-mix(in srgb, var(--color-bg) 85%, transparent);
+  backdrop-filter: blur(14px) saturate(1.5);
+  -webkit-backdrop-filter: blur(14px) saturate(1.5);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -122,17 +124,13 @@ img {
   gap: 1.4rem;
 }
 
-.site-header__nav a,
-.language-switcher,
-.theme-toggle {
+.site-header__nav a {
   color: var(--color-text-muted);
   font-size: 0.92rem;
   text-decoration: none;
 }
 
-.site-header__nav a:hover,
-.language-switcher:hover,
-.theme-toggle:hover {
+.site-header__nav a:hover {
   color: var(--color-text);
 }
 
@@ -141,28 +139,62 @@ img {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
+  gap: 0.3rem;
   border: 1px solid var(--color-border);
-  border-radius: 999px;
+  border-radius: 0.5rem;
   background: var(--color-surface);
-  padding: 0.45rem 0.72rem;
+  padding: 0.38rem 0.58rem;
   cursor: pointer;
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
   transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-  box-shadow: var(--shadow-soft);
+    color 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
 }
 
-.theme-toggle {
-  width: 6.6rem; /* Slightly narrower but still fixed to prevent shifts */
+.theme-toggle svg,
+.language-switcher svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  flex-shrink: 0;
 }
 
 .theme-toggle:hover,
 .language-switcher:hover {
-  background: color-mix(in srgb, var(--color-surface) 90%, var(--color-link) 10%);
-  border-color: var(--color-link);
-  box-shadow: 0 8px 24px rgb(28 27 24 / 0.12);
+  color: var(--color-text);
+  border-color: #f97316;
+  background: color-mix(in srgb, var(--color-surface) 94%, #f97316 6%);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, transparent 87%, #f97316 13%),
+    0 2px 10px rgb(249 115 22 / 0.1);
+}
+
+/* Sun/moon icon visibility driven by theme class */
+.theme-icon--sun {
+  display: none;
+}
+.theme-icon--moon {
+  display: block;
+}
+.dark .theme-icon--sun {
+  display: block;
+}
+.dark .theme-icon--moon {
+  display: none;
+}
+
+/* Globe icon */
+.lang-globe {
+  color: currentColor;
+}
+.lang-code {
+  line-height: 1;
 }
 
 .site-main {
@@ -218,10 +250,15 @@ img {
 /* Shiki syntax highlighting — dark mode override for class-based dark theme */
 .dark .astro-code,
 .dark .astro-code span {
+  /* biome-ignore lint/complexity/noImportantStyles: must override Shiki's inline styles */
   color: var(--shiki-dark) !important;
+  /* biome-ignore lint/complexity/noImportantStyles: must override Shiki's inline styles */
   background-color: var(--shiki-dark-bg) !important;
+  /* biome-ignore lint/complexity/noImportantStyles: must override Shiki's inline styles */
   font-style: var(--shiki-dark-font-style) !important;
+  /* biome-ignore lint/complexity/noImportantStyles: must override Shiki's inline styles */
   font-weight: var(--shiki-dark-font-weight) !important;
+  /* biome-ignore lint/complexity/noImportantStyles: must override Shiki's inline styles */
   text-decoration: var(--shiki-dark-text-decoration) !important;
 }
 
@@ -254,24 +291,47 @@ img {
 
 @media (max-width: 760px) {
   .site-header__inner {
+    flex-wrap: wrap;
     align-items: center;
-    flex-direction: column;
-    padding-block: 0.75rem;
-    gap: 0.75rem;
+    padding-block: 0.6rem;
+    gap: 0.4rem 0.75rem;
     min-height: auto;
   }
 
-  .site-header__brand-text {
-    align-items: center;
-    text-align: center;
+  .site-header__brand {
+    flex: 1;
+    min-width: 0;
   }
 
+  /* Actions visible on mobile, right of brand */
   .site-header__actions {
+    display: flex;
+    gap: 0.6rem;
+  }
+
+  /* Nav pushes to second row, full width, left-aligned */
+  .site-header__nav {
+    order: 3;
+    flex-basis: 100%;
+    justify-content: flex-start;
+    gap: 1.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.15rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .site-header__nav a {
+    font-size: 0.88rem;
+  }
+
+  /* Author subline hidden on mobile to keep brand compact */
+  .site-header__author {
     display: none;
   }
 
+  /* Actions now in header, hide from footer on mobile */
   .site-footer__actions {
-    display: flex;
+    display: none;
   }
 
   .site-footer__inner {

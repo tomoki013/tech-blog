@@ -254,7 +254,13 @@ const hasToc = filteredToc.length > 0;
 
     if (endSentinel) {
       new IntersectionObserver(
-        ([e]) => fab.classList.toggle("toc-fab--ending", e.isIntersecting),
+        ([e]) => {
+          // Keep FAB hidden when at end OR when scrolled past end (sentinel above viewport)
+          fab.classList.toggle(
+            "toc-fab--ending",
+            e.isIntersecting || e.boundingClientRect.top < 0
+          );
+        },
         { rootMargin: "0px", threshold: 0 }
       ).observe(endSentinel);
     }
@@ -275,29 +281,47 @@ const hasToc = filteredToc.length > 0;
     dlg.addEventListener("click", (e) => { if (e.target === dlg) closeToc(); });
     dlg.querySelectorAll("a").forEach((a) => a.addEventListener("click", closeToc));
 
-    const tocLinks = document.querySelectorAll<HTMLAnchorElement>(".toc-list a");
-    const headings = document.querySelectorAll<HTMLElement>(
-      ".article-content h2[id], .article-content h3[id]"
+    const tocLinks = Array.from(
+      document.querySelectorAll<HTMLAnchorElement>(".toc-list a")
+    );
+    const headings = Array.from(
+      document.querySelectorAll<HTMLElement>(".article-content h2[id], .article-content h3[id]")
     );
     if (!tocLinks.length || !headings.length) return;
 
-    let activeId = "";
-    const io = new IntersectionObserver(
-      (entries) => {
-        let top: IntersectionObserverEntry | null = null;
-        for (const e of entries) {
-          if (e.isIntersecting && (!top || e.boundingClientRect.top < top.boundingClientRect.top)) {
-            top = e;
-          }
-        }
-        if (top) activeId = (top.target as HTMLElement).id;
-        tocLinks.forEach((link) =>
-          link.classList.toggle("toc-link--active", link.hash === "#" + activeId)
+    let rafId = 0;
+    let prevActiveId = "";
+
+    function applyHighlight() {
+      rafId = 0;
+      const THRESHOLD = 100;
+      let activeId = "";
+      for (const h of headings) {
+        if (h.getBoundingClientRect().top < THRESHOLD) activeId = h.id;
+        else break;
+      }
+      if (activeId === prevActiveId) return;
+      prevActiveId = activeId;
+      for (const link of tocLinks) {
+        link.classList.toggle(
+          "toc-link--active",
+          decodeURIComponent(link.hash) === "#" + activeId
         );
-      },
-      { rootMargin: "-10% 0px -80% 0px" }
-    );
-    headings.forEach((h) => io.observe(h));
+      }
+    }
+
+    function onScroll() {
+      if (rafId) return;
+      rafId = requestAnimationFrame(applyHighlight);
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    applyHighlight();
+
+    document.addEventListener("astro:before-swap", () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(rafId);
+    }, { once: true });
   }
 
   document.addEventListener("astro:page-load", setupToc);
@@ -482,7 +506,7 @@ const hasToc = filteredToc.length > 0;
     color: var(--color-text);
     font-weight: 600;
     border-left-color: #f97316;
-    background: color-mix(in srgb, #f97316 6%, transparent);
+    background: color-mix(in srgb, #f97316 8%, transparent);
   }
 
   .toc-item--2 .toc-link {
@@ -527,10 +551,10 @@ const hasToc = filteredToc.length > 0;
     pointer-events: none;
     transition:
       opacity 0.25s ease,
-      transform 0.25s ease,
-      background 0.15s ease,
-      color 0.15s ease,
-      border-color 0.15s ease;
+      transform 0.22s ease,
+      box-shadow 0.2s ease,
+      border-color 0.2s ease,
+      background 0.2s ease;
     white-space: nowrap;
     font-size: 0.92rem;
     font-weight: 600;
@@ -542,7 +566,6 @@ const hasToc = filteredToc.length > 0;
     height: 1.2rem;
     flex-shrink: 0;
     color: #f97316;
-    transition: color 0.15s ease;
   }
 
   .toc-fab--visible {
@@ -553,25 +576,29 @@ const hasToc = filteredToc.length > 0;
 
   .toc-fab--ending {
     opacity: 0 !important;
-    transform: translateY(-1.5rem) !important;
+    transform: translateY(0.5rem) !important;
     pointer-events: none !important;
   }
 
   .toc-fab:hover {
-    background: #f97316;
-    color: #fff;
-    border-color: #f97316;
+    border-color: #fb923c;
+    background: color-mix(in srgb, #111 82%, #f97316 18%);
+    box-shadow:
+      0 4px 24px rgb(0 0 0 / 0.3),
+      0 0 18px rgb(249 115 22 / 0.4),
+      0 0 36px rgb(249 115 22 / 0.18);
+    transform: translateY(-1px);
   }
 
-  .toc-fab:hover svg {
-    color: #fff;
+  .toc-fab--visible:hover {
+    transform: translateY(-1px);
   }
 
   /* ── Bottom Sheet Dialog ── */
   @keyframes sheet-up {
     from {
       opacity: 0;
-      transform: translateX(-50%) translateY(50%);
+      transform: translateX(-50%) translateY(calc(100% + 1.5rem));
     }
     to {
       opacity: 1;
@@ -582,20 +609,21 @@ const hasToc = filteredToc.length > 0;
   .toc-dialog {
     padding: 0;
     position: fixed;
-    bottom: 0;
+    bottom: 1.25rem;
     left: 50%;
     top: auto;
     transform: translateX(-50%);
     border: 1px solid var(--color-border);
-    border-bottom: none;
-    border-radius: 1.25rem 1.25rem 0 0;
+    border-radius: 1.5rem;
     background: var(--color-surface);
     color: var(--color-text);
-    width: min(100vw, 600px);
+    width: min(calc(100vw - 2rem), 600px);
     max-height: 70vh;
     overflow-y: auto;
     overscroll-behavior: contain;
-    box-shadow: 0 -4px 30px rgb(0 0 0 / 0.15);
+    box-shadow:
+      0 8px 40px rgb(0 0 0 / 0.22),
+      0 2px 8px rgb(0 0 0 / 0.1);
     margin: 0;
   }
 
@@ -675,8 +703,8 @@ const hasToc = filteredToc.length > 0;
   }
 
   .toc-dialog__body {
-    padding: 0.75rem 1rem 1rem;
-    padding-bottom: max(2.75rem, env(safe-area-inset-bottom));
+    padding: 0.75rem 1rem;
+    padding-bottom: calc(4rem + env(safe-area-inset-bottom, 0px));
   }
 
   /* ── Article content ── */
