@@ -598,7 +598,7 @@ const hasToc = filteredToc.length > 0;
   @keyframes sheet-up {
     from {
       opacity: 0;
-      transform: translateX(-50%) translateY(50%);
+      transform: translateX(-50%) translateY(calc(100% + 1.5rem));
     }
     to {
       opacity: 1;
@@ -609,20 +609,21 @@ const hasToc = filteredToc.length > 0;
   .toc-dialog {
     padding: 0;
     position: fixed;
-    bottom: 0;
+    bottom: 1.25rem;
     left: 50%;
     top: auto;
     transform: translateX(-50%);
     border: 1px solid var(--color-border);
-    border-bottom: none;
-    border-radius: 1.5rem 1.5rem 0 0;
+    border-radius: 1.5rem;
     background: var(--color-surface);
     color: var(--color-text);
-    width: min(100vw, 600px);
+    width: min(calc(100vw - 2rem), 600px);
     max-height: 70vh;
     overflow-y: auto;
     overscroll-behavior: contain;
-    box-shadow: 0 -4px 30px rgb(0 0 0 / 0.15);
+    box-shadow:
+      0 8px 40px rgb(0 0 0 / 0.22),
+      0 2px 8px rgb(0 0 0 / 0.1);
     margin: 0;
   }
 
