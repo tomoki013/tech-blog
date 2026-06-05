@@ -513,7 +513,8 @@ Limited retention → auto-delete`,
           challenge: "Containing damage when a share link leaks",
           solution:
             "Separating view/edit/admin links, storing token hashes, and limiting retention",
-          result: "Limited the blast radius of leaks and clarified sharing design that assumes risk",
+          result:
+            "Limited the blast radius of leaks and clarified sharing design that assumes risk",
         },
       ],
     },
@@ -712,7 +713,8 @@ Limited retention → auto-delete`,
         },
         {
           challenge: "Plateauing search traffic",
-          solution: "Improving titles, headings, and internal links based on Search Console metrics",
+          solution:
+            "Improving titles, headings, and internal links based on Search Console metrics",
           result:
             "Built a setup for continuously revisiting search traffic through measurement-driven improvement",
         },
