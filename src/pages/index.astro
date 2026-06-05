@@ -218,18 +218,18 @@ const websiteJsonLd = safeJsonLd({
     box-shadow: 0 6px 20px rgb(0 0 0 / 0.18);
   }
 
-  /* Dark mode: orange button with dark text (contrast ratio ~6.7:1) */
+  /* Dark mode: white button with dark text (maximum contrast) */
   :global(.dark) .hero__cta-primary {
-    background: #f97316;
+    background: #ffffff;
     color: #111;
-    box-shadow: 0 2px 16px rgb(249 115 22 / 0.28);
+    box-shadow: 0 2px 16px rgb(0 0 0 / 0.4);
   }
 
   :global(.dark) .hero__cta-primary:hover {
-    background: #fb923c;
+    background: #f1f1f1;
     color: #111;
     transform: translateY(-2px);
-    box-shadow: 0 6px 28px rgb(249 115 22 / 0.45);
+    box-shadow: 0 6px 28px rgb(0 0 0 / 0.5);
   }
 
   .hero__cta-secondary {

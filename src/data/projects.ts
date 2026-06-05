@@ -301,9 +301,249 @@ Admin / Scoring / Quality Improvement`,
       website: "https://tabide.ai",
       article: "/articles/tabidea-travel-tips-loading-ux/",
       related: [
-        { title: "ともきちの旅行日記", url: "https://travel.tomokichi.me" },
+        { title: "ともきちの旅行日記", url: "https://tomokichidiary.com" },
         { title: "Globe Tabidea", url: "https://globe.tabide.ai" },
       ],
+    },
+  },
+  {
+    id: "nobo-page",
+    featured: true,
+    status: "prototype",
+    category: "app",
+    title: {
+      ja: "Nobo Page",
+      en: "Nobo Page",
+    },
+    tagline: {
+      ja: "ログインなしですぐ使える、一時的な共有ページ作成アプリ。手軽さとセキュリティ設計の両立を検討しています。",
+      en: "A login-free app for quickly creating temporary, shareable pages — designed to balance ease of use with security.",
+    },
+    highlights: {
+      ja: [
+        "アカウント登録なしで即座に使える設計",
+        "閲覧・編集・管理を分けた権限モデルの検討",
+        "保存期間の限定など、性質に合わせた安全設計",
+      ],
+      en: [
+        "Usable instantly with no account registration",
+        "Exploring a permission model that separates view, edit, and admin rights",
+        "Safety design matched to the service's nature, such as limited retention",
+      ],
+    },
+    description: {
+      ja: "Nobo Pageは、ログインなしで一時的な共有ページ（ボード）を作成できるアプリです。イベント当日の案内、短期間だけ使う共有メモ、QRコードから開く情報ページなど、長く使い続けることを前提としない用途を想定しています。手軽さを保ちながら、ログインが担っていた本人確認や権限管理をどう置き換えるかを設計の中心テーマにしています。",
+      en: "Nobo Page is an app for creating temporary shareable pages (boards) without logging in. It targets uses not meant to last long — same-day event guides, short-lived shared memos, or information pages opened via QR code. The central design theme is how to replace the identity verification and permission management that login usually provides, while keeping the experience effortless.",
+    },
+    background: {
+      ja: "ログインなしのアプリは利用開始までの負担が小さい一方、「認証がない」わけではなく、セッションやトークン、共有URLなど別の仕組みで権限を判断する必要があります。手軽さだけを優先すると、共有リンクの漏洩や権限の過剰付与といったリスクが見えにくくなります。Nobo Pageでは、ログインをなくす代わりに必要になる仕組みを曖昧にしないことを設計の出発点にしています。",
+      en: "Login-free apps lower the barrier to getting started, but that does not mean there is no authentication — permissions must still be judged through other mechanisms such as sessions, tokens, and shared URLs. Prioritizing only convenience makes risks like leaked share links or over-broad permissions harder to see. Nobo Page starts from the principle of not leaving the mechanisms that replace login ambiguous.",
+    },
+    challenges: {
+      user: {
+        ja: "アカウントを作るほどではないが、すぐに作って人に渡したい情報を、登録の手間なく共有できるようにすること。同時に、機密情報の保存には向かないことを利用者へ正直に伝えること。",
+        en: "Letting people share information that isn't worth creating an account for, instantly and without registration — while honestly communicating that it isn't suited for storing sensitive data.",
+      },
+      technical: {
+        ja: "アカウントに頼らずに「この操作を許可してよいか」を判断する仕組みを設計すること。共有する場合は閲覧・編集・管理の権限を分け、トークンを安全に扱う必要があります。",
+        en: "Designing a mechanism to decide 'should this operation be allowed?' without relying on accounts. When sharing, view/edit/admin rights must be separated and tokens handled safely.",
+      },
+      operational: {
+        ja: "ログインがないため、管理リンクを紛失した利用者の本人確認ができません。復元を前提にしない運用と、保存期間の限定によって責任範囲を小さく保つこと。",
+        en: "Without login, there is no way to verify a user who lost their admin link. Keeping responsibility small through operation that doesn't assume recovery and through limited retention.",
+      },
+    },
+    features: {
+      ja: [
+        { title: "ログインなしのページ作成", description: "登録不要で即座に共有ページを作成" },
+        { title: "権限を分けた共有", description: "閲覧・編集・管理リンクの分離を検討" },
+        { title: "保存期間の限定", description: "一時利用を前提とした自動削除設計" },
+        { title: "安全なユーザー入力表示", description: "XSSを防ぐ入力の取り扱い" },
+      ],
+      en: [
+        {
+          title: "Login-free Page Creation",
+          description: "Create shareable pages instantly with no registration",
+        },
+        {
+          title: "Permission-separated Sharing",
+          description: "Exploring separate view, edit, and admin links",
+        },
+        {
+          title: "Limited Retention",
+          description: "Auto-deletion design premised on temporary use",
+        },
+        {
+          title: "Safe User-input Rendering",
+          description: "Handling input to prevent XSS",
+        },
+      ],
+    },
+    responsibilities: {
+      ja: ["企画・コンセプト設計", "セキュリティ設計", "UI/UX設計", "実装"],
+      en: ["Planning & Concept Design", "Security Design", "UI/UX Design", "Implementation"],
+    },
+    stack: ["TypeScript", "Web Security", "Capability URL"],
+    stackBreakdown: {
+      frontend: ["TypeScript"],
+      databaseAuth: ["Session / Cookie", "Capability URL (token-based access)"],
+    },
+    systemArchitecture: {
+      description: {
+        ja: "共有しないsession-onlyな利用では、作成時のセッションからのみデータを取得できる単純な構成にできます。共有する場合は、ランダムなトークンを含む権限URL（Capability URL）を発行し、サーバーにはトークンのハッシュ値だけを保存して権限を判定する構成を検討しています。",
+        en: "For non-shared, session-only use, the design can be simple: data is retrievable only from the creating session. For sharing, the approach under consideration issues capability URLs containing random tokens and stores only the token hashes on the server to judge permissions.",
+      },
+      diagram: `Create page (no login)
+ ↓
+Session-only use → readable only from the creating session
+ ↓
+Share → issue capability URLs (view / edit / admin)
+ ↓
+Server stores token HASH only
+ ↓
+Limited retention → auto-delete`,
+    },
+    technicalRefinement: {
+      ja: [
+        {
+          title: "ログインなしは「認証がない」ではないという前提",
+          content:
+            "アカウント認証を、セッション・Cookie・共有URLといった別の仕組みに置き換えていると捉え、何を根拠に操作を許可するかを明確にしています。",
+        },
+        {
+          title: "閲覧・編集・管理の権限分離",
+          content:
+            "一つのリンクに全権限を持たせず、用途に応じて閲覧・編集・管理を分けることで、リンク漏洩時の被害を小さく抑える設計を検討しています。",
+        },
+        {
+          title: "生のトークンをDBに保存しない",
+          content:
+            "共有URLのトークンはパスワードに近い役割を持つため、サーバーにはハッシュ値だけを保存し、アクセス時に同じ方法でハッシュ化して照合します。",
+        },
+        {
+          title: "URLフラグメントの活用と限界の理解",
+          content:
+            "トークンをURLフラグメントに入れることでサーバーログへの残留は避けやすくなりますが、JSから読めるためXSS等では漏れる点も前提にしています。",
+        },
+      ],
+      en: [
+        {
+          title: "Treating login-free as 'not without authentication'",
+          content:
+            "Viewing it as replacing account authentication with sessions, cookies, and shared URLs, and clarifying on what basis each operation is allowed.",
+        },
+        {
+          title: "Separating view, edit, and admin rights",
+          content:
+            "Instead of granting all rights to one link, separating view/edit/admin by purpose to minimize damage when a link leaks.",
+        },
+        {
+          title: "Not storing raw tokens in the DB",
+          content:
+            "Since share-URL tokens act much like passwords, storing only their hashes on the server and hashing the same way at access time to compare.",
+        },
+        {
+          title: "Using URL fragments and understanding their limits",
+          content:
+            "Putting tokens in URL fragments helps avoid leaving them in server logs, but they remain readable from JS, so leakage via XSS is assumed.",
+        },
+      ],
+    },
+    uiUxDesign: {
+      ja: [
+        "登録なしで迷わず使い始められるシンプルな導線",
+        "共有リンクの性質（リンクを知っている人はアクセスできる）を分かりやすく伝える表現",
+        "機密情報の保存には向かないことを明示するUI",
+      ],
+      en: [
+        "A simple flow that lets people start without registration or confusion",
+        "Clear wording about the nature of share links (anyone with the link can access)",
+        "UI that explicitly states it isn't suited for storing sensitive information",
+      ],
+    },
+    performanceSeoAccessibility: {
+      ja: [
+        "ボードの閲覧・編集画面では外部スクリプトをできる限り置かない方針",
+        "紹介ページとユーザーデータを扱う画面で求める安全性を分けて設計",
+      ],
+      en: [
+        "A policy of placing as few external scripts as possible on board view/edit screens",
+        "Designing the required safety level separately for marketing pages and screens handling user data",
+      ],
+    },
+    securityPrivacy: {
+      ja: [
+        "閲覧・編集・管理権限を分離し、必要以上に広い権限を渡さない",
+        "十分に推測困難なトークンを発行し、生のトークンをDBへ保存しない",
+        "ユーザー入力をHTMLとして直接描画せず、XSSによる権限漏洩や不正操作を防ぐ",
+        "HttpOnly CookieやCSPを活用しつつ、それだけでXSSを防げない前提で設計する",
+        "保存期間を限定し、古い共有リンクが残り続けるのを防ぐ",
+        "復元を前提にせず、機密情報向けではないことを利用者へ明確に伝える",
+      ],
+      en: [
+        "Separating view/edit/admin rights and never granting broader permissions than needed",
+        "Issuing sufficiently unguessable tokens and never storing raw tokens in the DB",
+        "Not rendering user input directly as HTML, preventing permission leakage and abuse via XSS",
+        "Using HttpOnly cookies and CSP while designing on the premise that they alone cannot prevent XSS",
+        "Limiting retention to prevent old share links from lingering",
+        "Not assuming recovery, and clearly telling users it isn't meant for sensitive data",
+      ],
+    },
+    difficulties: {
+      ja: [
+        {
+          challenge: "ログインなしで「誰に操作を許可するか」をどう判断するか",
+          solution: "セッションや共有トークンを権限の根拠とし、用途に応じて権限を分離",
+          result: "アカウントに頼らずに操作許可を判断できる設計方針を整理",
+        },
+        {
+          challenge: "共有リンク漏洩時の被害をどう抑えるか",
+          solution: "閲覧・編集・管理リンクの分離と、トークンのハッシュ保存・保存期間の限定",
+          result: "漏洩時の影響範囲を限定し、リスクを前提にした共有設計を明確化",
+        },
+      ],
+      en: [
+        {
+          challenge: "Deciding 'who is allowed to operate' without login",
+          solution:
+            "Using sessions and share tokens as the basis for permissions, separating rights by purpose",
+          result: "Organized a design approach for judging operation permission without accounts",
+        },
+        {
+          challenge: "Containing damage when a share link leaks",
+          solution:
+            "Separating view/edit/admin links, storing token hashes, and limiting retention",
+          result:
+            "Limited the blast radius of leaks and clarified sharing design that assumes risk",
+        },
+      ],
+    },
+    learnings: {
+      ja: [
+        "ログインをなくしても認証はなくならず、別の仕組みに置き換わるだけだということ",
+        "共有機能があるとXSSの影響範囲が大きく広がること",
+        "手軽さとセキュリティは、性質に合わせた制約を設けることで両立できること",
+      ],
+      en: [
+        "Removing login doesn't remove authentication — it just shifts it to another mechanism",
+        "Adding sharing greatly widens the blast radius of XSS",
+        "Ease of use and security can coexist by setting constraints matched to the service's nature",
+      ],
+    },
+    futurePlans: {
+      ja: [
+        "共有時の権限分離とトークン失効の仕組みの具体化",
+        "保存期間や容量に関するポリシーの設計",
+        "ユーザー入力の安全な表示方法の実装と検証",
+      ],
+      en: [
+        "Concretizing permission separation and token revocation for sharing",
+        "Designing policies for retention period and capacity",
+        "Implementing and verifying safe rendering of user input",
+      ],
+    },
+    links: {
+      article: "/articles/login-less-app-security-design/",
     },
   },
   {
@@ -320,52 +560,166 @@ Admin / Scoring / Quality Improvement`,
       en: "An active travel blog where SEO and performance improvements are practiced continuously.",
     },
     highlights: {
-      ja: ["継続的なSEO施策", "表示速度の高速化"],
-      en: ["Continuous SEO implementation", "Page speed optimization"],
+      ja: [
+        "実際に運用を続けている旅行ブログ",
+        "計測に基づく継続的なSEO施策",
+        "表示速度とサイト構造の継続的な改善",
+      ],
+      en: [
+        "A travel blog kept in continuous real-world operation",
+        "Measurement-driven, continuous SEO implementation",
+        "Ongoing improvement of page speed and site structure",
+      ],
     },
     description: {
-      ja: "実際に運用している旅行ブログです。コンテンツを継続的に更新しながら、SEO施策・ページ表示速度の改善・サイト構造の最適化に取り組んでいます。実プロダクトを通じた知見の積み重ねを目的としています。",
-      en: "An actively maintained travel blog. Continuous content updates alongside ongoing SEO work, page speed improvements, and site structure optimization — learning through a real production environment.",
+      ja: "実際に運用している旅行ブログです。旅行先の体験やモデルコースなどの記事を継続的に更新しながら、SEO施策・ページ表示速度の改善・サイト構造の最適化に取り組んでいます。技術記事ではなく実コンテンツを扱うサイトを通じて、検索流入と読みやすさを両立させる知見を積み重ねることを目的としています。",
+      en: "An actively maintained travel blog. While continuously publishing articles such as destination experiences and model routes, I work on SEO, page speed improvements, and site structure optimization. The goal is to accumulate practical know-how on balancing search traffic and readability through a site that handles real content rather than technical writing.",
     },
     background: {
-      ja: "定期的にLighthouseスコアを計測し、課題を特定してから対処する改善サイクルを確立。コンテンツの構造とメタデータの最適化も継続的に実施しています。",
-      en: "Established a regular improvement cycle: measure Lighthouse scores, identify issues, then address them. Content structure and metadata optimization are also ongoing.",
+      ja: "技術検証用のサンプルではなく、実際に読者が訪れる旅行ブログを運用することで、検索エンジンからの流入やコンテンツの読まれ方を踏まえた改善を実践したいと考えました。定期的にLighthouseスコアやSearch Consoleの指標を計測し、課題を特定してから対処する改善サイクルを確立しています。コンテンツの構造やメタデータの最適化も継続的に実施しています。",
+      en: "Rather than running a sample site for technical experiments, I wanted to operate a travel blog that real readers visit, so that improvements could be grounded in actual search traffic and reading behavior. I established an improvement cycle that regularly measures Lighthouse scores and Search Console metrics, identifies issues, and then addresses them. Content structure and metadata optimization are also ongoing.",
     },
     challenges: {
       user: {
-        ja: "記事数が増えるにつれ、ページ速度の低下やSEO上の課題が表面化しやすくなります。技術的な改善を継続しながらコンテンツ運営を両立する必要があります。",
-        en: "As article count grows, page speed degradation and SEO issues become more visible. The challenge is sustaining technical improvement while also maintaining content operations.",
+        ja: "旅行先を調べている読者が、必要な情報に素早くたどり着き、ストレスなく読み進められること。記事数が増えるにつれ、ページ速度の低下やSEO上の課題が表面化しやすくなるため、技術的な改善を継続しながらコンテンツ運営を両立する必要があります。",
+        en: "Helping readers researching destinations reach the information they need quickly and read without friction. As the number of articles grows, page-speed degradation and SEO issues surface more easily, so technical improvement must be sustained alongside content operations.",
       },
-      technical: { ja: "", en: "" },
-      operational: { ja: "", en: "" },
+      technical: {
+        ja: "記事数が増えても表示速度とCore Web Vitalsを維持できるよう、画像の最適化や不要なスクリプトの削減を継続すること。内部リンクやカテゴリ構造を整理し、回遊性とクローラビリティを両立させること。",
+        en: "Sustaining page speed and Core Web Vitals as the article count grows through image optimization and reduction of unnecessary scripts. Organizing internal links and category structure to balance reader navigation with crawlability.",
+      },
+      operational: {
+        ja: "コンテンツの執筆・更新と技術的な改善を限られた時間の中で両立し、計測→課題特定→改善のサイクルを止めずに回し続けること。",
+        en: "Balancing content writing/updates with technical improvement within limited time, and keeping the measure → identify → improve cycle running without interruption.",
+      },
     },
-    features: { ja: [], en: [] },
+    features: {
+      ja: [
+        { title: "旅行記事の継続的な公開", description: "旅行先の体験やモデルコースを発信" },
+        { title: "SEOを意識したサイト構造", description: "カテゴリ・内部リンク・メタデータの整理" },
+        { title: "高速なページ表示", description: "画像最適化と軽量な構成による高速化" },
+      ],
+      en: [
+        {
+          title: "Continuous Travel Article Publishing",
+          description: "Sharing destination experiences and model routes",
+        },
+        {
+          title: "SEO-conscious Site Structure",
+          description: "Organized categories, internal links, and metadata",
+        },
+        {
+          title: "Fast Page Rendering",
+          description: "Speed gains through image optimization and a lightweight setup",
+        },
+      ],
+    },
     responsibilities: {
-      ja: ["企画", "デザイン", "実装", "運用"],
-      en: ["Planning", "Design", "Implementation", "Operation"],
+      ja: ["企画", "コンテンツ執筆", "デザイン", "実装", "SEO・パフォーマンス改善", "運用"],
+      en: [
+        "Planning",
+        "Content Writing",
+        "Design",
+        "Implementation",
+        "SEO & Performance Improvement",
+        "Operation",
+      ],
     },
     stack: ["SEO", "Performance optimization", "Content operations"],
-    stackBreakdown: {},
+    stackBreakdown: {
+      tooling: ["Lighthouse", "Google Search Console", "Google Analytics"],
+    },
     systemArchitecture: {
-      description: { ja: "", en: "" },
+      description: {
+        ja: "コンテンツ更新を中心に運用しつつ、Lighthouseによるパフォーマンス計測とSearch Consoleによる検索パフォーマンスの確認を定期的に行い、課題を特定してから改善を反映する運用フローを取っています。",
+        en: "Centered on content updates, the operation regularly measures performance with Lighthouse and checks search performance with Search Console, identifying issues before reflecting improvements.",
+      },
     },
     technicalRefinement: {
       ja: [
-        { title: "定期的なパフォーマンス計測と改善サイクルの確立", content: "" },
-        { title: "コンテンツSEOの継続的な最適化", content: "" },
+        {
+          title: "定期的なパフォーマンス計測と改善サイクルの確立",
+          content:
+            "Lighthouseスコアを定点観測し、表示速度やCore Web Vitalsに課題が出たタイミングで原因を特定し、画像やスクリプトを中心に改善しています。",
+        },
+        {
+          title: "コンテンツSEOの継続的な最適化",
+          content:
+            "Search Consoleの検索クエリや表示順位を確認しながら、タイトルや見出し、内部リンク構造を継続的に見直しています。",
+        },
       ],
       en: [
         {
           title: "Establishing a regular performance measurement and improvement cycle",
-          content: "",
+          content:
+            "Tracking Lighthouse scores over time, identifying causes when page speed or Core Web Vitals degrade, and improving mainly around images and scripts.",
         },
-        { title: "Continuous content SEO optimization", content: "" },
+        {
+          title: "Continuous content SEO optimization",
+          content:
+            "Continuously revisiting titles, headings, and internal link structure while monitoring search queries and rankings in Search Console.",
+        },
       ],
     },
-    uiUxDesign: { ja: [], en: [] },
-    performanceSeoAccessibility: { ja: [], en: [] },
-    securityPrivacy: { ja: [], en: [] },
-    difficulties: { ja: [], en: [] },
+    uiUxDesign: {
+      ja: [
+        "旅行先を探している読者が目的の情報に素早くたどり着ける導線設計",
+        "モバイルでの閲覧を前提とした読みやすいレイアウト",
+        "関連記事やカテゴリによる回遊性の確保",
+      ],
+      en: [
+        "Navigation designed so readers searching for destinations reach the right information quickly",
+        "A readable layout designed mobile-first",
+        "Encouraging exploration through related articles and categories",
+      ],
+    },
+    performanceSeoAccessibility: {
+      ja: [
+        "Lighthouseによる定期的なパフォーマンス計測と改善",
+        "適切なメタデータと構造化による検索エンジン最適化",
+        "画像の最適化による表示速度の維持",
+      ],
+      en: [
+        "Regular performance measurement and improvement with Lighthouse",
+        "Search engine optimization through appropriate metadata and structure",
+        "Maintaining page speed through image optimization",
+      ],
+    },
+    securityPrivacy: {
+      ja: ["必要以上の個人情報を収集しない運用方針", "依存関係を抑えた保守しやすい構成"],
+      en: [
+        "An operating policy that avoids collecting more personal data than necessary",
+        "A maintainable setup with limited dependencies",
+      ],
+    },
+    difficulties: {
+      ja: [
+        {
+          challenge: "記事数の増加に伴う表示速度の低下",
+          solution: "画像の最適化と不要なスクリプトの見直しを継続的に実施",
+          result: "記事を増やしながらも快適な表示速度を維持",
+        },
+        {
+          challenge: "検索流入の伸び悩み",
+          solution: "Search Consoleの指標をもとにタイトル・見出し・内部リンクを改善",
+          result: "計測に基づく改善で検索からの流入を継続的に見直せる体制を構築",
+        },
+      ],
+      en: [
+        {
+          challenge: "Page-speed degradation as the article count grows",
+          solution: "Continuously optimizing images and reviewing unnecessary scripts",
+          result: "Maintained comfortable page speed even while increasing articles",
+        },
+        {
+          challenge: "Plateauing search traffic",
+          solution:
+            "Improving titles, headings, and internal links based on Search Console metrics",
+          result:
+            "Built a setup for continuously revisiting search traffic through measurement-driven improvement",
+        },
+      ],
+    },
     learnings: {
       ja: [
         "実運用サイトでのSEO施策は計測と検証のサイクルが重要",
@@ -378,8 +732,21 @@ Admin / Scoring / Quality Improvement`,
         "Content quality and technical quality must improve together",
       ],
     },
-    futurePlans: { ja: [], en: [] },
-    links: {},
+    futurePlans: {
+      ja: [
+        "記事コンテンツのさらなる拡充と更新",
+        "検索意図に合わせたサイト構造の継続的な見直し",
+        "表示速度とCore Web Vitalsのさらなる改善",
+      ],
+      en: [
+        "Further expanding and updating article content",
+        "Continuously revisiting site structure to match search intent",
+        "Further improving page speed and Core Web Vitals",
+      ],
+    },
+    links: {
+      website: "https://tomokichidiary.com",
+    },
   },
   {
     id: "tech-blog",
