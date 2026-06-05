@@ -293,8 +293,8 @@ img {
   .site-header__inner {
     flex-wrap: wrap;
     align-items: center;
-    padding-block: 0.6rem;
-    gap: 0.4rem 0.75rem;
+    padding-block: 0.65rem;
+    gap: 0.5rem 0.75rem;
     min-height: auto;
   }
 
@@ -306,22 +306,39 @@ img {
   /* Actions visible on mobile, right of brand */
   .site-header__actions {
     display: flex;
-    gap: 0.6rem;
+    gap: 0.5rem;
   }
 
-  /* Nav pushes to second row, full width, left-aligned */
+  /* Nav becomes a full-width tab bar on the second row (no hamburger / no JS) */
   .site-header__nav {
     order: 3;
     flex-basis: 100%;
-    justify-content: flex-start;
-    gap: 1.5rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.15rem;
+    justify-content: space-between;
+    gap: 0.4rem;
+    margin-top: 0.55rem;
+    padding-top: 0.6rem;
     border-top: 1px solid var(--color-border);
   }
 
   .site-header__nav a {
-    font-size: 0.88rem;
+    flex: 1;
+    text-align: center;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.5rem 0.25rem;
+    border-radius: 0.6rem;
+    color: var(--color-text);
+    background: var(--color-surface);
+    border: 1px solid color-mix(in srgb, var(--color-border) 80%, transparent);
+    transition:
+      color 0.15s ease,
+      background 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .site-header__nav a:hover {
+    background: var(--color-surface-muted);
+    border-color: var(--color-text-muted);
   }
 
   /* Author subline hidden on mobile to keep brand compact */

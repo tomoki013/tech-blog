@@ -1,5 +1,6 @@
 export const projectIds = [
   "tabidea",
+  "nobo-page",
   "travel-diary",
   "tech-blog",
   "developer-status-links",
