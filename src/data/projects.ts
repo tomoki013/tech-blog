@@ -572,8 +572,8 @@ Limited retention → auto-delete`,
       ],
     },
     description: {
-      ja: "実際に運用している旅行ブログです。旅行先の体験やモデルコースなどの記事を継続的に更新しながら、SEO施策・ページ表示速度の改善・サイト構造の最適化に取り組んでいます。技術記事ではなく実コンテンツを扱うサイトを通じて、検索流入と読みやすさを両立させる知見を積み重ねることを目的としています。",
-      en: "An actively maintained travel blog. While continuously publishing articles such as destination experiences and model routes, I work on SEO, page speed improvements, and site structure optimization. The goal is to accumulate practical know-how on balancing search traffic and readability through a site that handles real content rather than technical writing.",
+      ja: "実際に運用している旅行ブログです。旅行先での体験記に加え、空港アクセス・ビザ・決済などの実用的な旅行情報や、写真ギャラリー・目的地別の記事を継続的に更新しながら、SEO施策・ページ表示速度の改善・サイト構造の最適化に取り組んでいます。技術記事ではなく実コンテンツを扱うサイトを通じて、検索流入と読みやすさを両立させる知見を積み重ねることを目的としています。",
+      en: "An actively maintained travel blog. Alongside firsthand travel diaries, it publishes practical travel information (airport access, visas, payments), a photo gallery, and destination-based articles. While keeping this content updated, I work on SEO, page speed improvements, and site structure optimization. The goal is to accumulate practical know-how on balancing search traffic and readability through a site that handles real content rather than technical writing.",
     },
     background: {
       ja: "技術検証用のサンプルではなく、実際に読者が訪れる旅行ブログを運用することで、検索エンジンからの流入やコンテンツの読まれ方を踏まえた改善を実践したいと考えました。定期的にLighthouseスコアやSearch Consoleの指標を計測し、課題を特定してから対処する改善サイクルを確立しています。コンテンツの構造やメタデータの最適化も継続的に実施しています。",
@@ -595,14 +595,17 @@ Limited retention → auto-delete`,
     },
     features: {
       ja: [
-        { title: "旅行記事の継続的な公開", description: "旅行先の体験やモデルコースを発信" },
+        {
+          title: "旅行記事の継続的な公開",
+          description: "旅行体験記や実用的な旅行情報、写真ギャラリーを発信",
+        },
         { title: "SEOを意識したサイト構造", description: "カテゴリ・内部リンク・メタデータの整理" },
         { title: "高速なページ表示", description: "画像最適化と軽量な構成による高速化" },
       ],
       en: [
         {
           title: "Continuous Travel Article Publishing",
-          description: "Sharing destination experiences and model routes",
+          description: "Sharing travel diaries, practical travel information, and a photo gallery",
         },
         {
           title: "SEO-conscious Site Structure",
