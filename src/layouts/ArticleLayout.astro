@@ -247,24 +247,6 @@ const hasToc = filteredToc.length > 0;
     const dlg = dialog;
     const sbw = window.innerWidth - document.documentElement.clientWidth;
 
-    new IntersectionObserver(
-      ([e]) => fab.classList.toggle("toc-fab--visible", !e.isIntersecting),
-      { rootMargin: "0px", threshold: 0 }
-    ).observe(sentinel);
-
-    if (endSentinel) {
-      new IntersectionObserver(
-        ([e]) => {
-          // Keep FAB hidden when at end OR when scrolled past end (sentinel above viewport)
-          fab.classList.toggle(
-            "toc-fab--ending",
-            e.isIntersecting || e.boundingClientRect.top < 0
-          );
-        },
-        { rootMargin: "0px", threshold: 0 }
-      ).observe(endSentinel);
-    }
-
     function openToc() {
       dlg.showModal();
       document.body.style.paddingRight = sbw + "px";
@@ -287,13 +269,26 @@ const hasToc = filteredToc.length > 0;
     const headings = Array.from(
       document.querySelectorAll<HTMLElement>(".article-content h2[id], .article-content h3[id]")
     );
-    if (!tocLinks.length || !headings.length) return;
 
     let rafId = 0;
     let prevActiveId = "";
 
+    // Drive FAB visibility from scroll position rather than an IntersectionObserver:
+    // the sentinel is a zero-height node, so an observer only fires at the exact
+    // boundary crossing and can miss the "scrolled past" state. Evaluating the
+    // geometry every frame is reliable and also avoids showing the FAB at the top
+    // when a tall header pushes the sentinel below the fold.
+    function updateFab() {
+      const startTop = sentinel.getBoundingClientRect().top;
+      const endTop = endSentinel
+        ? endSentinel.getBoundingClientRect().top
+        : Number.POSITIVE_INFINITY;
+      const show = startTop < 0 && endTop > window.innerHeight;
+      fab.classList.toggle("toc-fab--visible", show);
+    }
+
     function applyHighlight() {
-      rafId = 0;
+      if (!headings.length) return;
       const THRESHOLD = 100;
       let activeId = "";
       for (const h of headings) {
@@ -310,13 +305,19 @@ const hasToc = filteredToc.length > 0;
       }
     }
 
+    function onFrame() {
+      rafId = 0;
+      updateFab();
+      applyHighlight();
+    }
+
     function onScroll() {
       if (rafId) return;
-      rafId = requestAnimationFrame(applyHighlight);
+      rafId = requestAnimationFrame(onFrame);
     }
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    applyHighlight();
+    onFrame();
 
     document.addEventListener("astro:before-swap", () => {
       window.removeEventListener("scroll", onScroll);
@@ -468,11 +469,17 @@ const hasToc = filteredToc.length > 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    counter-reset: toc-counter;
+    counter-reset: toc-h2 toc-h3;
   }
 
-  .toc-item {
-    counter-increment: toc-counter;
+  /* h2 = top-level sections; h3 = sub-sections numbered within their h2 */
+  .toc-item--2 {
+    counter-increment: toc-h2;
+    counter-reset: toc-h3;
+  }
+
+  .toc-item--3 {
+    counter-increment: toc-h3;
   }
 
   .toc-link {
@@ -488,12 +495,25 @@ const hasToc = filteredToc.length > 0;
   }
 
   .toc-link::before {
-    content: counter(toc-counter) ".";
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* h2: bold orange section number (1., 2., …) */
+  .toc-item--2 .toc-link::before {
+    content: counter(toc-h2) ".";
     color: #f97316;
     font-weight: 700;
     font-size: 0.8em;
-    margin-right: 0.35rem;
-    font-variant-numeric: tabular-nums;
+    margin-right: 0.4rem;
+  }
+
+  /* h3: muted sub-number scoped to its section (1-1, 1-2, …) */
+  .toc-item--3 .toc-link::before {
+    content: counter(toc-h2) "-" counter(toc-h3);
+    color: var(--color-text-muted);
+    font-weight: 600;
+    font-size: 0.72em;
+    margin-right: 0.4rem;
   }
 
   .toc-link:hover {
@@ -514,9 +534,20 @@ const hasToc = filteredToc.length > 0;
     font-weight: 500;
   }
 
+  /* h3: indented and grouped under its h2 by a subtle nesting rail */
   .toc-item--3 .toc-link {
-    padding-left: 1.5rem;
+    margin-left: 0.9rem;
+    padding-left: 0.7rem;
     font-size: 0.825rem;
+    border-left-color: var(--color-border);
+  }
+
+  .toc-item--3 .toc-link--active {
+    border-left-color: #f97316;
+  }
+
+  .toc-item--3 .toc-link--active::before {
+    color: #f97316;
   }
 
   /* Dialog variants */
@@ -526,7 +557,8 @@ const hasToc = filteredToc.length > 0;
   }
 
   .toc-list--dialog .toc-item--3 .toc-link {
-    padding: 0.35rem 0.6rem 0.35rem 1.75rem;
+    margin-left: 1rem;
+    padding: 0.35rem 0.6rem 0.35rem 0.8rem;
     font-size: 0.85rem;
   }
 
@@ -572,12 +604,6 @@ const hasToc = filteredToc.length > 0;
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
-  }
-
-  .toc-fab--ending {
-    opacity: 0 !important;
-    transform: translateY(0.5rem) !important;
-    pointer-events: none !important;
   }
 
   .toc-fab:hover {
@@ -637,12 +663,21 @@ const hasToc = filteredToc.length > 0;
     -webkit-backdrop-filter: blur(4px);
   }
 
+  /* Top grab handle: keep the orange pill but sit it on the same #111 bar as
+     the header so the top of the sheet is one continuous color. */
   .toc-dialog__handle {
+    display: flex;
+    justify-content: center;
+    padding-top: 0.75rem;
+    background: #111;
+  }
+
+  .toc-dialog__handle::before {
+    content: "";
     width: 2.5rem;
     height: 4px;
     background: #f97316;
     border-radius: 9999px;
-    margin: 0.75rem auto 0;
   }
 
   .toc-dialog__header {
@@ -703,8 +738,8 @@ const hasToc = filteredToc.length > 0;
   }
 
   .toc-dialog__body {
-    padding: 0.75rem 1rem;
-    padding-bottom: calc(4rem + env(safe-area-inset-bottom, 0px));
+    padding: 0.5rem 1rem 0.75rem;
+    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
   }
 
   /* ── Article content ── */
