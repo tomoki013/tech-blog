@@ -4,6 +4,63 @@ import { defineConfig } from "astro/config";
 
 const site = process.env.PUBLIC_SITE_URL ?? "https://example.com";
 
+// Open Graph data cache for in-article link cards.
+// Module-scoped so it persists across every Markdown file processed in a build
+// (e.g. paired JA/EN articles reuse the same fetch instead of refetching).
+const ogCache = new Map();
+
+async function fetchOgData(url) {
+  if (ogCache.has(url)) return ogCache.get(url);
+
+  // Fetch with a couple of retries: a single slow first byte under the build's
+  // concurrent load should not silently demote a link card to a plain link.
+  const attempts = 3;
+  for (let attempt = 1; attempt <= attempts; attempt++) {
+    try {
+      const res = await fetch(url, {
+        headers: {
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36",
+        },
+        signal: AbortSignal.timeout(15000),
+      });
+      if (!res.ok) {
+        ogCache.set(url, null);
+        return null;
+      }
+      const html = await res.text();
+      const title =
+        html.match(/<meta[^>]*property=["']og:title["'][^>]*content=["']([^"']+)["']/i)?.[1] ||
+        html.match(/<meta[^>]*content=["']([^"']+)["'][^>]*property=["']og:title["']/i)?.[1] ||
+        html.match(/<title>([^<]+)<\/title>/i)?.[1];
+      const description =
+        html.match(
+          /<meta[^>]*property=["']og:description["'][^>]*content=["']([^"']+)["']/i,
+        )?.[1] ||
+        html.match(
+          /<meta[^>]*content=["']([^"']+)["'][^>]*property=["']og:description["']/i,
+        )?.[1] ||
+        html.match(/<meta[^>]*name=["']description["'][^>]*content=["']([^"']+)["']/i)?.[1];
+      const image =
+        html.match(/<meta[^>]*property=["']og:image["'][^>]*content=["']([^"']+)["']/i)?.[1] ||
+        html.match(/<meta[^>]*content=["']([^"']+)["'][^>]*property=["']og:image["']/i)?.[1];
+      const data = title ? { title, description, image, hostname: new URL(url).hostname } : null;
+      ogCache.set(url, data);
+      return data;
+    } catch (err) {
+      // Only give up (and cache the miss) after the final attempt.
+      if (attempt === attempts) {
+        console.warn(
+          `[link-card] Could not fetch OG data for ${url}: ${err?.name ?? "Error"} — falling back to a plain link.`,
+        );
+        ogCache.set(url, null);
+        return null;
+      }
+    }
+  }
+  return null;
+}
+
 export default defineConfig({
   site,
   output: "static",
@@ -23,49 +80,6 @@ export default defineConfig({
     },
     rehypePlugins: [
       () => async (tree) => {
-        const ogCache = new Map();
-
-        async function getOgData(url) {
-          if (ogCache.has(url)) return ogCache.get(url);
-          try {
-            const res = await fetch(url, {
-              headers: { "User-Agent": "Mozilla/5.0 (compatible; GeminiBot/1.0)" },
-              signal: AbortSignal.timeout(5000),
-            });
-            if (!res.ok) return null;
-            const html = await res.text();
-            const title =
-              html.match(
-                /<meta[^>]*property=["']og:title["'][^>]*content=["']([^"']+)["']/i,
-              )?.[1] ||
-              html.match(
-                /<meta[^>]*content=["']([^"']+)["'][^>]*property=["']og:title["']/i,
-              )?.[1] ||
-              html.match(/<title>([^<]+)<\/title>/i)?.[1];
-            const description =
-              html.match(
-                /<meta[^>]*property=["']og:description["'][^>]*content=["']([^"']+)["']/i,
-              )?.[1] ||
-              html.match(
-                /<meta[^>]*content=["']([^"']+)["'][^>]*property=["']og:description["']/i,
-              )?.[1] ||
-              html.match(/<meta[^>]*name=["']description["'][^>]*content=["']([^"']+)["']/i)?.[1];
-            const image =
-              html.match(
-                /<meta[^>]*property=["']og:image["'][^>]*content=["']([^"']+)["']/i,
-              )?.[1] ||
-              html.match(/<meta[^>]*content=["']([^"']+)["'][^>]*property=["']og:image["']/i)?.[1];
-            const data = title
-              ? { title, description, image, hostname: new URL(url).hostname }
-              : null;
-            ogCache.set(url, data);
-            return data;
-          } catch (_e) {
-            ogCache.set(url, null);
-            return null;
-          }
-        }
-
         async function traverse(node) {
           if (!node?.children) return;
 
@@ -94,7 +108,7 @@ export default defineConfig({
               }
 
               if (urlToFetch) {
-                const og = await getOgData(urlToFetch);
+                const og = await fetchOgData(urlToFetch);
                 if (og) {
                   node.children[i] = {
                     type: "element",
