@@ -22,7 +22,7 @@ So I migrated Tabidea's itinerary generation pipeline from a Netlify Functions-b
 
 This article does not go into the detailed logic of the itinerary generation pipeline itself. Instead, it focuses on why I migrated it, how I approached the migration, and what went wrong along the way.
 
-## 1. Why I migrated it
+## Why I migrated it
 
 The main reason was simple: itinerary generation was becoming too heavy to treat as a normal API request.
 
@@ -44,7 +44,7 @@ Itinerary generation is the core of Tabidea.
 
 That is why I decided not to simply extend timeouts or patch around the problem. I wanted to rethink the execution model itself.
 
-## 2. The new mental model
+## The new mental model
 
 After the migration, itinerary generation is no longer treated as something the API must complete immediately.
 
@@ -65,7 +65,7 @@ The browser creates a generation job and watches its progress. The worker perfor
 
 This allowed me to keep the user experience mostly the same while moving the execution responsibility to a more appropriate place.
 
-## 3. Splitting the API and worker
+## Splitting the API and worker
 
 In Cloud Run, I separated the public API service from the private worker service.
 
@@ -81,7 +81,7 @@ The worker can then handle the longer-running process. It can update progress, s
 
 By separating these roles, the responsibilities became much clearer.
 
-## 4. I did not rewrite everything at once
+## I did not rewrite everything at once
 
 I did not rewrite the entire itinerary generation logic at the same time as the infrastructure migration.
 
@@ -97,7 +97,7 @@ So I focused first on changing where the pipeline runs.
 
 The internal generation details were kept mostly stable, while the execution layer and state management were moved toward the Cloud Run-based model.
 
-## 5. What the production cutover involved
+## What the production cutover involved
 
 Migrating to Cloud Run was not just a matter of writing code and deploying it.
 
@@ -121,7 +121,7 @@ After doing all of this, I realized that the migration was not only about applic
 
 DNS, certificates, IAM, database migrations, queues, secrets, and frontend proxying were all part of the migration.
 
-## 6. Things that went wrong
+## Things that went wrong
 
 Several things went wrong during the migration.
 
@@ -197,7 +197,7 @@ This part does not behave like application code. You cannot always change someth
 
 For production cutovers, I learned that it is important to check DNS, certificate state, and health endpoints step by step.
 
-## 7. What improved after the migration
+## What improved after the migration
 
 The biggest improvement was that itinerary generation became easier to reason about.
 
@@ -223,7 +223,7 @@ What kind of input tends to take longer?
 
 The migration made it easier to build that kind of foundation.
 
-## 8. Cloud Run does not solve everything automatically
+## Cloud Run does not solve everything automatically
 
 Moving to Cloud Run does not magically solve every problem.
 
@@ -239,7 +239,7 @@ Itinerary generation was never a simple API request. I had only been forcing it 
 
 By moving it into an asynchronous job model, the complexity became more visible and easier to manage.
 
-## 9. What I want to do next
+## What I want to do next
 
 This migration gave Tabidea a more stable foundation for itinerary generation.
 

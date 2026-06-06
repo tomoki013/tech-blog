@@ -28,7 +28,7 @@ This article is less about framework selection and more about practical implemen
 
 The examples are based on a statically generated Astro blog, but many of the ideas also apply to blogs and documentation sites built with Next.js, Vite, or other frontend stacks.
 
-## 1. Serve article content as static HTML
+## Serve article content as static HTML
 
 The most important thing for an engineering blog is that the article content should be readable as quickly as possible.
 
@@ -56,7 +56,7 @@ There are cases where these approaches make sense for web apps.
 But an article page on an engineering blog is mostly for reading.  
 If that is the case, serving the content as plain HTML is usually the fastest and most robust option.
 
-## 2. Keep the HTML simple
+## Keep the HTML simple
 
 Generating static HTML does not automatically mean the page is perfect.
 
@@ -89,7 +89,7 @@ If these common parts become heavy, every article page becomes heavy.
 It is not enough to optimize only the article body.  
 I also need to keep an eye on what is included in the shared layout.
 
-## 3. Keep JavaScript away from the initial render
+## Keep JavaScript away from the initial render
 
 JavaScript needs to be handled carefully when thinking about performance.
 
@@ -133,7 +133,7 @@ The article body should not depend on JavaScript to appear.
 Some small scripts may still be necessary, such as theme initialization.  
 But even then, I try to keep them small and fast.
 
-## 4. Treat CSS as part of the critical rendering path
+## Treat CSS as part of the critical rendering path
 
 CSS is not just for styling.  
 It directly affects the initial rendering path.
@@ -173,7 +173,7 @@ I also pay attention to how CSS is emitted during the build.
 Inlining small CSS can reduce requests, but inlining too much CSS can become counterproductive.  
 So I look at CSS not only as a styling layer, but as something that can affect rendering performance directly.
 
-## 5. Keep images, icons, and OGP assets lightweight
+## Keep images, icons, and OGP assets lightweight
 
 Images can easily make a page heavy.
 
@@ -204,7 +204,7 @@ For an engineering blog, the highest priority is the article content.
 
 I want the text to become readable before spending too much effort on loading decorative assets.
 
-## 6. Use system fonts by default
+## Use system fonts by default
 
 Web fonts can make a site look polished.
 
@@ -228,7 +228,7 @@ For brand sites or portfolios, typography can be a major part of the design.
 
 But for a personal engineering blog, I prefer prioritizing readability, speed, and long-term maintainability.
 
-## 7. Keep dependencies minimal
+## Keep dependencies minimal
 
 One of the most effective ways to keep a site fast is to avoid unnecessary dependencies.
 
@@ -257,7 +257,7 @@ Keeping dependencies small helps not only performance, but also maintainability.
 
 It is less about making the site smaller once, and more about reducing the number of ways the site can become heavy over time.
 
-## 8. Serve the site as static assets
+## Serve the site as static assets
 
 This blog is built and served as static assets.
 
@@ -284,7 +284,7 @@ A web app may need dynamic rendering.
 
 But for a blog whose main purpose is reading articles, static delivery is often the fastest and simplest option.
 
-## 9. Look at real Lighthouse measurements
+## Look at real Lighthouse measurements
 
 Lighthouse is very useful when thinking about performance.
 
@@ -314,7 +314,7 @@ Network conditions, CPU performance, rendering timing, images, CSS, and other fa
 So I try not to judge performance based on a single run.  
 I prefer running it multiple times and looking at the overall tendency.
 
-## 10. Target numbers for a lightweight engineering blog
+## Target numbers for a lightweight engineering blog
 
 This is only my personal reference, but I think a statically generated engineering blog can aim for fairly aggressive numbers.
 
@@ -342,7 +342,7 @@ They would be too strict for many other types of sites, such as:
 
 These targets make sense only because this blog is mostly static HTML with minimal images and JavaScript.
 
-## 11. Desktop and mobile are different
+## Desktop and mobile are different
 
 A site that feels fast on desktop does not automatically feel fast on mobile.
 
@@ -370,7 +370,7 @@ So I try not to call the site fast just because the desktop score looks good.
 At minimum, I check both Mobile and Desktop in Lighthouse.  
 When possible, I also check the site on a real device or with DevTools Performance.
 
-## 12. Do not optimize only for numbers
+## Do not optimize only for numbers
 
 Lighthouse is useful, but optimizing only for Lighthouse can be misleading.
 
@@ -399,7 +399,7 @@ But the final goal is not a perfect score.
 
 The final goal is a site that feels fast and comfortable to read.
 
-## 13. Checklist for keeping an engineering blog fast
+## Checklist for keeping an engineering blog fast
 
 Here is the checklist I use to keep a technical blog lightweight.
 
