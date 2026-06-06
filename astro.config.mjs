@@ -30,12 +30,8 @@ async function fetchOgData(url) {
       }
       const html = await res.text();
       const title =
-        html.match(
-          /<meta[^>]*property=["']og:title["'][^>]*content=["']([^"']+)["']/i,
-        )?.[1] ||
-        html.match(
-          /<meta[^>]*content=["']([^"']+)["'][^>]*property=["']og:title["']/i,
-        )?.[1] ||
+        html.match(/<meta[^>]*property=["']og:title["'][^>]*content=["']([^"']+)["']/i)?.[1] ||
+        html.match(/<meta[^>]*content=["']([^"']+)["'][^>]*property=["']og:title["']/i)?.[1] ||
         html.match(/<title>([^<]+)<\/title>/i)?.[1];
       const description =
         html.match(
@@ -46,13 +42,9 @@ async function fetchOgData(url) {
         )?.[1] ||
         html.match(/<meta[^>]*name=["']description["'][^>]*content=["']([^"']+)["']/i)?.[1];
       const image =
-        html.match(
-          /<meta[^>]*property=["']og:image["'][^>]*content=["']([^"']+)["']/i,
-        )?.[1] ||
+        html.match(/<meta[^>]*property=["']og:image["'][^>]*content=["']([^"']+)["']/i)?.[1] ||
         html.match(/<meta[^>]*content=["']([^"']+)["'][^>]*property=["']og:image["']/i)?.[1];
-      const data = title
-        ? { title, description, image, hostname: new URL(url).hostname }
-        : null;
+      const data = title ? { title, description, image, hostname: new URL(url).hostname } : null;
       ogCache.set(url, data);
       return data;
     } catch (err) {
