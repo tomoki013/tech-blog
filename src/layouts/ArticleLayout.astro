@@ -278,16 +278,18 @@ const hasToc = filteredToc.length > 0;
     // boundary crossing and can miss the "scrolled past" state. Evaluating the
     // geometry every frame is reliable and also avoids showing the FAB at the top
     // when a tall header pushes the sentinel below the fold.
-    function updateFab() {
+    // Arrow functions (not hoisted declarations) so the non-null narrowing of
+    // `fab` / `sentinel` from the guard above flows into these closures.
+    const updateFab = () => {
       const startTop = sentinel.getBoundingClientRect().top;
       const endTop = endSentinel
         ? endSentinel.getBoundingClientRect().top
         : Number.POSITIVE_INFINITY;
       const show = startTop < 0 && endTop > window.innerHeight;
       fab.classList.toggle("toc-fab--visible", show);
-    }
+    };
 
-    function applyHighlight() {
+    const applyHighlight = () => {
       if (!headings.length) return;
       const THRESHOLD = 100;
       let activeId = "";
@@ -303,18 +305,18 @@ const hasToc = filteredToc.length > 0;
           decodeURIComponent(link.hash) === "#" + activeId
         );
       }
-    }
+    };
 
-    function onFrame() {
+    const onFrame = () => {
       rafId = 0;
       updateFab();
       applyHighlight();
-    }
+    };
 
-    function onScroll() {
+    const onScroll = () => {
       if (rafId) return;
       rafId = requestAnimationFrame(onFrame);
-    }
+    };
 
     window.addEventListener("scroll", onScroll, { passive: true });
     onFrame();
