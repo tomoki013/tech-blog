@@ -1,0 +1,66 @@
+---
+interface Props {
+  mdHref: string;
+  title: string;
+}
+
+const { mdHref, title } = Astro.props;
+---
+
+<div id="webmcp" data-md-href={mdHref} data-title={title} hidden></div>
+
+<script>
+  // WebMCP (W3C Web Machine Learning CG draft).
+  // API surface: `document.modelContext.registerTool(tool, options)`.
+  // Tools are unregistered via the AbortSignal passed in `options.signal`.
+  // [SecureContext] only (HTTPS), and a no-op everywhere the API is absent.
+  interface ModelContextTool {
+    name: string;
+    description: string;
+    inputSchema?: unknown;
+    annotations?: { readOnlyHint?: boolean; untrustedContentHint?: boolean };
+    execute: () => Promise<unknown>;
+  }
+  interface ModelContext {
+    registerTool: (tool: ModelContextTool, options?: { signal?: AbortSignal }) => unknown;
+  }
+
+  function setupWebMcp() {
+    const modelContext = (document as unknown as { modelContext?: ModelContext }).modelContext;
+    const root = document.getElementById("webmcp");
+    if (!modelContext || !root) return;
+
+    const mdHref = root.dataset.mdHref ?? "";
+    const title = root.dataset.title ?? "";
+    const controller = new AbortController();
+
+    try {
+      modelContext.registerTool(
+        {
+          name: "get_current_article_markdown",
+          description:
+            `Return the full Markdown source (with frontmatter) of the article currently ` +
+            `open in this tab${title ? `: "${title}"` : ""}.`,
+          inputSchema: { type: "object", properties: {}, additionalProperties: false },
+          annotations: { readOnlyHint: true },
+          async execute() {
+            const res = await fetch(mdHref);
+            if (!res.ok) throw new Error(`Failed to fetch Markdown (${res.status})`);
+            const text = await res.text();
+            return { content: [{ type: "text", text }] };
+          },
+        },
+        { signal: controller.signal },
+      );
+    } catch {
+      // Registration may throw on older/partial implementations — stay a no-op.
+      return;
+    }
+
+    // ClientRouter swaps the DOM without a full reload, so explicitly drop the
+    // tool before navigating and re-register on the next page load.
+    document.addEventListener("astro:before-swap", () => controller.abort(), { once: true });
+  }
+
+  document.addEventListener("astro:page-load", setupWebMcp);
+</script>

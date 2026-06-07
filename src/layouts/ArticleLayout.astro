@@ -1,6 +1,8 @@
 ---
 import type { MarkdownHeading } from "astro";
+import ArticleExport from "@/components/ArticleExport.astro";
 import RelatedProjects from "@/components/RelatedProjects.astro";
+import WebMcp from "@/components/WebMcp.astro";
 import type { ProjectId } from "@/data/project-ids";
 import type { Project } from "@/data/projects";
 import type { Locale } from "@/i18n/config";
@@ -34,6 +36,8 @@ interface Props {
   prevArticle?: AdjacentArticle;
   nextArticle?: AdjacentArticle;
   toc?: MarkdownHeading[];
+  mdHref: string;
+  jsonHref: string;
 }
 
 const {
@@ -51,6 +55,8 @@ const {
   prevArticle,
   nextArticle,
   toc = [],
+  mdHref,
+  jsonHref,
 } = Astro.props;
 const t = getUi(locale);
 const articleUrl = `${siteConfig.url}${canonicalPath}`;
@@ -67,6 +73,11 @@ const hasToc = filteredToc.length > 0;
   type="article"
   alternateLocales={alternateLocales}
 >
+  <Fragment slot="head">
+    <link rel="alternate" type="text/markdown" href={mdHref} title={title} />
+    <link rel="alternate" type="application/json" href={jsonHref} title={title} />
+  </Fragment>
+
   <article class="article-detail">
     <header class="article-detail__header">
       <h2>{title}</h2>
@@ -104,6 +115,10 @@ const hasToc = filteredToc.length > 0;
             </svg>
           </a>
         </div>
+      </div>
+
+      <div class="article-detail__export">
+        <ArticleExport mdHref={mdHref} jsonHref={jsonHref} locale={locale} />
       </div>
 
       {hasToc && (
@@ -182,6 +197,8 @@ const hasToc = filteredToc.length > 0;
       <RelatedProjects projects={relatedProjects} locale={locale} />
     </div>
   </article>
+
+  <WebMcp mdHref={mdHref} title={title} />
 
   {hasToc && (
     <button
@@ -390,6 +407,12 @@ const hasToc = filteredToc.length > 0;
 
   .article-detail__share {
     flex-shrink: 0;
+  }
+
+  .article-detail__export {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
   }
 
   .share-link {
