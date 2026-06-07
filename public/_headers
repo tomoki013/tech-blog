@@ -1,0 +1,7 @@
+# Serve Markdown article exports as UTF-8.
+# With output: "static" the Content-Type header set in the .md endpoint is
+# dropped at build time, so the host infers the type from the .md extension
+# and omits a charset. Browsers then decode the bytes with a non-UTF-8 default
+# and garble multibyte (e.g. Japanese) text. Pin the charset here.
+/*.md
+  Content-Type: text/markdown; charset=utf-8

@@ -13,6 +13,10 @@
   --color-link: #334155;
   --color-link-hover: #0f172a;
   --shadow-soft: 0 16px 48px rgb(28 27 24 / 0.08);
+  /* Shared hover accent — every hover state resolves its accent color here */
+  --color-accent: #f97316;
+  --color-accent-hover: #fb923c;
+  --color-accent-soft: color-mix(in srgb, var(--color-surface) 92%, #f97316 8%);
 }
 
 .dark {
@@ -69,7 +73,7 @@ a {
 }
 
 a:hover {
-  color: var(--color-link-hover);
+  color: var(--color-accent);
 }
 
 img {
@@ -131,7 +135,7 @@ img {
 }
 
 .site-header__nav a:hover {
-  color: var(--color-text);
+  color: var(--color-accent);
 }
 
 .theme-toggle,
@@ -167,8 +171,8 @@ img {
 
 .theme-toggle:hover,
 .language-switcher:hover {
-  color: var(--color-text);
-  border-color: #f97316;
+  color: var(--color-accent);
+  border-color: var(--color-accent);
   background: color-mix(in srgb, var(--color-surface) 94%, #f97316 6%);
   box-shadow:
     0 0 0 3px color-mix(in srgb, transparent 87%, #f97316 13%),
@@ -337,8 +341,9 @@ img {
   }
 
   .site-header__nav a:hover {
-    background: var(--color-surface-muted);
-    border-color: var(--color-text-muted);
+    background: var(--color-accent-soft);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
   }
 
   /* Author subline hidden on mobile to keep brand compact */

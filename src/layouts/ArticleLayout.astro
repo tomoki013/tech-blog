@@ -423,7 +423,7 @@ const hasToc = filteredToc.length > 0;
   }
 
   .share-link:hover {
-    color: var(--color-text);
+    color: var(--color-accent);
   }
 
   .share-icon {
@@ -459,7 +459,8 @@ const hasToc = filteredToc.length > 0;
   }
 
   .toc-header__summary:hover {
-    background: var(--color-surface-muted);
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
   }
 
   .toc-icon {
@@ -542,9 +543,9 @@ const hasToc = filteredToc.length > 0;
   }
 
   .toc-link:hover {
-    color: var(--color-text);
-    background: var(--color-surface-muted);
-    border-left-color: var(--color-border);
+    color: var(--color-accent);
+    background: var(--color-accent-soft);
+    border-left-color: var(--color-accent);
   }
 
   .toc-link--active {
@@ -599,8 +600,8 @@ const hasToc = filteredToc.length > 0;
     padding: 0.7rem 1.3rem;
     border-radius: 9999px;
     border: 2px solid #f97316;
-    background: #111;
-    color: #fff;
+    background: var(--color-surface);
+    color: var(--color-text);
     cursor: pointer;
     box-shadow: 0 4px 24px rgb(0 0 0 / 0.22), 0 2px 6px rgb(249 115 22 / 0.18);
     opacity: 0;
@@ -633,7 +634,7 @@ const hasToc = filteredToc.length > 0;
 
   .toc-fab:hover {
     border-color: #fb923c;
-    background: color-mix(in srgb, #111 82%, #f97316 18%);
+    background: color-mix(in srgb, var(--color-surface) 86%, #f97316 14%);
     box-shadow:
       0 4px 24px rgb(0 0 0 / 0.3),
       0 0 18px rgb(249 115 22 / 0.4),
@@ -688,13 +689,13 @@ const hasToc = filteredToc.length > 0;
     -webkit-backdrop-filter: blur(4px);
   }
 
-  /* Top grab handle: keep the orange pill but sit it on the same #111 bar as
-     the header so the top of the sheet is one continuous color. */
+  /* Top grab handle: keep the orange pill but sit it on the same surface bar as
+     the header so the top of the sheet is one continuous, theme-aware color. */
   .toc-dialog__handle {
     display: flex;
     justify-content: center;
     padding-top: 0.75rem;
-    background: #111;
+    background: var(--color-surface);
   }
 
   .toc-dialog__handle::before {
@@ -714,7 +715,7 @@ const hasToc = filteredToc.length > 0;
     border-bottom: 1px solid #f97316;
     position: sticky;
     top: 0;
-    background: #111;
+    background: var(--color-surface);
     z-index: 1;
   }
 
@@ -739,9 +740,9 @@ const hasToc = filteredToc.length > 0;
     height: 1.75rem;
     padding: 0;
     border-radius: 50%;
-    border: 1px solid #444;
+    border: 1px solid var(--color-border);
     background: transparent;
-    color: #aaa;
+    color: var(--color-text-muted);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -758,8 +759,9 @@ const hasToc = filteredToc.length > 0;
   }
 
   .toc-dialog__close:hover {
-    background: rgba(255 255 255 / 0.1);
-    color: #fff;
+    background: var(--color-accent-soft);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
   }
 
   .toc-dialog__body {
@@ -807,7 +809,7 @@ const hasToc = filteredToc.length > 0;
   }
 
   .article-content :global(a:hover) {
-    opacity: 0.7;
+    color: var(--color-accent);
   }
 
   .article-content :global(.external-link)::after {
@@ -896,7 +898,7 @@ const hasToc = filteredToc.length > 0;
   }
 
   .article-content :global(.link-card:hover) {
-    border-color: var(--color-link);
+    border-color: var(--color-accent);
     transform: translateY(-2px);
     opacity: 1 !important;
   }
@@ -1050,8 +1052,8 @@ const hasToc = filteredToc.length > 0;
   }
 
   .article-nav__link:hover {
-    border-color: var(--color-link);
-    background: var(--color-surface-muted);
+    border-color: var(--color-accent);
+    background: var(--color-accent-soft);
   }
 
   .article-nav__item--next .article-nav__link {
