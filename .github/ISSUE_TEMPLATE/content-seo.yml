@@ -1,0 +1,56 @@
+name: コンテンツ・SEO改善
+description: 文章、構造化データ、検索表示、SNS共有表示などの改善を記録します
+title: "[Content/SEO] "
+labels:
+  - "type: content-seo"
+  - "status: inbox"
+assignees:
+  - tomoki013
+body:
+  - type: input
+    id: target
+    attributes:
+      label: 対象ページ・コンテンツ
+      placeholder: URL、記事名、メタデータなど
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: 気になること
+      placeholder: 誤解しやすい文章、検索結果やSNSカードの問題など
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: 分類
+      options:
+        - 文章・コピー
+        - SEO
+        - OGP・SNS共有
+        - 構造化データ
+        - 多言語・翻訳
+        - その他
+    validations:
+      required: true
+  - type: textarea
+    id: ideal
+    attributes:
+      label: 理想の状態・修正案
+    validations:
+      required: false
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 検索結果・スクリーンショット・参考資料
+    validations:
+      required: false
+  - type: checkboxes
+    id: completion
+    attributes:
+      label: 完了条件
+      options:
+        - label: 修正内容を確認した
+        - label: プレビューまたはテスト環境で確認した
+        - label: 本番環境で確認した

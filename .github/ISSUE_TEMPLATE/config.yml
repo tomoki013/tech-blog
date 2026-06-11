@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: セキュリティ上の問題を報告する
+    url: https://github.com/tomoki013/tech-blog/security/advisories/new
+    about: 脆弱性や機密性のある問題は、公開Issueではなく非公開で報告してください。
