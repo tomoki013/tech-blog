@@ -1,0 +1,52 @@
+name: パフォーマンス改善
+description: 表示速度、Core Web Vitals、バンドルサイズなどの改善を記録します
+title: "[Performance] "
+labels:
+  - "type: performance"
+  - "status: inbox"
+assignees:
+  - tomoki013
+body:
+  - type: input
+    id: target
+    attributes:
+      label: 対象ページ・処理
+      placeholder: URL、画面名、API、ビルド処理など
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: 気になること・計測結果
+      description: 遅いと感じる場面や、Lighthouse・ログなどの数値を書いてください
+    validations:
+      required: true
+  - type: textarea
+    id: hypothesis
+    attributes:
+      label: 原因の仮説
+      placeholder: 分かる範囲で記入してください
+    validations:
+      required: false
+  - type: textarea
+    id: goal
+    attributes:
+      label: 改善目標
+      placeholder: 例：LCPを2.5秒未満にする、JSを50KB削減する
+    validations:
+      required: false
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 計測URL・スクリーンショット・補足
+    validations:
+      required: false
+  - type: checkboxes
+    id: completion
+    attributes:
+      label: 完了条件
+      options:
+        - label: 修正前の数値を記録した
+        - label: 修正後の数値を記録した
+        - label: 主要機能に回帰がないことを確認した
+        - label: 本番環境で確認した
