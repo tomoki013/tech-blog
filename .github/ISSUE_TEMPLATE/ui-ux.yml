@@ -1,0 +1,58 @@
+name: UI・UX改善
+description: 見た目、操作性、導線、分かりやすさの改善を記録します
+title: "[UI/UX] "
+labels:
+  - "type: ui-ux"
+  - "status: inbox"
+assignees:
+  - tomoki013
+body:
+  - type: input
+    id: target
+    attributes:
+      label: 対象ページ・機能
+      placeholder: URL、画面名、コンポーネント名など
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: 気になること
+      description: 現在どのように見える、または使いにくいかを書いてください
+      placeholder: 例：スマホでは共有ボタンが小さく、押しにくい
+    validations:
+      required: true
+  - type: textarea
+    id: ideal
+    attributes:
+      label: 理想の状態
+      placeholder: どのようになれば改善と判断できるか
+    validations:
+      required: false
+  - type: dropdown
+    id: device
+    attributes:
+      label: 主な対象環境
+      options:
+        - すべて
+        - スマートフォン
+        - PC
+        - タブレット
+        - 特定環境のみ
+    validations:
+      required: false
+  - type: textarea
+    id: evidence
+    attributes:
+      label: スクリーンショット・参考例・補足
+    validations:
+      required: false
+  - type: checkboxes
+    id: completion
+    attributes:
+      label: 完了条件
+      options:
+        - label: 修正した
+        - label: スマートフォンで確認した
+        - label: PCで確認した
+        - label: 本番環境で確認した
