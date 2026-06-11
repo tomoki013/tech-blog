@@ -1,0 +1,63 @@
+name: バグ・不具合
+description: 正常に動かない、表示が崩れるなどの問題を記録します
+title: "[Bug] "
+labels:
+  - "type: bug"
+  - "status: inbox"
+assignees:
+  - tomoki013
+body:
+  - type: input
+    id: target
+    attributes:
+      label: 対象ページ・機能
+      placeholder: URL、画面名、機能名など
+    validations:
+      required: true
+  - type: textarea
+    id: symptom
+    attributes:
+      label: 発生している問題
+      description: 実際に何が起きているかを書いてください
+      placeholder: 例：iPhone Safariで共有ボタンを押しても反応しない
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 再現手順
+      value: |
+        1. 
+        2. 
+        3. 
+    validations:
+      required: false
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期待する動作
+      placeholder: 本来どう動いてほしいか
+    validations:
+      required: false
+  - type: input
+    id: environment
+    attributes:
+      label: 確認環境
+      placeholder: 例：iPhone Safari、Windows Chrome
+    validations:
+      required: false
+  - type: textarea
+    id: evidence
+    attributes:
+      label: スクリーンショット・ログ・補足
+      description: 機密情報や個人情報は貼らないでください
+    validations:
+      required: false
+  - type: checkboxes
+    id: completion
+    attributes:
+      label: 完了条件
+      options:
+        - label: 原因または再現条件を確認した
+        - label: 修正と動作確認を行った
+        - label: 本番環境で確認した
