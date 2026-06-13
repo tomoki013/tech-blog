@@ -85,6 +85,7 @@ export const ui = {
     viewJson: "View JSON",
     copied: "Copied",
     copyFailed: "コピーに失敗しました",
+    menu: "メニュー",
   },
   en: {
     home: "Home",
@@ -171,6 +172,7 @@ export const ui = {
     viewJson: "View JSON",
     copied: "Copied",
     copyFailed: "Failed to copy",
+    menu: "Menu",
   },
 } as const satisfies Record<Locale, Record<string, string>>;
 
