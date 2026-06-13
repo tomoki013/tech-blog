@@ -27,6 +27,18 @@ const t = getUi(locale);
       <span class="site-header__author">{siteConfig.author}</span>
     </a>
 
+    <input type="checkbox" class="site-nav__toggle-input sr-only" id="site-nav-toggle" aria-label={t.menu} />
+    <label class="site-nav__toggle" for="site-nav-toggle" aria-hidden="true">
+      <svg class="site-nav__icon site-nav__icon--open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+      <svg class="site-nav__icon site-nav__icon--close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </label>
     <nav class="site-header__nav" aria-label="Primary navigation">
       <a href={getHomePath(locale)} data-astro-prefetch>{t.home}</a>
       <a href={getArticlesPath(locale)} data-astro-prefetch>{t.articles}</a>

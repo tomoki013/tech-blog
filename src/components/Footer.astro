@@ -7,26 +7,19 @@ import {
   type Locale,
 } from "@/i18n/config";
 import { getUi } from "@/i18n/ui";
-import LanguageSwitcher from "./LanguageSwitcher.astro";
-import ThemeToggle from "./ThemeToggle.astro";
 
 interface Props {
   locale: Locale;
-  alternateHref: string;
 }
 
-const { locale, alternateHref } = Astro.props;
+const { locale } = Astro.props;
 const t = getUi(locale);
 ---
 
 <footer class="site-footer">
   <div class="site-footer__inner">
-    <div class="site-footer__actions">
-      <LanguageSwitcher locale={locale} alternateHref={alternateHref} />
-      <ThemeToggle locale={locale} />
-    </div>
-    <div class="site-footer__main">
-      <p>Made with <span aria-hidden="true">❤️</span> by Tomokichi
+    <div class="site-footer__top">
+      <p class="site-footer__social">Made with <span aria-hidden="true">❤️</span> by Tomokichi
         <a href="https://x.com/tomokichi178694" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
@@ -55,12 +48,12 @@ const t = getUi(locale);
           </svg>
         </a>
       </p>
-      <p class="copyright">© 2025-2026 ともきちのエンジニア成長記 All Rights Reserved.</p>
+      <nav aria-label="Footer navigation">
+        <a href={getPrivacyPath(locale)}>{t.privacy}</a>
+        <a href={getDisclaimerPath(locale)}>{t.disclaimer}</a>
+        <a href={getLicensePath(locale)}>{t.license}</a>
+      </nav>
     </div>
-    <nav aria-label="Footer navigation">
-      <a href={getPrivacyPath(locale)}>{t.privacy}</a>
-      <a href={getDisclaimerPath(locale)}>{t.disclaimer}</a>
-      <a href={getLicensePath(locale)}>{t.license}</a>
-    </nav>
+    <p class="copyright">© 2025-2026 ともきちのエンジニア成長記 All Rights Reserved.</p>
   </div>
 </footer>
