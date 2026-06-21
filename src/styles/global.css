@@ -140,7 +140,8 @@ img {
 
 /* Theme toggle, language switcher and the hamburger toggle share one icon-button
    style so all three line up in size. The hamburger is hidden on desktop and
-   revealed (via a CSS-only checkbox) under 760px — see the media query below. */
+   revealed under 760px, where a minimal script toggles its aria-expanded
+   state — see the media query below. */
 .theme-toggle,
 .language-switcher,
 .site-nav__toggle {
@@ -177,7 +178,7 @@ img {
 .theme-toggle:hover,
 .language-switcher:hover,
 .site-nav__toggle:hover,
-.site-nav__toggle-input:focus-visible ~ .site-nav__toggle {
+.site-nav__toggle:focus-visible {
   color: var(--color-accent);
   border-color: var(--color-accent);
   background: color-mix(in srgb, var(--color-surface) 94%, #f97316 6%);
@@ -186,9 +187,8 @@ img {
     0 2px 10px rgb(249 115 22 / 0.1);
 }
 
-/* Hamburger + its checkbox are desktop-hidden; the media query re-enables them */
-.site-nav__toggle,
-.site-nav__toggle-input {
+/* Hamburger is desktop-hidden; the media query re-enables it */
+.site-nav__toggle {
   display: none;
 }
 
@@ -327,11 +327,6 @@ img {
     min-width: 0;
   }
 
-  /* Re-enable the checkbox (kept visually hidden but focusable) on mobile */
-  .site-nav__toggle-input {
-    display: block;
-  }
-
   /* Actions sit left of the hamburger */
   .site-header__actions {
     order: 2;
@@ -349,11 +344,11 @@ img {
     display: none;
   }
 
-  .site-nav__toggle-input:checked ~ .site-nav__toggle .site-nav__icon--open {
+  .site-nav__toggle[aria-expanded="true"] .site-nav__icon--open {
     display: none;
   }
 
-  .site-nav__toggle-input:checked ~ .site-nav__toggle .site-nav__icon--close {
+  .site-nav__toggle[aria-expanded="true"] .site-nav__icon--close {
     display: block;
   }
 
@@ -382,7 +377,7 @@ img {
       visibility 0.18s ease;
   }
 
-  .site-nav__toggle-input:checked ~ .site-header__nav {
+  .site-nav__toggle[aria-expanded="true"] ~ .site-header__nav {
     visibility: visible;
     opacity: 1;
     transform: translateY(0);
