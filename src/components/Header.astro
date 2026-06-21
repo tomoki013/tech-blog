@@ -27,8 +27,14 @@ const t = getUi(locale);
       <span class="site-header__author">{siteConfig.author}</span>
     </a>
 
-    <input type="checkbox" class="site-nav__toggle-input sr-only" id="site-nav-toggle" aria-label={t.menu} />
-    <label class="site-nav__toggle" for="site-nav-toggle" aria-hidden="true">
+    <button
+      type="button"
+      class="site-nav__toggle"
+      id="site-nav-toggle"
+      aria-label={t.menu}
+      aria-controls="site-nav"
+      aria-expanded="false"
+    >
       <svg class="site-nav__icon site-nav__icon--open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
         <line x1="3" y1="6" x2="21" y2="6"/>
         <line x1="3" y1="12" x2="21" y2="12"/>
@@ -38,8 +44,8 @@ const t = getUi(locale);
         <line x1="18" y1="6" x2="6" y2="18"/>
         <line x1="6" y1="6" x2="18" y2="18"/>
       </svg>
-    </label>
-    <nav class="site-header__nav" aria-label="Primary navigation">
+    </button>
+    <nav id="site-nav" class="site-header__nav" aria-label="Primary navigation">
       <a href={getHomePath(locale)} data-astro-prefetch>{t.home}</a>
       <a href={getArticlesPath(locale)} data-astro-prefetch>{t.articles}</a>
       <a href={getWorksPath(locale)} data-astro-prefetch>{t.works}</a>
@@ -52,6 +58,56 @@ const t = getUi(locale);
     </div>
   </div>
 </header>
+
+<script is:inline>
+  (() => {
+    const init = () => {
+      const toggle = document.getElementById("site-nav-toggle");
+      const nav = document.getElementById("site-nav");
+      if (!toggle || !nav) return;
+
+      const setOpen = (open) => toggle.setAttribute("aria-expanded", String(open));
+
+      // .onclick assignment is idempotent, so re-running init on View
+      // Transitions never stacks duplicate handlers.
+      toggle.onclick = () =>
+        setOpen(toggle.getAttribute("aria-expanded") !== "true");
+
+      // Close once a destination is chosen
+      nav.onclick = (event) => {
+        if (event.target.closest("a")) setOpen(false);
+      };
+    };
+
+    init();
+
+    // Document-level listeners are registered once and look the elements up
+    // lazily, so they keep working after each page swap replaces the header.
+    if (!window.__siteNavListenerAdded) {
+      window.__siteNavListenerAdded = true;
+
+      const close = () =>
+        document
+          .getElementById("site-nav-toggle")
+          ?.setAttribute("aria-expanded", "false");
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") close();
+      });
+
+      document.addEventListener("click", (event) => {
+        const toggle = document.getElementById("site-nav-toggle");
+        const nav = document.getElementById("site-nav");
+        if (!toggle || !nav) return;
+        if (!toggle.contains(event.target) && !nav.contains(event.target)) {
+          close();
+        }
+      });
+
+      document.addEventListener("astro:after-swap", init);
+    }
+  })();
+</script>
 
 <style>
   .site-header__brand {
