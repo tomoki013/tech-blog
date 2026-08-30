@@ -10,10 +10,9 @@ const { mdHref, title } = Astro.props;
 <div id="webmcp" data-md-href={mdHref} data-title={title} hidden></div>
 
 <script>
-  // WebMCP (W3C Web Machine Learning CG draft).
-  // API surface: `document.modelContext.registerTool(tool, options)`.
-  // Tools are unregistered via the AbortSignal passed in `options.signal`.
-  // [SecureContext] only (HTTPS), and a no-op everywhere the API is absent.
+  // WebMCP is still an experimental Community Group draft. Prefer the current
+  // document.modelContext API and fall back to the older Navigator location for
+  // browsers that shipped an earlier draft.
   interface ModelContextTool {
     name: string;
     description: string;
@@ -22,20 +21,32 @@ const { mdHref, title } = Astro.props;
     execute: () => Promise<unknown>;
   }
   interface ModelContext {
-    registerTool: (tool: ModelContextTool, options?: { signal?: AbortSignal }) => unknown;
+    registerTool: (
+      tool: ModelContextTool,
+      options?: { signal?: AbortSignal },
+    ) => Promise<void>;
   }
 
-  function setupWebMcp() {
-    const modelContext = (document as unknown as { modelContext?: ModelContext }).modelContext;
+  const getModelContext = () => {
+    const documentContext = (document as unknown as { modelContext?: ModelContext }).modelContext;
+    if (documentContext) return documentContext;
+
+    return (navigator as unknown as { modelContext?: ModelContext }).modelContext;
+  };
+
+  async function setupWebMcp() {
+    const modelContext = getModelContext();
     const root = document.getElementById("webmcp");
     if (!modelContext || !root) return;
 
     const mdHref = root.dataset.mdHref ?? "";
     const title = root.dataset.title ?? "";
+    if (!mdHref) return;
+
     const controller = new AbortController();
 
     try {
-      modelContext.registerTool(
+      await modelContext.registerTool(
         {
           name: "get_current_article_markdown",
           description:
@@ -44,7 +55,7 @@ const { mdHref, title } = Astro.props;
           inputSchema: { type: "object", properties: {}, additionalProperties: false },
           annotations: { readOnlyHint: true },
           async execute() {
-            const res = await fetch(mdHref);
+            const res = await fetch(mdHref, { credentials: "same-origin" });
             if (!res.ok) throw new Error(`Failed to fetch Markdown (${res.status})`);
             const text = await res.text();
             return { content: [{ type: "text", text }] };
@@ -53,14 +64,14 @@ const { mdHref, title } = Astro.props;
         { signal: controller.signal },
       );
     } catch {
-      // Registration may throw on older/partial implementations — stay a no-op.
+      controller.abort();
       return;
     }
 
-    // ClientRouter swaps the DOM without a full reload, so explicitly drop the
-    // tool before navigating and re-register on the next page load.
     document.addEventListener("astro:before-swap", () => controller.abort(), { once: true });
   }
 
-  document.addEventListener("astro:page-load", setupWebMcp);
+  document.addEventListener("astro:page-load", () => {
+    void setupWebMcp();
+  });
 </script>

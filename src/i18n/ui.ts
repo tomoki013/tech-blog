@@ -86,6 +86,7 @@ export const ui = {
     copied: "Copied",
     copyFailed: "コピーに失敗しました",
     menu: "メニュー",
+    primaryNavigation: "主要ナビゲーション",
   },
   en: {
     home: "Home",
@@ -173,6 +174,7 @@ export const ui = {
     copied: "Copied",
     copyFailed: "Failed to copy",
     menu: "Menu",
+    primaryNavigation: "Primary navigation",
   },
 } as const satisfies Record<Locale, Record<string, string>>;
 
