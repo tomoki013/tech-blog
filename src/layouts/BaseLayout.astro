@@ -21,6 +21,7 @@ interface Props {
   type?: "website" | "article";
   alternateLocales?: AlternateLocale[];
   jsonLd?: string;
+  preloadProfileImage?: boolean;
 }
 
 const {
@@ -32,6 +33,7 @@ const {
   type = "website",
   alternateLocales = [],
   jsonLd,
+  preloadProfileImage = false,
 } = Astro.props;
 ---
 
@@ -41,7 +43,7 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light dark" />
-    <link rel="preload" as="image" href="/icon-256.webp" />
+    {preloadProfileImage && <link rel="preload" as="image" href="/icon-256.webp" />}
     <ThemeInit />
     <SEO
       title={title}
@@ -51,7 +53,7 @@ const {
       type={type}
       alternateLocales={alternateLocales}
     />
-    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
     <slot name="head" />
     <ClientRouter />
