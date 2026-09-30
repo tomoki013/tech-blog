@@ -1,0 +1,5 @@
+# Runtime and package manager are pinned here so local machines and CI resolve
+# identically (Tomokichi rules: common/dependencies.md). Run `mise install` once.
+[tools]
+node = "22"
+pnpm = "10.19.0"
