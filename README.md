@@ -37,7 +37,7 @@ Astro と Tailwind CSS v4 で構築した、軽量・高速・多言語対応の
 
 ## 技術スタック
 
-- **Framework**: Astro v6
+- **Framework**: Astro v7
 - **Styling**: Tailwind CSS v4
 - **Language**: TypeScript
 - **Content**: Markdown / Astro Content Collections
@@ -76,7 +76,7 @@ Astro と Tailwind CSS v4 で構築した、軽量・高速・多言語対応の
 ## 必要な環境
 
 - Node.js 26.12.1（26系を使用。`mise.toml` で固定）
-- pnpm 10.19.0（`mise.toml` と `package.json` で固定）
+- pnpm 10.34.9（`mise.toml` と `package.json` で固定）
 - [mise](https://mise.jdx.dev/getting-started.html)
 
 ## セットアップ
@@ -104,6 +104,17 @@ pnpm check      # Biome による lint / format チェック
 pnpm typecheck  # TypeScript の型チェック
 pnpm build      # 本番ビルド
 ```
+
+依存関係とシークレットの検査も CI・デプロイ前に実行します。
+
+```bash
+pnpm audit --prod
+pnpm security:audit
+pnpm test:security
+pnpm security:secrets
+```
+
+Gitleaks は `mise install` で導入されます。開発ツールに残る3件の指摘と期限付き例外は [セキュリティ監査記録](./docs/security-audit.md) を参照してください。`pnpm audit` は例外を適用しない全件レポートを表示します。
 
 ## デプロイ
 
@@ -198,7 +209,7 @@ The goal is to deliver articles as static HTML generated from Markdown, avoid un
 
 ## Tech Stack
 
-* **Framework**: Astro v6
+* **Framework**: Astro v7
 * **Styling**: Tailwind CSS v4
 * **Language**: TypeScript
 * **Content**: Markdown / Astro Content Collections
@@ -238,7 +249,7 @@ Other large permanent features are not planned for now.
 ## Requirements
 
 * Node.js 26.12.1 (use Node.js 26; pinned in `mise.toml`)
-* pnpm 10.19.0 (pinned in `mise.toml` and `package.json`)
+* pnpm 10.34.9 (pinned in `mise.toml` and `package.json`)
 * [mise](https://mise.jdx.dev/getting-started.html)
 
 ## Setup
@@ -266,6 +277,17 @@ pnpm check      # Lint and format check with Biome
 pnpm typecheck  # TypeScript type check
 pnpm build      # Production build
 ```
+
+CI and deployment also check dependencies and secrets:
+
+```bash
+pnpm audit --prod
+pnpm security:audit
+pnpm test:security
+pnpm security:secrets
+```
+
+`mise install` provides Gitleaks. See the [security audit record](./docs/security-audit.md) for the three remaining development-tool findings and expiring exceptions. `pnpm audit` shows the unfiltered full report.
 
 ## Deployment
 

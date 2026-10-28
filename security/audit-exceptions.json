@@ -1,0 +1,29 @@
+[
+  {
+    "ghsa": "GHSA-jmr9-qjv8-65gv",
+    "package": "extract-zip",
+    "severity": "high",
+    "versions": ["2.0.1"],
+    "paths": [".>@lhci/cli>lighthouse>puppeteer-core>@puppeteer/browsers>extract-zip"],
+    "expires": "2027-01-26",
+    "reason": "Development-only browser download dependency; no patched release exists. LHCI uses installed Chrome and never downloads or extracts browser archives in this repository. See docs/security-audit.md."
+  },
+  {
+    "ghsa": "GHSA-7pqw-9j4j-h8q3",
+    "package": "extract-zip",
+    "severity": "high",
+    "versions": ["2.0.1"],
+    "paths": [".>@lhci/cli>lighthouse>puppeteer-core>@puppeteer/browsers>extract-zip"],
+    "expires": "2027-01-26",
+    "reason": "Development-only browser download dependency; no patched release exists. LHCI uses installed Chrome and never downloads or extracts browser archives in this repository. See docs/security-audit.md."
+  },
+  {
+    "ghsa": "GHSA-mrhx-c7xc-m3w5",
+    "package": "zod",
+    "severity": "high",
+    "versions": ["3.25.76"],
+    "paths": [".>@lhci/cli>lighthouse>puppeteer-core>chromium-bidi>zod"],
+    "expires": "2027-01-26",
+    "reason": "Development-only WebDriver BiDi schema validator. LHCI connects to installed Chrome using CDP, not BiDi. Astro uses patched Zod 4.6.7. A forced Zod 3-to-4 override would break upstream schema compatibility. See docs/security-audit.md."
+  }
+]

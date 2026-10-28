@@ -2,4 +2,5 @@
 # identically (Tomokichi rules: common/dependencies.md). Run `mise install` once.
 [tools]
 node = "26.12.1"
-pnpm = "10.19.0"
+"npm:pnpm" = "10.34.9"
+gitleaks = "8.30.1"

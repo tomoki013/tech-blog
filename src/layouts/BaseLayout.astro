@@ -54,7 +54,7 @@ const {
       alternateLocales={alternateLocales}
     />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
+    {jsonLd && <script is:inline type="application/ld+json" set:html={jsonLd} />}
     <slot name="head" />
     <ClientRouter />
   </head>
