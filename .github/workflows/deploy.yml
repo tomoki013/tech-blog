@@ -16,13 +16,24 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
 
       - name: Set up toolchain (mise)
-        uses: jdx/mise-action@v4
+        uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Scan Git history for secrets
+        run: pnpm security:secrets
+
+      - name: Audit production dependencies
+        run: pnpm audit --prod
+
+      - name: Audit all dependencies
+        run: pnpm security:audit
 
       - name: Check formatting and lint
         run: pnpm check
@@ -36,7 +47,7 @@ jobs:
           PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL }}
 
       - name: Deploy to Cloudflare Workers
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@953926a2e2182532811c01a25e53647d93bf07c0 # v4.1.3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

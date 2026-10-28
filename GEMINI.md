@@ -1,6 +1,6 @@
 # Gemini Agent Guidance
 
-This repository is an Astro v6 + Tailwind CSS v4 static engineering blog and portfolio site.
+This repository is an Astro v7 + Tailwind CSS v4 static engineering blog and portfolio site.
 
 ## Before making changes
 
@@ -18,7 +18,7 @@ This repository is an Astro v6 + Tailwind CSS v4 static engineering blog and por
 
 ## Technology
 
-- Framework: Astro v6
+- Framework: Astro v7
 - Styling: Tailwind CSS v4 (via `@tailwindcss/vite`)
 - Language: TypeScript
 - Code quality: Biome v2 (`pnpm check`, `pnpm check:write`)

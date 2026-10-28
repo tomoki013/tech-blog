@@ -1,4 +1,5 @@
 // @ts-check
+import { unified } from "@astrojs/markdown-remark";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 
@@ -64,6 +65,8 @@ async function fetchOgData(url) {
 export default defineConfig({
   site,
   output: "static",
+  // Keep Astro 6's HTML whitespace behavior when rendering inline elements.
+  compressHTML: true,
   trailingSlash: "always",
   prefetch: {
     prefetchAll: true,
@@ -78,159 +81,162 @@ export default defineConfig({
       defaultColor: "light",
       wrap: false,
     },
-    rehypePlugins: [
-      () => async (tree) => {
-        async function traverse(node) {
-          if (!node?.children) return;
+    // Preserve the existing link-card, table, and task-list rehype transforms.
+    processor: unified({
+      rehypePlugins: [
+        () => async (tree) => {
+          async function traverse(node) {
+            if (!node?.children) return;
 
-          for (let i = 0; i < node.children.length; i++) {
-            const child = node.children[i];
-            if (child.type === "element") {
-              // Standalone Link Card Detection
-              let urlToFetch = null;
+            for (let i = 0; i < node.children.length; i++) {
+              const child = node.children[i];
+              if (child.type === "element") {
+                // Standalone Link Card Detection
+                let urlToFetch = null;
 
-              if (child.tagName === "p" && child.children.length === 1) {
-                const soloChild = child.children[0];
-                if (soloChild.tagName === "a") {
-                  const href = soloChild.properties.href;
-                  if (
-                    typeof href === "string" &&
-                    (href.startsWith("http") || href.startsWith("//"))
-                  ) {
-                    urlToFetch = href;
-                  }
-                } else if (soloChild.type === "text") {
-                  const text = soloChild.value.trim();
-                  if (/^https?:\/\/[^\s]+$/.test(text)) {
-                    urlToFetch = text;
+                if (child.tagName === "p" && child.children.length === 1) {
+                  const soloChild = child.children[0];
+                  if (soloChild.tagName === "a") {
+                    const href = soloChild.properties.href;
+                    if (
+                      typeof href === "string" &&
+                      (href.startsWith("http") || href.startsWith("//"))
+                    ) {
+                      urlToFetch = href;
+                    }
+                  } else if (soloChild.type === "text") {
+                    const text = soloChild.value.trim();
+                    if (/^https?:\/\/[^\s]+$/.test(text)) {
+                      urlToFetch = text;
+                    }
                   }
                 }
-              }
 
-              if (urlToFetch) {
-                const og = await fetchOgData(urlToFetch);
-                if (og) {
-                  node.children[i] = {
-                    type: "element",
-                    tagName: "a",
-                    properties: {
-                      href: urlToFetch,
-                      className: ["link-card"],
-                      target: "_blank",
-                      rel: "noopener noreferrer",
-                    },
-                    children: [
-                      {
-                        type: "element",
-                        tagName: "div",
-                        properties: { className: ["link-card__body"] },
-                        children: [
-                          {
-                            type: "element",
-                            tagName: "span",
-                            properties: { className: ["link-card__title"] },
-                            children: [{ type: "text", value: og.title }],
-                          },
-                          og.description
-                            ? {
-                                type: "element",
-                                tagName: "p",
-                                properties: { className: ["link-card__description"] },
-                                children: [{ type: "text", value: og.description }],
-                              }
-                            : null,
-                          {
-                            type: "element",
-                            tagName: "span",
-                            properties: { className: ["link-card__hostname"] },
-                            children: [{ type: "text", value: og.hostname }],
-                          },
-                        ].filter(Boolean),
+                if (urlToFetch) {
+                  const og = await fetchOgData(urlToFetch);
+                  if (og) {
+                    node.children[i] = {
+                      type: "element",
+                      tagName: "a",
+                      properties: {
+                        href: urlToFetch,
+                        className: ["link-card"],
+                        target: "_blank",
+                        rel: "noopener noreferrer",
                       },
-                      og.image
-                        ? {
-                            type: "element",
-                            tagName: "div",
-                            properties: { className: ["link-card__image"] },
-                            children: [
-                              {
-                                type: "element",
-                                tagName: "img",
-                                properties: {
-                                  src: og.image,
-                                  alt: "",
-                                  loading: "lazy",
-                                  decoding: "async",
-                                  referrerPolicy: "no-referrer",
+                      children: [
+                        {
+                          type: "element",
+                          tagName: "div",
+                          properties: { className: ["link-card__body"] },
+                          children: [
+                            {
+                              type: "element",
+                              tagName: "span",
+                              properties: { className: ["link-card__title"] },
+                              children: [{ type: "text", value: og.title }],
+                            },
+                            og.description
+                              ? {
+                                  type: "element",
+                                  tagName: "p",
+                                  properties: { className: ["link-card__description"] },
+                                  children: [{ type: "text", value: og.description }],
+                                }
+                              : null,
+                            {
+                              type: "element",
+                              tagName: "span",
+                              properties: { className: ["link-card__hostname"] },
+                              children: [{ type: "text", value: og.hostname }],
+                            },
+                          ].filter(Boolean),
+                        },
+                        og.image
+                          ? {
+                              type: "element",
+                              tagName: "div",
+                              properties: { className: ["link-card__image"] },
+                              children: [
+                                {
+                                  type: "element",
+                                  tagName: "img",
+                                  properties: {
+                                    src: og.image,
+                                    alt: "",
+                                    loading: "lazy",
+                                    decoding: "async",
+                                    referrerPolicy: "no-referrer",
+                                  },
                                 },
-                              },
-                            ],
-                          }
-                        : null,
-                    ].filter(Boolean),
+                              ],
+                            }
+                          : null,
+                      ].filter(Boolean),
+                    };
+                    continue;
+                  }
+                }
+
+                // Normal Table/Link/List handling
+                if (child.tagName === "table") {
+                  const wrapper = {
+                    type: "element",
+                    tagName: "div",
+                    properties: { className: ["table-wrapper"] },
+                    children: [child],
                   };
+                  node.children[i] = wrapper;
+                  child.properties.className = [...(child.properties.className || []), "md-table"];
                   continue;
                 }
-              }
 
-              // Normal Table/Link/List handling
-              if (child.tagName === "table") {
-                const wrapper = {
-                  type: "element",
-                  tagName: "div",
-                  properties: { className: ["table-wrapper"] },
-                  children: [child],
-                };
-                node.children[i] = wrapper;
-                child.properties.className = [...(child.properties.className || []), "md-table"];
-                continue;
-              }
+                if (child.tagName === "a") {
+                  const href = child.properties.href;
+                  const isExternal =
+                    typeof href === "string" && (href.startsWith("http") || href.startsWith("//"));
+                  if (isExternal) {
+                    child.properties.target = "_blank";
+                    child.properties.rel = "noopener noreferrer";
+                    child.properties.className = [
+                      ...(child.properties.className || []),
+                      "external-link",
+                    ];
+                  }
+                }
 
-              if (child.tagName === "a") {
-                const href = child.properties.href;
-                const isExternal =
-                  typeof href === "string" && (href.startsWith("http") || href.startsWith("//"));
-                if (isExternal) {
-                  child.properties.target = "_blank";
-                  child.properties.rel = "noopener noreferrer";
-                  child.properties.className = [
-                    ...(child.properties.className || []),
-                    "external-link",
-                  ];
+                if (child.tagName === "li") {
+                  child.properties.className = [...(child.properties.className || []), "md-li"];
                 }
               }
-
-              if (child.tagName === "li") {
-                child.properties.className = [...(child.properties.className || []), "md-li"];
+              await traverse(child);
+            }
+          }
+          await traverse(tree);
+        },
+        // Labels unlabeled GFM task-list checkboxes (<input type="checkbox" disabled>)
+        // so screen readers have an accessible name.
+        () => (tree) => {
+          function visit(node) {
+            if (!node?.children) return;
+            for (const child of node.children) {
+              if (
+                child.type === "element" &&
+                child.tagName === "input" &&
+                child.properties?.type === "checkbox" &&
+                "disabled" in (child.properties ?? {}) &&
+                !child.properties?.["aria-label"] &&
+                !child.properties?.id
+              ) {
+                child.properties["aria-label"] = "Task item";
               }
+              visit(child);
             }
-            await traverse(child);
           }
-        }
-        await traverse(tree);
-      },
-      // Labels unlabeled GFM task-list checkboxes (<input type="checkbox" disabled>)
-      // so screen readers have an accessible name.
-      () => (tree) => {
-        function visit(node) {
-          if (!node?.children) return;
-          for (const child of node.children) {
-            if (
-              child.type === "element" &&
-              child.tagName === "input" &&
-              child.properties?.type === "checkbox" &&
-              "disabled" in (child.properties ?? {}) &&
-              !child.properties?.["aria-label"] &&
-              !child.properties?.id
-            ) {
-              child.properties["aria-label"] = "Task item";
-            }
-            visit(child);
-          }
-        }
-        visit(tree);
-      },
-    ],
+          visit(tree);
+        },
+      ],
+    }),
   },
   build: {
     inlineStylesheets: "auto",

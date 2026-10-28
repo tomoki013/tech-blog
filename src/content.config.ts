@@ -1,6 +1,6 @@
 import { defineCollection } from "astro:content";
-import { z } from "astro:schema";
 import { glob } from "astro/loaders";
+import { z } from "astro/zod";
 import { projectIds } from "@/data/project-ids";
 
 const articles = defineCollection({
