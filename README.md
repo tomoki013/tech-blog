@@ -75,16 +75,19 @@ Astro と Tailwind CSS v4 で構築した、軽量・高速・多言語対応の
 
 ## 必要な環境
 
-- Node.js 22 LTS 以上
-- pnpm 10 以上
+- Node.js 26.12.1（26系を使用。`mise.toml` で固定）
+- pnpm 10.19.0（`mise.toml` と `package.json` で固定）
+- [mise](https://mise.jdx.dev/getting-started.html)
 
 ## セットアップ
 
 ```bash
-corepack enable
-pnpm install
+mise install
+mise exec -- pnpm install --frozen-lockfile
 cp .env.example .env
-````
+```
+
+CI とデプロイも `mise.toml` のツールチェーンを使用します。以降のコマンドは mise を有効にしたシェルで実行してください。有効にしていない場合は `mise exec --` を先頭に付けて実行できます。
 
 `.env` の `PUBLIC_SITE_URL` を本番環境の URL に変更してください。
 
@@ -234,16 +237,19 @@ Other large permanent features are not planned for now.
 
 ## Requirements
 
-* Node.js 22 LTS or later
-* pnpm 10 or later
+* Node.js 26.12.1 (use Node.js 26; pinned in `mise.toml`)
+* pnpm 10.19.0 (pinned in `mise.toml` and `package.json`)
+* [mise](https://mise.jdx.dev/getting-started.html)
 
 ## Setup
 
 ```bash
-corepack enable
-pnpm install
+mise install
+mise exec -- pnpm install --frozen-lockfile
 cp .env.example .env
 ```
+
+CI and deployment use the toolchain in `mise.toml` as well. Run the following commands in a shell with mise activated, or prefix them with `mise exec --`.
 
 Update `PUBLIC_SITE_URL` in `.env` with the production URL.
 
